@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>accountManagerAdvancedView</class>
+ <widget class="QWidget" name="accountManagerAdvancedView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>905</width>
+    <height>539</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Maplestory Manager - View Account (Advanced)</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../images/maplestoryIcon.ico</normaloff>../images/maplestoryIcon.ico</iconset>
+  </property>
+  <widget class="QListWidget" name="listWidget">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>20</y>
+     <width>551</width>
+     <height>411</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="usernameCheckbox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>70</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Username</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="creationDateCheckbox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>80</y>
+     <width>91</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Creation Date</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="localizationCheckbox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>110</y>
+     <width>81</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Localization</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="preferredLanguageCheckbox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>140</y>
+     <width>70</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Language</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="pinCheckbox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>170</y>
+     <width>70</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PIN</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="profilePictureCheckbox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>200</y>
+     <width>91</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Profile Picture</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="passwordCheckbox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>50</y>
+     <width>70</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Password</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>250</y>
+     <width>81</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Username</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Creation Date</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Localization</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Language</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QCheckBox" name="checkBox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>290</y>
+     <width>41</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>AND</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_2">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>290</y>
+     <width>41</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>OR</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>320</y>
+     <width>81</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Username</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Creation Date</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Localization</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Language</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_3">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>360</y>
+     <width>41</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>OR</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_4">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>360</y>
+     <width>41</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>AND</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox_3">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>390</y>
+     <width>81</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Username</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Creation Date</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Localization</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Language</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="comboBox_4">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>250</y>
+     <width>141</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>IS</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>IS NOT</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>GREATHER THEN</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>GREATHER OR EQUAL TO</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>LESSER THEN</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>LESSER OR EQUAL TO</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="comboBox_5">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>320</y>
+     <width>141</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>IS</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>IS NOT</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>GREATHER THEN</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>GREATHER OR EQUAL TO</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>LESSER THEN</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>LESSER OR EQUAL TO</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="comboBox_6">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>390</y>
+     <width>141</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>IS</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>IS NOT</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>GREATHER THEN</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>GREATHER OR EQUAL TO</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>LESSER THEN</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>LESSER OR EQUAL TO</string>
+    </property>
+   </item>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
