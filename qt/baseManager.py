@@ -16,6 +16,7 @@ from PyQt5.QtCore import QSize
 
 grey_background = "background-color: rgb(245, 245, 245);"
 white_background = "background-color: rgb(255, 255, 255);"
+transparent = "background-color: rgba(255, 255, 255, 0);"
 _translate = QtCore.QCoreApplication.translate
 
 class Ui_baseManager(object):
@@ -24,15 +25,28 @@ class Ui_baseManager(object):
         
         baseManager.setObjectName("baseManager")
         baseManager.resize(442, 351)
+        baseManager.setMinimumSize(QtCore.QSize(442, 351))
+        baseManager.setMaximumSize(QtCore.QSize(442, 351))
         baseManager.setStyleSheet(white_background)
         icon = QIcon()
         icon.addFile(u"images\maplestoryIcon.ico", QSize(), QIcon.Normal, QIcon.Off)
         baseManager.setWindowIcon(icon)
         baseManager.setWindowTitle(_translate("baseManager", "Maplestory Manager - Item Bases"))
 
-        self.gridLayoutWidget = QtWidgets.QWidget(baseManager)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(10, 40, 131, 311))
-        self.gridLayoutWidget.setObjectName("gridLayoutWidget")
+        self.gridEquipLayoutWidget = QtWidgets.QWidget(baseManager)
+        self.gridEquipLayoutWidget.setGeometry(QtCore.QRect(10, 40, 131, 311))
+        self.gridEquipLayoutWidget.setObjectName("gridEquipLayoutWidget")
+        self.gridEquipLayoutWidget.hide()
+
+        self.gridUseLayoutWidget = QtWidgets.QWidget(baseManager)
+        self.gridUseLayoutWidget.setGeometry(QtCore.QRect(10, 40, 131, 311))
+        self.gridUseLayoutWidget.setObjectName("gridUseLayoutWidget")
+        self.gridUseLayoutWidget.hide()
+
+        self.gridEtcLayoutWidget = QtWidgets.QWidget(baseManager)
+        self.gridEtcLayoutWidget.setGeometry(QtCore.QRect(10, 40, 131, 311))
+        self.gridEtcLayoutWidget.setObjectName("gridEtcLayoutWidget")
+        self.gridEtcLayoutWidget.hide()
 
         self.baseSelector = QtWidgets.QComboBox(baseManager)
         self.baseSelector.setGeometry(QtCore.QRect(10, 10, 81, 22))
@@ -46,7 +60,7 @@ class Ui_baseManager(object):
         self.baseSelector.setItemText(1, _translate("baseManager", "Equip Base"))
         self.baseSelector.setItemText(2, _translate("baseManager", "Use Base"))
         self.baseSelector.setItemText(3, _translate("baseManager", "Etc Base"))
-        self.baseSelector.currentTextChanged.connect(lambda: self.changeScreen(self.baseSelector.currentText(),baseManager))
+        self.baseSelector.currentTextChanged.connect(lambda: self.changeScreen(self.baseSelector.currentText()))
 
         self.deleteRadioButton = QtWidgets.QRadioButton(baseManager)
         self.deleteRadioButton.setGeometry(QtCore.QRect(350, 10, 81, 17))
@@ -61,12 +75,12 @@ class Ui_baseManager(object):
         self.readRadioButton = QtWidgets.QRadioButton(baseManager)
         self.readRadioButton.setGeometry(QtCore.QRect(180, 10, 71, 17))
         self.readRadioButton.setObjectName("readRadioButton")
-        self.readRadioButton.setStyleSheet("background-color: rgba(255, 255, 255, 0);")
+        self.readRadioButton.setStyleSheet(transparent)
         self.readRadioButton.setText(_translate("baseManager", "View Item"))
 
         self.createRadioButton = QtWidgets.QRadioButton(baseManager)
         self.createRadioButton.setGeometry(QtCore.QRect(100, 10, 71, 17))
-        self.createRadioButton.setStyleSheet("background-color: rgba(255, 255, 255, 0);")
+        self.createRadioButton.setStyleSheet(transparent)
         self.createRadioButton.setObjectName("createRadioButton")
         self.createRadioButton.setText(_translate("baseManager", "Add Item"))
 
@@ -75,139 +89,170 @@ class Ui_baseManager(object):
         self.output.setMinimumSize(QtCore.QSize(241, 151))
         self.output.setObjectName("output")
 
-        self.control = 1
+        #self.control = 1
+
+        self.equipBaseManager(baseManager)
+        self.useBaseManager(baseManager)
+        self.etcBaseManager(baseManager)
 
         #self.retranslateUi(baseManager)
         QtCore.QMetaObject.connectSlotsByName(baseManager)
 
-    def changeScreen(self, text, baseManager):
-        if self.control != 1:
-            for i in reversed(range(self.gridLayout.count())): 
-                self.gridLayout.itemAt(i).widget().setParent(None)
-            self.gridLayout.deleteLater()
+    def changeScreen(self, text):
         if text == "Equip Base":
-            self.equipBaseManager(baseManager)
-            self.control = 2
+            #self.equipBaseManager(baseManager)
+            self.gridEquipLayoutWidget.show()
+            self.gridUseLayoutWidget.hide()
+            self.gridEtcLayoutWidget.hide()
         elif text == "Use Base":
-            self.useBaseManager(baseManager)
-            self.control = 2
+            #self.useBaseManager(baseManager)
+            self.gridEquipLayoutWidget.hide()
+            self.gridUseLayoutWidget.show()
+            self.gridEtcLayoutWidget.hide()
         elif text == "Etc Base":
-            self.etcBaseManager(baseManager)
-            self.control = 2
+            #self.etcBaseManager(baseManager)
+            self.gridEquipLayoutWidget.hide()
+            self.gridUseLayoutWidget.hide()
+            self.gridEtcLayoutWidget.show()
         else:
-            self.control = 1
+            self.gridEquipLayoutWidget.hide()
+            self.gridUseLayoutWidget.hide()
+            self.gridEtcLayoutWidget.hide()
 
 
     def equipBaseManager(self, baseManager):
-        self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
-        self.gridLayout.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout.setObjectName("gridLayout")
-        self.attLabel = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.gridLayoutEquip = QtWidgets.QGridLayout(self.gridEquipLayoutWidget)
+        self.gridLayoutEquip.setContentsMargins(0, 0, 0, 0)
+        self.gridLayoutEquip.setObjectName("gridLayoutEquip")
+
+        self.attLabel = QtWidgets.QLabel(self.gridEquipLayoutWidget)
         self.attLabel.setObjectName("attLabel")
-        self.gridLayout.addWidget(self.attLabel, 3, 0, 1, 1)
-        self.attackPower = QtWidgets.QSpinBox(self.gridLayoutWidget)
+        self.gridLayoutEquip.addWidget(self.attLabel, 3, 0, 1, 1)
+
+        self.attackPower = QtWidgets.QSpinBox(self.gridEquipLayoutWidget)
         self.attackPower.setMaximum(255)
         self.attackPower.setObjectName("attackPower")
-        self.gridLayout.addWidget(self.attackPower, 3, 1, 1, 1)
-        self.mattLabel = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.gridLayoutEquip.addWidget(self.attackPower, 3, 1, 1, 1)
+
+        self.mattLabel = QtWidgets.QLabel(self.gridEquipLayoutWidget)
         self.mattLabel.setStyleSheet("background-color: rgba(255, 255, 255, 0);")
         self.mattLabel.setObjectName("mattLabel")
-        self.gridLayout.addWidget(self.mattLabel, 4, 0, 1, 1)
-        self.magicPower = QtWidgets.QSpinBox(self.gridLayoutWidget)
+        self.gridLayoutEquip.addWidget(self.mattLabel, 4, 0, 1, 1)
+
+        self.magicPower = QtWidgets.QSpinBox(self.gridEquipLayoutWidget)
         self.magicPower.setMaximum(255)
         self.magicPower.setObjectName("magicPower")
-        self.gridLayout.addWidget(self.magicPower, 4, 1, 1, 1)
-        self.idEquip = QtWidgets.QLineEdit(self.gridLayoutWidget)
+        self.gridLayoutEquip.addWidget(self.magicPower, 4, 1, 1, 1)
+
+        self.idEquip = QtWidgets.QLineEdit(self.gridEquipLayoutWidget)
         self.idEquip.setText("")
         self.idEquip.setObjectName("idEquip")
-        self.gridLayout.addWidget(self.idEquip, 0, 0, 1, 2)
-        self.equipName = QtWidgets.QLineEdit(self.gridLayoutWidget)
+        self.gridLayoutEquip.addWidget(self.idEquip, 0, 0, 1, 2)
+
+        self.equipName = QtWidgets.QLineEdit(self.gridEquipLayoutWidget)
         self.equipName.setText("")
         self.equipName.setObjectName("equipName")
-        self.gridLayout.addWidget(self.equipName, 1, 0, 1, 2)
-        self.classCanUse = QtWidgets.QLineEdit(self.gridLayoutWidget)
+        self.gridLayoutEquip.addWidget(self.equipName, 1, 0, 1, 2)
+
+        self.classCanUse = QtWidgets.QLineEdit(self.gridEquipLayoutWidget)
         self.classCanUse.setText("")
         self.classCanUse.setObjectName("classCanUse")
-        self.gridLayout.addWidget(self.classCanUse, 2, 0, 1, 2)
-        self.attribute = QtWidgets.QLineEdit(self.gridLayoutWidget)
+        self.gridLayoutEquip.addWidget(self.classCanUse, 2, 0, 1, 2)
+
+        self.attribute = QtWidgets.QLineEdit(self.gridEquipLayoutWidget)
         self.attribute.setText("")
         self.attribute.setObjectName("attribute")
-        self.gridLayout.addWidget(self.attribute, 5, 0, 1, 2)
-        self.attributeBonus = QtWidgets.QLineEdit(self.gridLayoutWidget)
+        self.gridLayoutEquip.addWidget(self.attribute, 5, 0, 1, 2)
+
+        self.attributeBonus = QtWidgets.QLineEdit(self.gridEquipLayoutWidget)
         self.attributeBonus.setText("")
         self.attributeBonus.setObjectName("attributeBonus")
-        self.gridLayout.addWidget(self.attributeBonus, 6, 0, 1, 2)
-        self.okButton = QtWidgets.QPushButton(self.gridLayoutWidget)
-        self.okButton.setStyleSheet(grey_background)
-        self.okButton.setObjectName("okButton")
-        self.gridLayout.addWidget(self.okButton, 8, 0, 1, 2)
-        self.value = QtWidgets.QLineEdit(self.gridLayoutWidget)
-        self.value.setObjectName("value")
-        self.gridLayout.addWidget(self.value, 7, 0, 1, 2)
+        self.gridLayoutEquip.addWidget(self.attributeBonus, 6, 0, 1, 2)
+
+        self.okEquipButton = QtWidgets.QPushButton(self.gridEquipLayoutWidget)
+        self.okEquipButton.setStyleSheet(grey_background)
+        self.okEquipButton.setObjectName("okEquipButton")
+        self.gridLayoutEquip.addWidget(self.okEquipButton, 8, 0, 1, 2)
+
+        self.equipValue = QtWidgets.QLineEdit(self.gridEquipLayoutWidget)
+        self.equipValue.setObjectName("equipValue")
+        self.gridLayoutEquip.addWidget(self.equipValue, 7, 0, 1, 2)
 
         self.retranslateUiEquip()
         QtCore.QMetaObject.connectSlotsByName(baseManager)
 
     def useBaseManager(self, baseManager):
-        self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
-        self.gridLayout.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout.setObjectName("gridLayout")
-        self.recoveredMP = QtWidgets.QLineEdit(self.gridLayoutWidget)
+        self.gridLayoutUse = QtWidgets.QGridLayout(self.gridUseLayoutWidget)
+        self.gridLayoutUse.setContentsMargins(0, 0, 0, 0)
+        self.gridLayoutUse.setObjectName("gridLayoutUse")
+
+        self.recoveredMP = QtWidgets.QLineEdit(self.gridUseLayoutWidget)
         self.recoveredMP.setText("")
         self.recoveredMP.setObjectName("recoveredMP")
-        self.gridLayout.addWidget(self.recoveredMP, 3, 0, 1, 2)
-        self.recoveredHP = QtWidgets.QLineEdit(self.gridLayoutWidget)
+        self.gridLayoutUse.addWidget(self.recoveredMP, 3, 0, 1, 2)
+
+        self.recoveredHP = QtWidgets.QLineEdit(self.gridUseLayoutWidget)
         self.recoveredHP.setText("")
         self.recoveredHP.setObjectName("recoveredHP")
-        self.gridLayout.addWidget(self.recoveredHP, 2, 0, 1, 2)
-        self.bonusLabel = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.gridLayoutUse.addWidget(self.recoveredHP, 2, 0, 1, 2)
+
+        self.bonusLabel = QtWidgets.QLabel(self.gridUseLayoutWidget)
         self.bonusLabel.setObjectName("bonusLabel")
-        self.gridLayout.addWidget(self.bonusLabel, 4, 0, 1, 1)
-        self.value = QtWidgets.QLineEdit(self.gridLayoutWidget)
-        self.value.setText("")
-        self.value.setObjectName("value")
-        self.gridLayout.addWidget(self.value, 6, 0, 1, 2)
-        self.idUse = QtWidgets.QLineEdit(self.gridLayoutWidget)
+        self.gridLayoutUse.addWidget(self.bonusLabel, 4, 0, 1, 1)
+
+        self.useValue = QtWidgets.QLineEdit(self.gridUseLayoutWidget)
+        self.useValue.setText("")
+        self.useValue.setObjectName("useValue")
+        self.gridLayoutUse.addWidget(self.useValue, 6, 0, 1, 2)
+
+        self.idUse = QtWidgets.QLineEdit(self.gridUseLayoutWidget)
         self.idUse.setText("")
         self.idUse.setObjectName("idUse")
-        self.gridLayout.addWidget(self.idUse, 0, 0, 1, 2)
-        self.useName = QtWidgets.QLineEdit(self.gridLayoutWidget)
+        self.gridLayoutUse.addWidget(self.idUse, 0, 0, 1, 2)
+
+        self.useName = QtWidgets.QLineEdit(self.gridUseLayoutWidget)
         self.useName.setText("")
         self.useName.setObjectName("useName")
-        self.gridLayout.addWidget(self.useName, 1, 0, 1, 2)
-        self.okButton = QtWidgets.QPushButton(self.gridLayoutWidget)
-        self.okButton.setStyleSheet(grey_background)
-        self.okButton.setObjectName("okButton")
-        self.gridLayout.addWidget(self.okButton, 7, 0, 1, 2)
-        self.attributeBonus = QtWidgets.QSpinBox(self.gridLayoutWidget)
+        self.gridLayoutUse.addWidget(self.useName, 1, 0, 1, 2)
+
+        self.okUseButton = QtWidgets.QPushButton(self.gridUseLayoutWidget)
+        self.okUseButton.setStyleSheet(grey_background)
+        self.okUseButton.setObjectName("okUseButton")
+        self.gridLayoutUse.addWidget(self.okUseButton, 7, 0, 1, 2)
+
+        self.attributeBonus = QtWidgets.QSpinBox(self.gridUseLayoutWidget)
         self.attributeBonus.setMinimum(-128)
         self.attributeBonus.setMaximum(127)
         self.attributeBonus.setObjectName("attributeBonus")
-        self.gridLayout.addWidget(self.attributeBonus, 4, 1, 1, 1)
+        self.gridLayoutUse.addWidget(self.attributeBonus, 4, 1, 1, 1)
 
         self.retranslateUiUse()
         QtCore.QMetaObject.connectSlotsByName(baseManager)
 
     def etcBaseManager(self, baseManager):
-        self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
-        self.gridLayout.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout.setObjectName("gridLayout")
-        self.idEtc = QtWidgets.QLineEdit(self.gridLayoutWidget)
+        self.gridLayoutEtc = QtWidgets.QGridLayout(self.gridEtcLayoutWidget)
+        self.gridLayoutEtc.setContentsMargins(0, 0, 0, 85)
+        self.gridLayoutEtc.setObjectName("gridLayoutEtc")
+
+        self.idEtc = QtWidgets.QLineEdit(self.gridEtcLayoutWidget)
         self.idEtc.setText("")
         self.idEtc.setObjectName("idEtc")
-        self.gridLayout.addWidget(self.idEtc, 0, 0, 1, 2)
-        self.etcName = QtWidgets.QLineEdit(self.gridLayoutWidget)
+        self.gridLayoutEtc.addWidget(self.idEtc, 0, 0, 1, 2)
+
+        self.etcName = QtWidgets.QLineEdit(self.gridEtcLayoutWidget)
         self.etcName.setText("")
         self.etcName.setObjectName("etcName")
-        self.gridLayout.addWidget(self.etcName, 1, 0, 1, 2)
-        self.value = QtWidgets.QLineEdit(self.gridLayoutWidget)
-        self.value.setText("")
-        self.value.setObjectName("value")
-        self.gridLayout.addWidget(self.value, 2, 0, 1, 2)
-        self.okButton = QtWidgets.QPushButton(self.gridLayoutWidget)
-        self.okButton.setStyleSheet(grey_background)
-        self.okButton.setObjectName("okButton")
-        self.gridLayout.addWidget(self.okButton, 3, 0, 1, 2)
+        self.gridLayoutEtc.addWidget(self.etcName, 1, 0, 1, 2)
+
+        self.etcValue = QtWidgets.QLineEdit(self.gridEtcLayoutWidget)
+        self.etcValue.setText("")
+        self.etcValue.setObjectName("etcValue")
+        self.gridLayoutEtc.addWidget(self.etcValue, 2, 0, 1, 2)
+
+        self.okEtcButton = QtWidgets.QPushButton(self.gridEtcLayoutWidget)
+        self.okEtcButton.setStyleSheet(grey_background)
+        self.okEtcButton.setObjectName("okEtcButton")
+        self.gridLayoutEtc.addWidget(self.okEtcButton, 3, 0, 1, 2)
 
         self.retranslateUiEtc()
         QtCore.QMetaObject.connectSlotsByName(baseManager)
@@ -215,57 +260,30 @@ class Ui_baseManager(object):
     def retranslateUiEquip(self):
         self.idEquip.setPlaceholderText(_translate("baseManager", "Equip ID"))
         self.classCanUse.setPlaceholderText(_translate("baseManager", "Class"))
-        self.okButton.setText(_translate("baseManager", "OK"))
+        self.okEquipButton.setText(_translate("baseManager", "OK"))
         self.equipName.setPlaceholderText(_translate("baseManager", "Equip Name"))
         self.attLabel.setText(_translate("baseManager", "ATT"))
         self.mattLabel.setText(_translate("baseManager", "MATT"))
         self.attribute.setPlaceholderText(_translate("baseManager", "Attribute"))
         self.attributeBonus.setPlaceholderText(_translate("baseManager", "Attribute Bonus"))
-        self.value.setPlaceholderText(_translate("baseManager", "Value"))
+        self.equipValue.setPlaceholderText(_translate("baseManager", "Value"))
 
     def retranslateUiUse(self):
         _translate = QtCore.QCoreApplication.translate
         self.recoveredMP.setPlaceholderText(_translate("baseManager", "Recovered MP"))
         self.recoveredHP.setPlaceholderText(_translate("baseManager", "Recovered HP"))
         self.bonusLabel.setText(_translate("baseManager", "Bonus"))
-        self.value.setPlaceholderText(_translate("baseManager", "Value"))
+        self.useValue.setPlaceholderText(_translate("baseManager", "Value"))
         self.idUse.setPlaceholderText(_translate("baseManager", "Use ID"))
         self.useName.setPlaceholderText(_translate("baseManager", "Use Name"))
-        self.okButton.setText(_translate("baseManager", "OK"))
+        self.okUseButton.setText(_translate("baseManager", "OK"))
 
     def retranslateUiEtc(self):
         _translate = QtCore.QCoreApplication.translate
         self.idEtc.setPlaceholderText(_translate("baseManager", "Etc ID"))
         self.etcName.setPlaceholderText(_translate("baseManager", "Etc Name"))
-        self.value.setPlaceholderText(_translate("baseManager", "Value"))
-        self.okButton.setText(_translate("baseManager", "OK"))
-
-    def removeLayout(self,layout):
-        for i in  range(layout.count()):
-            temp_layout = layout.itemAt(i)
-            if temp_layout is not None:
-                widget = temp_layout.widget()
-                if widget is not None:
-                    widget.deleteLater()
-            else:
-                return
-            if temp_layout.layout() is not None:
-                self.removeLayout(temp_layout.layout())
-
-
-    def removeFormLayout(self,layout):
-
-        if layout is not None:
-
-            for i in  range(layout.count()):
-                    temp_layout = layout.itemAt(i)
-                    if isinstance(temp_layout.layout(),type(QFormLayout())):
-                            self.removeLayout(temp_layout.layout())
-
-                    else:
-                        next
-        else:
-            return
+        self.etcValue.setPlaceholderText(_translate("baseManager", "Value"))
+        self.okEtcButton.setText(_translate("baseManager", "OK"))
 
 if __name__ == "__main__":
     import sys
