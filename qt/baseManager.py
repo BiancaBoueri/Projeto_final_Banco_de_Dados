@@ -89,28 +89,22 @@ class Ui_baseManager(object):
         self.output.setMinimumSize(QtCore.QSize(241, 151))
         self.output.setObjectName("output")
 
-        #self.control = 1
-
         self.equipBaseManager(baseManager)
         self.useBaseManager(baseManager)
         self.etcBaseManager(baseManager)
 
-        #self.retranslateUi(baseManager)
         QtCore.QMetaObject.connectSlotsByName(baseManager)
 
     def changeScreen(self, text):
         if text == "Equip Base":
-            #self.equipBaseManager(baseManager)
             self.gridEquipLayoutWidget.show()
             self.gridUseLayoutWidget.hide()
             self.gridEtcLayoutWidget.hide()
         elif text == "Use Base":
-            #self.useBaseManager(baseManager)
             self.gridEquipLayoutWidget.hide()
             self.gridUseLayoutWidget.show()
             self.gridEtcLayoutWidget.hide()
         elif text == "Etc Base":
-            #self.etcBaseManager(baseManager)
             self.gridEquipLayoutWidget.hide()
             self.gridUseLayoutWidget.hide()
             self.gridEtcLayoutWidget.show()

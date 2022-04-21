@@ -19,6 +19,8 @@ class Ui_transactionManager(object):
     def setupUi(self, transactionManager):
         transactionManager.setObjectName("transactionManager")
         transactionManager.resize(422, 273)
+        transactionManager.setMinimumSize(QtCore.QSize(422, 273))
+        transactionManager.setMaximumSize(QtCore.QSize(422, 273))
         icon = QIcon()
         icon.addFile(u"images\maplestoryIcon.ico", QSize(), QIcon.Normal, QIcon.Off)
         transactionManager.setWindowIcon(icon)

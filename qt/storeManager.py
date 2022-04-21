@@ -20,6 +20,8 @@ class Ui_storeManager(object):
     def setupUi(self, storeManager):
         storeManager.setObjectName("storeManager")
         storeManager.resize(428, 306)
+        storeManager.setMinimumSize(QtCore.QSize(428, 306))
+        storeManager.setMaximumSize(QtCore.QSize(428, 306))
         icon = QIcon()
         icon.addFile(u"images\maplestoryIcon.ico", QSize(), QIcon.Normal, QIcon.Off)
         storeManager.setWindowIcon(icon)

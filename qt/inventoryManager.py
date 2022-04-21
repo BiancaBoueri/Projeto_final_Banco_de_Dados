@@ -19,6 +19,8 @@ class Ui_inventoryManager(object):
     def setupUi(self, inventoryManager):
         inventoryManager.setObjectName("inventoryManager")
         inventoryManager.resize(592, 324)
+        inventoryManager.setMinimumSize(QtCore.QSize(592, 324))
+        inventoryManager.setMaximumSize(QtCore.QSize(592, 324))
         icon = QIcon()
         icon.addFile(u"images\maplestoryIcon.ico", QSize(), QIcon.Normal, QIcon.Off)
         inventoryManager.setWindowIcon(icon)
@@ -111,7 +113,7 @@ class Ui_inventoryManager(object):
         self.quantity = QtWidgets.QLineEdit(inventoryManager)
         self.quantity.setGeometry(QtCore.QRect(170, 200, 113, 20))
         self.quantity.setObjectName("quantity")
-        
+
         self.rarity = QtWidgets.QLineEdit(inventoryManager)
         self.rarity.setGeometry(QtCore.QRect(170, 240, 113, 20))
         self.rarity.setObjectName("rarity")
