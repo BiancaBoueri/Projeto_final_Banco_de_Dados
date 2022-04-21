@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>905</width>
-    <height>539</height>
+    <width>893</width>
+    <height>428</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>893</width>
+    <height>428</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>893</width>
+    <height>428</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Maplestory Manager - View Account (Advanced)</string>
@@ -17,13 +29,16 @@
    <iconset>
     <normaloff>../images/maplestoryIcon.ico</normaloff>../images/maplestoryIcon.ico</iconset>
   </property>
-  <widget class="QListWidget" name="listWidget">
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
+  </property>
+  <widget class="QListWidget" name="output">
    <property name="geometry">
     <rect>
-     <x>330</x>
+     <x>320</x>
      <y>20</y>
      <width>551</width>
-     <height>411</height>
+     <height>391</height>
     </rect>
    </property>
   </widget>
@@ -118,7 +133,7 @@
     <string>Password</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QComboBox" name="inputFirstConditional">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -127,6 +142,14 @@
      <height>22</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(245, 245, 245);</string>
+   </property>
+   <item>
+    <property name="text">
+     <string/>
+    </property>
+   </item>
    <item>
     <property name="text">
      <string>Username</string>
@@ -148,7 +171,7 @@
     </property>
    </item>
   </widget>
-  <widget class="QCheckBox" name="checkBox">
+  <widget class="QCheckBox" name="andFirst">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -161,7 +184,7 @@
     <string>AND</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="checkBox_2">
+  <widget class="QCheckBox" name="orFirst">
    <property name="geometry">
     <rect>
      <x>70</x>
@@ -174,7 +197,7 @@
     <string>OR</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox_2">
+  <widget class="QComboBox" name="inputSecondConditional">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -183,6 +206,14 @@
      <height>22</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(245, 245, 245);</string>
+   </property>
+   <item>
+    <property name="text">
+     <string/>
+    </property>
+   </item>
    <item>
     <property name="text">
      <string>Username</string>
@@ -204,7 +235,7 @@
     </property>
    </item>
   </widget>
-  <widget class="QCheckBox" name="checkBox_3">
+  <widget class="QCheckBox" name="orSecond">
    <property name="geometry">
     <rect>
      <x>70</x>
@@ -217,7 +248,7 @@
     <string>OR</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="checkBox_4">
+  <widget class="QCheckBox" name="andSecond">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -230,7 +261,7 @@
     <string>AND</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox_3">
+  <widget class="QComboBox" name="inputThirdConditional">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -239,6 +270,14 @@
      <height>22</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(245, 245, 245);</string>
+   </property>
+   <item>
+    <property name="text">
+     <string/>
+    </property>
+   </item>
    <item>
     <property name="text">
      <string>Username</string>
@@ -260,125 +299,202 @@
     </property>
    </item>
   </widget>
-  <widget class="QComboBox" name="comboBox_4">
+  <widget class="QComboBox" name="conditionFirstConditional">
    <property name="geometry">
     <rect>
      <x>120</x>
      <y>250</y>
-     <width>141</width>
+     <width>41</width>
      <height>22</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(245, 245, 245);</string>
+   </property>
    <item>
     <property name="text">
-     <string>IS</string>
+     <string>=</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>IS NOT</string>
+     <string>!=</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>GREATHER THEN</string>
+     <string>&gt;</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>GREATHER OR EQUAL TO</string>
+     <string>&gt;=</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>LESSER THEN</string>
+     <string>&lt;</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>LESSER OR EQUAL TO</string>
+     <string>&lt;=</string>
     </property>
    </item>
   </widget>
-  <widget class="QComboBox" name="comboBox_5">
+  <widget class="QComboBox" name="conditionSecondConditional">
    <property name="geometry">
     <rect>
      <x>120</x>
      <y>320</y>
-     <width>141</width>
+     <width>41</width>
      <height>22</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(245, 245, 245);</string>
+   </property>
    <item>
     <property name="text">
-     <string>IS</string>
+     <string>=</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>IS NOT</string>
+     <string>!=</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>GREATHER THEN</string>
+     <string>&gt;</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>GREATHER OR EQUAL TO</string>
+     <string>&gt;=</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>LESSER THEN</string>
+     <string>&lt;</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>LESSER OR EQUAL TO</string>
+     <string>&lt;=</string>
     </property>
    </item>
   </widget>
-  <widget class="QComboBox" name="comboBox_6">
+  <widget class="QComboBox" name="conditionThirdConditional">
    <property name="geometry">
     <rect>
      <x>120</x>
      <y>390</y>
-     <width>141</width>
+     <width>41</width>
      <height>22</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(245, 245, 245);</string>
+   </property>
    <item>
     <property name="text">
-     <string>IS</string>
+     <string>=</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>IS NOT</string>
+     <string>!=</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>GREATHER THEN</string>
+     <string>&gt;</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>GREATHER OR EQUAL TO</string>
+     <string>&gt;=</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>LESSER THEN</string>
+     <string>&lt;</string>
     </property>
    </item>
    <item>
     <property name="text">
-     <string>LESSER OR EQUAL TO</string>
+     <string>&lt;=</string>
     </property>
    </item>
+  </widget>
+  <widget class="QLineEdit" name="outputFirstConditional">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>250</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="outputSecondConditional">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>320</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="outputThirdConditional">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>390</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="profilePictureView">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>20</y>
+     <width>131</width>
+     <height>141</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="searchButton">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>180</y>
+     <width>131</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(249, 249, 249);</string>
+   </property>
+   <property name="text">
+    <string>Search</string>
+   </property>
   </widget>
  </widget>
  <resources/>

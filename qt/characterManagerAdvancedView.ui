@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>characterManagerAdvancedView</class>
+ <widget class="QWidget" name="characterManagerAdvancedView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>893</width>
+    <height>428</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>893</width>
+    <height>428</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>893</width>
+    <height>428</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Maplestory Manager - View Character (Advanced)</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
+  </property>
+  <widget class="QCheckBox" name="charLevelCheckbox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>100</y>
+     <width>70</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Level</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="outputFirstConditional">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>240</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="charHPCheckbox">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>10</y>
+     <width>70</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>HP</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="charClassCheckbox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>40</y>
+     <width>101</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Character Class</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="output">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>10</y>
+     <width>551</width>
+     <height>391</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="orFirst">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>280</y>
+     <width>41</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>OR</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="outputSecondConditional">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>310</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="charNameCheckbox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>101</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Character Name</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="conditionThirdConditional">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>380</y>
+     <width>41</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(245, 245, 245);</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>=</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>!=</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>&gt;</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>&gt;=</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>&lt;</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>&lt;=</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QCheckBox" name="orSecond">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>350</y>
+     <width>41</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>OR</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="conditionFirstConditional">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>240</y>
+     <width>41</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(245, 245, 245);</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>=</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>!=</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>&gt;</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>&gt;=</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>&lt;</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>&lt;=</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QCheckBox" name="andFirst">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>280</y>
+     <width>41</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>AND</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="outputThirdConditional">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>380</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="andSecond">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>350</y>
+     <width>41</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>AND</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="charAttributeCheckbox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>70</y>
+     <width>91</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Main Attribute</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="searchButton">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>160</y>
+     <width>271</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(245, 245, 245);</string>
+   </property>
+   <property name="text">
+    <string>Search</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="conditionSecondConditional">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>310</y>
+     <width>41</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(245, 245, 245);</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>=</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>!=</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>&gt;</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>&gt;=</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>&lt;</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>&lt;=</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QCheckBox" name="charMPCheckbox">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>40</y>
+     <width>91</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>MP</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="inputFirstConditional">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>240</y>
+     <width>111</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(245, 245, 245);</string>
+   </property>
+   <item>
+    <property name="text">
+     <string/>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Username</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Character Name</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Character Class</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Main Attribute</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Level</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Server</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>HP</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>MP</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>EXP</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Map</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Inventory</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QCheckBox" name="charEXPCheckbox">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>70</y>
+     <width>91</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>EXP</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="charServerCheckbox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>130</y>
+     <width>91</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Server</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="charMapCheckbox">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>100</y>
+     <width>91</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Map</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="charInventoryCheckbox">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>130</y>
+     <width>91</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Inventory</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="inputSecondConditional">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>310</y>
+     <width>111</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(245, 245, 245);</string>
+   </property>
+   <item>
+    <property name="text">
+     <string/>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Username</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Character Name</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Character Class</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Main Attribute</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Level</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Server</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>HP</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>MP</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>EXP</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Map</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Inventory</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="inputThirdConditional">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>380</y>
+     <width>111</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(245, 245, 245);</string>
+   </property>
+   <item>
+    <property name="text">
+     <string/>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Username</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Character Name</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Character Class</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Main Attribute</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Level</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Server</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>HP</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>MP</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>EXP</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Map</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Inventory</string>
+    </property>
+   </item>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -12,6 +12,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize
 from accountManager import Ui_accountManager
+from characterManager import Ui_characterManager
+from mapManager import Ui_mapManager
+from baseManager import Ui_baseManager
+from inventoryManager import Ui_inventoryManager
+from storeManager import Ui_storeManager
 
 grey_background = "background-color: rgb(245, 245, 245);"
 white_background = "background-color: rgb(255, 255, 255);"
@@ -37,37 +42,38 @@ class Ui_mainWindow(object):
         self.accountButton.setGeometry(QtCore.QRect(30, 270, 121, 61))
         self.accountButton.setStyleSheet(grey_background)
         self.accountButton.setObjectName("accountButton")
-        self.accountButton.clicked.connect(lambda: self.clicked(1))
+        self.accountButton.clicked.connect(lambda: self.callAccountManagement())
 
         self.characterButton = QtWidgets.QPushButton(self.centralwidget)
         self.characterButton.setGeometry(QtCore.QRect(200, 270, 121, 61))
         self.characterButton.setStyleSheet(grey_background)
         self.characterButton.setObjectName("characterButton")
-        self.characterButton.clicked.connect(lambda: self.clicked(2))
+        self.characterButton.clicked.connect(lambda: self.callCharacterManagement())
 
         self.mapButton = QtWidgets.QPushButton(self.centralwidget)
         self.mapButton.setGeometry(QtCore.QRect(370, 270, 121, 61))
         self.mapButton.setStyleSheet(grey_background)
         self.mapButton.setObjectName("mapButton")
-        self.mapButton.clicked.connect(lambda: self.clicked(3))
-
-        self.storeButton = QtWidgets.QPushButton(self.centralwidget)
-        self.storeButton.setGeometry(QtCore.QRect(370, 370, 121, 61))
-        self.storeButton.setStyleSheet(grey_background)
-        self.storeButton.setObjectName("storeButton")
-        self.storeButton.clicked.connect(lambda: self.clicked(4))
+        self.mapButton.clicked.connect(lambda: self.callMapManagement())
 
         self.baseButton = QtWidgets.QPushButton(self.centralwidget)
         self.baseButton.setGeometry(QtCore.QRect(30, 370, 121, 61))
         self.baseButton.setStyleSheet(grey_background)
         self.baseButton.setObjectName("baseButton")
-        self.baseButton.clicked.connect(lambda: self.clicked(5))
+        self.baseButton.clicked.connect(lambda: self.callBaseManagement())
 
         self.inventoryButton = QtWidgets.QPushButton(self.centralwidget)
         self.inventoryButton.setGeometry(QtCore.QRect(200, 370, 121, 61))
         self.inventoryButton.setStyleSheet(grey_background)
         self.inventoryButton.setObjectName("inventoryButton")
-        self.inventoryButton.clicked.connect(lambda: self.clicked(6))
+        self.inventoryButton.clicked.connect(lambda: self.callInventoryManagement())
+
+        self.storeButton = QtWidgets.QPushButton(self.centralwidget)
+        self.storeButton.setGeometry(QtCore.QRect(370, 370, 121, 61))
+        self.storeButton.setStyleSheet(grey_background)
+        self.storeButton.setObjectName("storeButton")
+        self.storeButton.clicked.connect(lambda: self.callStoreManagement())
+
 
         self.maplestoryLogo = QtWidgets.QLabel(self.centralwidget)
         self.maplestoryLogo.setGeometry(QtCore.QRect(-30, 10, 541, 181))
@@ -108,18 +114,42 @@ class Ui_mainWindow(object):
         self.ui.setupUi(self.accountManagerWindow)
         self.accountManagerWindow.show()
 
+    def callCharacterManagement(self):
+        self.characterManagerWindow = QtWidgets.QWidget()
+        self.ui = Ui_characterManager()
+        self.ui.setupUi(self.characterManagerWindow)
+        self.characterManagerWindow.show()
+
+    def callMapManagement(self):
+        self.mapManagerWindow = QtWidgets.QWidget()
+        self.ui = Ui_mapManager()
+        self.ui.setupUi(self.mapManagerWindow)
+        self.mapManagerWindow.show()
+
+    def callBaseManagement(self):
+        self.baseManagerWindow = QtWidgets.QWidget()
+        self.ui = Ui_baseManager()
+        self.ui.setupUi(self.baseManagerWindow)
+        self.baseManagerWindow.show()
+
+    def callInventoryManagement(self):
+        self.inventoryManagerWindow = QtWidgets.QWidget()
+        self.ui = Ui_inventoryManager()
+        self.ui.setupUi(self.inventoryManagerWindow)
+        self.inventoryManagerWindow.show()
+
+    def callStoreManagement(self):
+        self.storeManagerWindow = QtWidgets.QWidget()
+        self.ui = Ui_storeManager()
+        self.ui.setupUi(self.storeManagerWindow)
+        self.storeManagerWindow.show()
+
     def clicked(self, number):
         _translate = QtCore.QCoreApplication.translate
         if number != 1:
             self.accountButton.setText(_translate("mainWindow", "Clicked Button"))
         else:
             self.callAccountManagement()
-            #app = QtWidgets.QApplication(sys.argv)
-            #accountManagerWindow = QtWidgets.QWidget()
-            #ui = Ui_accountManager()
-            #ui.setupUi(accountManagerWindow)
-            #accountManagerWindow.show()
-            #sys.exit(app.exec_())
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

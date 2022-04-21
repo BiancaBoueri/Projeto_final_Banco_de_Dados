@@ -9,6 +9,9 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from accountManagerAdvancedView import Ui_accountManagerAdvancedView
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import QSize
 
 grey_background = "background-color: rgb(245, 245, 245);"
 white_background = "background-color: rgb(255, 255, 255);"
@@ -19,6 +22,9 @@ class Ui_accountManager(object):
         accountManager.setObjectName("accountManager")
         accountManager.setMinimumSize(QtCore.QSize(434, 340))
         accountManager.setMaximumSize(QtCore.QSize(434, 340))
+        icon = QIcon()
+        icon.addFile(u"images\maplestoryIcon.ico", QSize(), QIcon.Normal, QIcon.Off)
+        accountManager.setWindowIcon(icon)
         accountManager.setStyleSheet(white_background)
 
         self.createRadioButton = QtWidgets.QRadioButton(accountManager)
@@ -75,6 +81,12 @@ class Ui_accountManager(object):
         self.advancedViewButton.setGeometry(QtCore.QRect(304, 300, 111, 31))
         self.advancedViewButton.setStyleSheet(grey_background)
         self.advancedViewButton.setObjectName("advancedViewButton")
+        self.advancedViewButton.clicked.connect(self.callAdvancedView)
+
+        self.okButton = QtWidgets.QPushButton(accountManager)
+        self.okButton.setObjectName("okButton")
+        self.okButton.setGeometry(QtCore.QRect(20, 300, 111, 31))
+        self.okButton.setStyleSheet(grey_background)
 
         self.retranslateUi(accountManager)
         QtCore.QMetaObject.connectSlotsByName(accountManager)
@@ -92,13 +104,14 @@ class Ui_accountManager(object):
         self.localization.setPlaceholderText(_translate("accountManager", "Localization"))
         self.preferredLanguage.setPlaceholderText(_translate("accountManager", "Language"))
         self.pin.setPlaceholderText(_translate("accountManager", "PIN"))
-        self.advancedViewButton.setText(_translate("accountManager", "Advanced View"))
+        self.advancedViewButton.setText(_translate("accountManager", "Advanced View..."))
+        self.okButton.setText(_translate("accountManager", "OK"))
 
-    #def callAdvancedView(self):
-    #    self.accountManagerAdvancedViewWindow = QtWidgets.QWidget()
-    #    self.ui = Ui_accountManager()
-    #    self.ui.setupUi(self.accountManagerWindow)
-    #    self.accountManagerWindow.show()
+    def callAdvancedView(self):
+        self.accountManagerAdvancedViewWindow = QtWidgets.QWidget()
+        self.ui = Ui_accountManagerAdvancedView()
+        self.ui.setupUi(self.accountManagerAdvancedViewWindow)
+        self.accountManagerAdvancedViewWindow.show()
 
 
 if __name__ == "__main__":
