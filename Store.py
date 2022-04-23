@@ -19,11 +19,17 @@ def update(idItem, value, stock):
     mydb.commit()
     
 def selectAll():
+  resultList = []
   mycursor.execute("SELECT * FROM Store")
+  for i in mycursor:
+    resultList.append(i)
+  return resultList
 
 def select(idItem):
   sql = "SELECT * FROM Store WHERE idItem = '%s'" %(idItem)
   mycursor.execute(sql)
+  for i in mycursor:
+    return i
 
 def delete(idItem):
   sql = "DELETE FROM Store WHERE idItem = '%s'" %(idItem)

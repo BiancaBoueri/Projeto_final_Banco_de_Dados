@@ -1,4 +1,12 @@
+import sys
+sys.path.append(sys.path[0]+"\qt")
+
 from dbConnection import mydb, mycursor 
+from qt import mainWindow
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import QSize
+
 import Map
 import Store
 
@@ -11,14 +19,20 @@ def printTerminal():
 
 print("main")
 
+app = QtWidgets.QApplication(sys.argv)
+appWindow = QtWidgets.QMainWindow()
+ui = mainWindow.Ui_mainWindow()
+ui.setupUi(appWindow)
+appWindow.show()
+
 #Map.insert("101325","Mirror Touched Sea 5","3")
 #Map.insert("145","Ruined Past 5","4")
 #Map.delete("1")
 #Map.deleteAll()
 #Map.select("145")
 #Map.update("145","p","9")
-Map.selectAll()
-printTerminal()
+#Map.selectAll()
+#printTerminal()
 
 
 #Store.insert("w1111111","1999999999","1")
@@ -57,3 +71,4 @@ printTerminal()
 # INSERT INTO etcsubinventory (Inventory_idInventory, EtcBase_idEtc, etcQuantity) VALUES ("0leevanf","m1111111",100);
 
 
+sys.exit(app.exec_())

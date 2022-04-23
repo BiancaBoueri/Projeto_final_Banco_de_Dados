@@ -47,9 +47,29 @@ class Ui_characterManagerAdvancedView(object):
         self.output.setGeometry(QtCore.QRect(310, 10, 551, 391))
         self.output.setObjectName("output")
 
+        self.andFirst = QtWidgets.QCheckBox(characterManagerAdvancedView)
+        self.andFirst.setGeometry(QtCore.QRect(10, 280, 41, 17))
+        self.andFirst.setObjectName("andFirst")
+
         self.orFirst = QtWidgets.QCheckBox(characterManagerAdvancedView)
         self.orFirst.setGeometry(QtCore.QRect(60, 280, 41, 17))
         self.orFirst.setObjectName("orFirst")
+
+        self.firstButtonGroup = QtWidgets.QButtonGroup()
+        self.firstButtonGroup.addButton(self.andFirst)
+        self.firstButtonGroup.addButton(self.orFirst)
+
+        self.andSecond = QtWidgets.QCheckBox(characterManagerAdvancedView)
+        self.andSecond.setGeometry(QtCore.QRect(10, 350, 41, 17))
+        self.andSecond.setObjectName("andSecond")
+
+        self.orSecond = QtWidgets.QCheckBox(characterManagerAdvancedView)
+        self.orSecond.setGeometry(QtCore.QRect(60, 350, 41, 17))
+        self.orSecond.setObjectName("orSecond")
+
+        self.secondButtonGroup = QtWidgets.QButtonGroup()
+        self.secondButtonGroup.addButton(self.andSecond)
+        self.secondButtonGroup.addButton(self.orSecond)
 
         self.outputSecondConditional = QtWidgets.QLineEdit(characterManagerAdvancedView)
         self.outputSecondConditional.setGeometry(QtCore.QRect(180, 310, 113, 20))
@@ -71,10 +91,6 @@ class Ui_characterManagerAdvancedView(object):
         self.conditionThirdConditional.addItem("")
         self.conditionThirdConditional.addItem("")
 
-        self.orSecond = QtWidgets.QCheckBox(characterManagerAdvancedView)
-        self.orSecond.setGeometry(QtCore.QRect(60, 350, 41, 17))
-        self.orSecond.setObjectName("orSecond")
-
         self.conditionFirstConditional = QtWidgets.QComboBox(characterManagerAdvancedView)
         self.conditionFirstConditional.setGeometry(QtCore.QRect(130, 240, 41, 22))
         self.conditionFirstConditional.setStyleSheet(grey_background)
@@ -86,18 +102,10 @@ class Ui_characterManagerAdvancedView(object):
         self.conditionFirstConditional.addItem("")
         self.conditionFirstConditional.addItem("")
 
-        self.andFirst = QtWidgets.QCheckBox(characterManagerAdvancedView)
-        self.andFirst.setGeometry(QtCore.QRect(10, 280, 41, 17))
-        self.andFirst.setObjectName("andFirst")
-
         self.outputThirdConditional = QtWidgets.QLineEdit(characterManagerAdvancedView)
         self.outputThirdConditional.setGeometry(QtCore.QRect(180, 380, 113, 20))
         self.outputThirdConditional.setStyleSheet("")
         self.outputThirdConditional.setObjectName("outputThirdConditional")
-
-        self.andSecond = QtWidgets.QCheckBox(characterManagerAdvancedView)
-        self.andSecond.setGeometry(QtCore.QRect(10, 350, 41, 17))
-        self.andSecond.setObjectName("andSecond")
 
         self.charAttributeCheckbox = QtWidgets.QCheckBox(characterManagerAdvancedView)
         self.charAttributeCheckbox.setGeometry(QtCore.QRect(20, 70, 91, 17))
