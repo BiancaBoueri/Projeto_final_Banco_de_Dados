@@ -12,6 +12,7 @@ def update(idItem, value, stock):
     vals = (value,idItem)
     mycursor.execute(sql,vals)
     mydb.commit()
+    
   if(stock):
     sql = "UPDATE Store SET stock = %s WHERE idItem = %s"
     vals = (stock,idItem)
