@@ -1,6 +1,11 @@
 from dbConnection import mydb, mycursor 
 import Map
 import Store
+import Account
+import Inventory
+import EquipBase
+import UseBase
+import EtcBase
 
 def printTerminal():
   for i in mycursor: 
@@ -17,8 +22,8 @@ print("main")
 #Map.deleteAll()
 #Map.select("145")
 #Map.update("145","p","9")
-Map.selectAll()
-printTerminal()
+#Map.selectAll()
+#printTerminal()
 
 
 #Store.insert("w1111111","1999999999","1")
@@ -27,28 +32,64 @@ printTerminal()
 #Store.deleteAll()
 #Store.select("g1111111")
 #Store.update('w1111111',"5","99")
-Store.selectAll()
-printTerminal()
+#Store.selectAll()
+#printTerminal()
+
+
+#Account.insert("leevanf","teste123",None,"2013-08-02","BR","Brazilian Portuguese","8009");
+#Account.delete("leevanf")
+#Account.deleteAll()
+#Account.select("leevanf")
+#Account.update("leevanf","5",None,"BR","french","8")
+#Account.selectAll()
+#printTerminal()
+
+
+#Inventory.insert("0leevanf","2654332984","2473")
+#Inventory.insert("annahild","150489556","2473")
+#Inventory.delete("0leevanf")
+#Inventory.deleteAll()
+#Inventory.select("0leevanf")
+#Inventory.update("0leevanf","10","8")
+#Inventory.selectAll()
+#printTerminal()
+
+
+
+#EquipBase.insert("w1111111","Arcane Umbra Two Handed Sword","Warrior","255","0","STR","40","100000")
+#EquipBase.delete("w1111111")
+#EquipBase.deleteAll()
+#EquipBase.select("w1111111")
+#EquipBase.update("w1111111","Arcane Umbra Two Handed Sword","W","2","0","STR","40","1")
+#EquipBase.selectAll()
+#printTerminal()
+
+
+#UseBase.insert("g1111111","Power Elixir","99999","99999","0","3000")
+#UseBase.delete("g1111111")
+#UseBase.deleteAll()
+#UseBase.select("g1111111")
+#UseBase.update("g1111111","Power Elixir","9","9","0","3")
+#UseBase.selectAll()
+#printTerminal()
+
+
+#EtcBase.insert("m1111111","Necki Jr. Skin","237")
+#EtcBase.delete("m1111111")
+#EtcBase.deleteAll()
+#EtcBase.select("m1111111")
+#EtcBase.update("m1111111","Necki Jr. Skin","1")
+#EtcBase.selectAll()
+#printTerminal()
 
 
 
 
-
-# INSERT INTO maplestory.account VALUES ("leevanf","teste123",NULL,"2013-08-02","BR","Brazilian Portuguese",8009);
-
-# INSERT INTO inventory VALUES ("0leevanf",2654332984,2473);
-# INSERT INTO inventory VALUES ("annahild",150489556,2473);
 
 # INSERT INTO maplestory.character VALUES ("LeevOrDie","Warrior","STR",241,97000,15000,150000000000,"Luna",101325,"0leevanf");
 # INSERT INTO maplestory.character VALUES ("Annahild","Archer","DEX",206,23487,19554,14595625100,"Luna",145,"annahild");
 
 # INSERT INTO accounttocharacter VALUES ("leevanf","LeevOrDie","2015-05-05"),("leevanf","Annahild","2018-04-02");
-
-# INSERT INTO equipbase VALUES ("w1111111","Arcane Umbra Two Handed Sword","Warrior",255,0,"STR",40,100000);
-
-# INSERT INTO usebase VALUES ("g1111111","Power Elixir",99999,99999,0,3000);
-
-# INSERT INTO etcbase VALUES ("m1111111","Necki Jr. Skin",237);
 
 # INSERT INTO equipsubinventory (Inventory_idInventory, EquipBase_idEquip, equipQuantity, equipRarity) VALUES ("0leevanf","w1111111",1,"Unique");
 

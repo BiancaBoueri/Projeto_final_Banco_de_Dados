@@ -12,6 +12,7 @@ def update(idMap,mapName,spawnPosition):
     vals = (mapName,idMap)
     mycursor.execute(sql,vals)
     mydb.commit()
+    
   if(spawnPosition):
     sql = "UPDATE Map SET spawnPosition = %s WHERE idMap = %s"
     vals = (spawnPosition,idMap)
