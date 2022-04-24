@@ -1,6 +1,15 @@
 from dbConnection import mydb, mycursor 
+from datetime import date
 
-def insert(username, password, profilePicture, creationDate, localization, preferredLanguage, PIN):
+def convertData(fileName):
+    with open(fileName, 'rb') as file:
+        binaryData = file.read()
+    return binaryData
+
+def insert(username, password, profilePicture, localization, preferredLanguage, PIN):
+  if(profilePicture != None):
+    profilePicture = convertData(profilePicture)
+  creationDate = date.today()
   sql = "INSERT INTO Account VALUES (%s,%s,%s,%s,%s,%s,%s)"
   vals = (username, password, profilePicture, creationDate, localization, preferredLanguage, PIN)
   mycursor.execute(sql,vals)
@@ -14,6 +23,8 @@ def update(username, password, profilePicture, localization, preferredLanguage, 
     mydb.commit()
 
   if(profilePicture):
+    if(profilePicture != None):
+      profilePicture = convertData(profilePicture) 
     sql = "UPDATE Account SET profilePicture = %s WHERE username = %s"
     vals = (profilePicture,username)
     mycursor.execute(sql,vals)
@@ -36,14 +47,19 @@ def update(username, password, profilePicture, localization, preferredLanguage, 
     vals = (PIN,username)
     mycursor.execute(sql,vals)
     mydb.commit()
-  
     
 def selectAll():
   mycursor.execute("SELECT * FROM Account")
+  resultList = []
+  for i in mycursor:
+    resultList.append(i)
+  return resultList
 
 def select(username):
   sql = "SELECT * FROM Account WHERE username = '%s'" %(username)
   mycursor.execute(sql)
+  for i in mycursor:
+    return i
 
 def delete(username):
   sql = "DELETE FROM Account WHERE username = '%s'" %(username)

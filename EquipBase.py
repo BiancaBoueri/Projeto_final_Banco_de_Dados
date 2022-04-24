@@ -51,10 +51,16 @@ def update(idEquip, equipName, classCanUse, attackPower, magicPower, attribute, 
 
 def selectAll():
   mycursor.execute("SELECT * FROM EquipBase")
+  resultList = []
+  for i in mycursor:
+    resultList.append(i)
+  return resultList
 
 def select(idEquip):
   sql = "SELECT * FROM EquipBase WHERE idEquip = '%s'" %(idEquip)
   mycursor.execute(sql)
+  for i in mycursor:
+    return i
 
 def delete(idEquip):
   sql = "DELETE FROM EquipBase WHERE idEquip = '%s'" %(idEquip)

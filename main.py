@@ -1,4 +1,3 @@
-from dbConnection import mydb, mycursor 
 import Map
 import Store
 import Account
@@ -6,95 +5,104 @@ import Inventory
 import EquipBase
 import UseBase
 import EtcBase
-
-def printTerminal():
-  for i in mycursor: 
-    print(i)
-    #a,b,c = i
-    #print(a,b,c)
+import EquipSubInventory
+import UseSubInventory
+import EtcSubInventory
+import Character
 
 
-print("main")
 
 #Map.insert("101325","Mirror Touched Sea 5","3")
 #Map.insert("145","Ruined Past 5","4")
 #Map.delete("1")
 #Map.deleteAll()
-#Map.select("145")
+#print(Map.select("145"))
 #Map.update("145","p","9")
-#Map.selectAll()
-#printTerminal()
+#print(Map.selectAll())
 
 
 #Store.insert("w1111111","1999999999","1")
 #Store.insert("g1111111","5999","150000")
+#Store.insert("g","5","1")
 #Store.delete("g1111111")
 #Store.deleteAll()
-#Store.select("g1111111")
 #Store.update('w1111111',"5","99")
-#Store.selectAll()
-#printTerminal()
+#print(Store.selectAll())
+#print(Store.select("g1111111"))
 
 
-#Account.insert("leevanf","teste123",None,"2013-08-02","BR","Brazilian Portuguese","8009");
-#Account.delete("leevanf")
+#Account.insert("leevanf4","teste123","./images/avatar.png","BR","Brazilian Portuguese","8009")
+#Account.insert("leevanf3","teste123",None,"BR","Brazilian Portuguese","8009")
+#Account.delete("leevanf4")
 #Account.deleteAll()
-#Account.select("leevanf")
-#Account.update("leevanf","5",None,"BR","french","8")
-#Account.selectAll()
-#printTerminal()
+#print(Account.select("leevanf"))
+#Account.update("leevanf4","teste","./images/avatar.png","B","Portuguese","80")
+#print(Account.selectAll())
 
 
 #Inventory.insert("0leevanf","2654332984","2473")
 #Inventory.insert("annahild","150489556","2473")
 #Inventory.delete("0leevanf")
 #Inventory.deleteAll()
-#Inventory.select("0leevanf")
+#print(Inventory.select("0leevanf"))
 #Inventory.update("0leevanf","10","8")
-#Inventory.selectAll()
-#printTerminal()
-
+#print(Inventory.selectAll())
 
 
 #EquipBase.insert("w1111111","Arcane Umbra Two Handed Sword","Warrior","255","0","STR","40","100000")
 #EquipBase.delete("w1111111")
 #EquipBase.deleteAll()
-#EquipBase.select("w1111111")
+#print(EquipBase.select("w1111111"))
 #EquipBase.update("w1111111","Arcane Umbra Two Handed Sword","W","2","0","STR","40","1")
-#EquipBase.selectAll()
-#printTerminal()
+#print(EquipBase.selectAll())
 
 
 #UseBase.insert("g1111111","Power Elixir","99999","99999","0","3000")
 #UseBase.delete("g1111111")
 #UseBase.deleteAll()
-#UseBase.select("g1111111")
+#print(UseBase.select("g1111111"))
 #UseBase.update("g1111111","Power Elixir","9","9","0","3")
-#UseBase.selectAll()
-#printTerminal()
+#print(UseBase.selectAll())
 
 
 #EtcBase.insert("m1111111","Necki Jr. Skin","237")
 #EtcBase.delete("m1111111")
 #EtcBase.deleteAll()
-#EtcBase.select("m1111111")
+#print(EtcBase.select("m1111111"))
 #EtcBase.update("m1111111","Necki Jr. Skin","1")
-#EtcBase.selectAll()
-#printTerminal()
+#print(EtcBase.selectAll())
 
 
+#EquipSubInventory.insert("0leevanf","w1111111","1","Unique")
+#EquipSubInventory.delete("1")
+#EquipSubInventory.deleteAll()
+#print(EquipSubInventory.select("3"))
+#EquipSubInventory.update("3","30","Nice")
+#print(EquipSubInventory.selectAll())
 
 
+#UseSubInventory.insert("0leevanf","g1111111","255"),
+#UseSubInventory.insert("0leevanf","g1111111","150")
+#UseSubInventory.delete("1")
+#UseSubInventory.deleteAll()
+#print(UseSubInventory.select("3"))
+#UseSubInventory.update("3","1")
+#print(UseSubInventory.selectAll())
 
-# INSERT INTO maplestory.character VALUES ("LeevOrDie","Warrior","STR",241,97000,15000,150000000000,"Luna",101325,"0leevanf");
-# INSERT INTO maplestory.character VALUES ("Annahild","Archer","DEX",206,23487,19554,14595625100,"Luna",145,"annahild");
 
-# INSERT INTO accounttocharacter VALUES ("leevanf","LeevOrDie","2015-05-05"),("leevanf","Annahild","2018-04-02");
+#EtcSubInventory.insert("0leevanf","m1111111","100")
+#EtcSubInventory.delete("1")
+#EtcSubInventory.deleteAll()
+#print(EtcSubInventory.select("3"))
+#EtcSubInventory.update("3","1")
+#print(EtcSubInventory.selectAll())
 
-# INSERT INTO equipsubinventory (Inventory_idInventory, EquipBase_idEquip, equipQuantity, equipRarity) VALUES ("0leevanf","w1111111",1,"Unique");
-
-# INSERT INTO usesubinventory (Inventory_idInventory, UseBase_idUse, useQuantity) VALUES ("0leevanf","g1111111",255),("0leevanf","g1111111",150);
-
-# INSERT INTO etcsubinventory (Inventory_idInventory, EtcBase_idEtc, etcQuantity) VALUES ("0leevanf","m1111111",100);
-
+    
+#Character.insert("leevanf","LeevOrDie8","Warrior","STR","241","97000","15000","150000000000","Luna","101325","0leevanf")
+#Character.insert("leevanf","Annahild1","Archer","DEX","206","23487","19554","14595625100","Luna","145","annahild")
+#Character.delete("Annahild1")
+#Character.deleteAll()
+#print(Character.select("Annahild1"))
+#Character.update("Annahild1","A","D","2","23","14","100","L")
+#print(Character.selectAll())
 

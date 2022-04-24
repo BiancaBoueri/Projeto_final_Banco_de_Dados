@@ -21,10 +21,16 @@ def update(idEtc, etcName, value):
     
 def selectAll():
   mycursor.execute("SELECT * FROM EtcBase")
+  resultList = []
+  for i in mycursor:
+    resultList.append(i)
+  return resultList
 
 def select(idEtc):
   sql = "SELECT * FROM EtcBase WHERE idEtc = '%s'" %(idEtc)
   mycursor.execute(sql)
+  for i in mycursor:
+    return i
 
 def delete(idEtc):
   sql = "DELETE FROM EtcBase WHERE idEtc = '%s'" %(idEtc)

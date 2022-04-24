@@ -39,10 +39,16 @@ def update(idUse, useName, recoveredHP, recoveredMP, attributeBonus, value):
     
 def selectAll():
   mycursor.execute("SELECT * FROM UseBase")
+  resultList = []
+  for i in mycursor:
+    resultList.append(i)
+  return resultList
 
 def select(idUse):
   sql = "SELECT * FROM UseBase WHERE idUse = '%s'" %(idUse)
   mycursor.execute(sql)
+  for i in mycursor:
+    return i
 
 def delete(idUse):
   sql = "DELETE FROM UseBase WHERE idUse = '%s'" %(idUse)

@@ -21,10 +21,16 @@ def update(idInventory, mesos, nx):
     
 def selectAll():
   mycursor.execute("SELECT * FROM Inventory")
+  resultList = []
+  for i in mycursor:
+    resultList.append(i)
+  return resultList
 
 def select(idInventory):
   sql = "SELECT * FROM Inventory WHERE idInventory = '%s'" %(idInventory)
   mycursor.execute(sql)
+  for i in mycursor:
+    return i
 
 def delete(idInventory):
   sql = "DELETE FROM Inventory WHERE idInventory = '%s'" %(idInventory)

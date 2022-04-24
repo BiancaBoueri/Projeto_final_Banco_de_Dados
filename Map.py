@@ -21,10 +21,16 @@ def update(idMap,mapName,spawnPosition):
     
 def selectAll():
   mycursor.execute("SELECT * FROM Map")
+  resultList = []
+  for i in mycursor:
+    resultList.append(i)
+  return resultList
 
 def select(idMap):
   sql = "SELECT * FROM Map WHERE idMap = '%s'" %(idMap)
   mycursor.execute(sql)
+  for i in mycursor:
+    return i
 
 def delete(idMap):
   sql = "DELETE FROM Map WHERE idMap = '%s'" %(idMap)
