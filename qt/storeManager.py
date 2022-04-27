@@ -19,6 +19,11 @@ import Store
 grey_background = "background-color: rgb(245, 245, 245);"
 white_background = "background-color: rgb(255, 255, 255);"
 
+ADD_BUTTON = -2
+VIEW_BUTTON = -3
+UPDATE_BUTTON = -4
+DELETE_BUTTON = -5
+
 class Ui_storeManager(object):
     def setupUi(self, storeManager):
         storeManager.setObjectName("storeManager")
@@ -87,11 +92,11 @@ class Ui_storeManager(object):
         self.output.setHorizontalHeaderItem(2, column3)
 
         column1 = self.output.horizontalHeaderItem(0)
-        column1.setText(QtCore.QCoreApplication.translate("accountManagerAdvancedView", "idItem"))
+        column1.setText(QtCore.QCoreApplication.translate("storeManager", "idItem"))
         column2 = self.output.horizontalHeaderItem(1)
-        column2.setText(QtCore.QCoreApplication.translate("accountManagerAdvancedView", "value"))
+        column2.setText(QtCore.QCoreApplication.translate("storeManager", "value"))
         column3 = self.output.horizontalHeaderItem(2)
-        column3.setText(QtCore.QCoreApplication.translate("accountManagerAdvancedView", "stock"))
+        column3.setText(QtCore.QCoreApplication.translate("storeManager", "stock"))
 
         self.simulateButton = QtWidgets.QPushButton(storeManager)
         self.simulateButton.setGeometry(QtCore.QRect(10, 210, 121, 31))
@@ -127,10 +132,10 @@ class Ui_storeManager(object):
         tempStock = self.stock.text()
         action = self.buttonGroup.checkedId()
 
-        if (action == -2):
+        if (action == ADD_BUTTON):
             Store.insert(tempItemID, tempValue, tempStock)
 
-        elif (action == -3):
+        elif (action == VIEW_BUTTON):
             if (not tempItemID and not tempValue and not tempStock):
                 result = Store.selectAll()
             else:
@@ -142,14 +147,11 @@ class Ui_storeManager(object):
                 self.output.setItem(i, 1, QtWidgets.QTableWidgetItem(str(result[i][1])))
                 self.output.setItem(i, 2, QtWidgets.QTableWidgetItem(str(result[i][2])))
 
-        elif (action == -4):
+        elif (action == UPDATE_BUTTON):
             Store.update(tempItemID, tempValue, tempStock)
 
-        elif (action == -5):
+        elif (action == DELETE_BUTTON):
             Store.delete(tempItemID)
-
-        else:
-            pass
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

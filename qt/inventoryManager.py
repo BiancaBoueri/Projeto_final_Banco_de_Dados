@@ -11,16 +11,27 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize
+import Inventory, EquipSubInventory, UseSubInventory, EtcSubInventory
+
 
 grey_background = "background-color: rgb(245, 245, 245);"
 white_background = "background-color: rgb(255, 255, 255);"
 
+ADD_INVENTORY_BUTTON = -2
+VIEW_INVENTORY_BUTTON = -3
+UPDATE_INVENTORY_BUTTON = -4
+DELETE_INVENTORY_BUTTON = -5
+ADD_SUBINVENTORY_BUTTON = -6
+VIEW_SUBINVENTORY_BUTTON = -7
+UPDATE_SUBINVENTORY_BUTTON = -8
+DELETE_SUBINVENTORY_BUTTON = -9
+
 class Ui_inventoryManager(object):
     def setupUi(self, inventoryManager):
         inventoryManager.setObjectName("inventoryManager")
-        inventoryManager.resize(592, 324)
-        inventoryManager.setMinimumSize(QtCore.QSize(592, 324))
-        inventoryManager.setMaximumSize(QtCore.QSize(592, 324))
+        inventoryManager.resize(640, 368)
+        inventoryManager.setMinimumSize(QtCore.QSize(640, 368))
+        inventoryManager.setMaximumSize(QtCore.QSize(640, 368))
         icon = QIcon()
         icon.addFile(u"images\maplestoryIcon.ico", QSize(), QIcon.Normal, QIcon.Off)
         inventoryManager.setWindowIcon(icon)
@@ -36,62 +47,80 @@ class Ui_inventoryManager(object):
         self.inventoryId.setText("")
         self.inventoryId.setObjectName("inventoryId")
 
-        self.output = QtWidgets.QListView(inventoryManager)
-        self.output.setGeometry(QtCore.QRect(320, 10, 256, 301))
-        self.output.setObjectName("output")
-
-        self.readInventoryRadioButton = QtWidgets.QRadioButton(inventoryManager)
-        self.readInventoryRadioButton.setGeometry(QtCore.QRect(20, 50, 41, 17))
-        self.readInventoryRadioButton.setObjectName("readInventoryRadioButton")
-
-        self.subinventoryID = QtWidgets.QLineEdit(inventoryManager)
-        self.subinventoryID.setGeometry(QtCore.QRect(170, 120, 113, 20))
-        self.subinventoryID.setText("")
-        self.subinventoryID.setObjectName("subinventoryID")
-
-        self.createInventoryRadioButton = QtWidgets.QRadioButton(inventoryManager)
-        self.createInventoryRadioButton.setGeometry(QtCore.QRect(20, 30, 41, 17))
-        self.createInventoryRadioButton.setObjectName("createInventoryRadioButton")
-
-        self.inventoryForeignID = QtWidgets.QLineEdit(inventoryManager)
-        self.inventoryForeignID.setGeometry(QtCore.QRect(170, 80, 113, 20))
-        self.inventoryForeignID.setText("")
-        self.inventoryForeignID.setObjectName("inventoryForeignID")
+        self.mesos = QtWidgets.QLineEdit(inventoryManager)
+        self.mesos.setGeometry(QtCore.QRect(20, 160, 113, 20))
+        self.mesos.setText("")
+        self.mesos.setObjectName("mesos")
 
         self.nx = QtWidgets.QLineEdit(inventoryManager)
         self.nx.setGeometry(QtCore.QRect(20, 200, 113, 20))
         self.nx.setText("")
         self.nx.setObjectName("nx")
 
-        self.okButton = QtWidgets.QPushButton(inventoryManager)
-        self.okButton.setGeometry(QtCore.QRect(20, 280, 261, 31))
-        self.okButton.setStyleSheet(grey_background)
-        self.okButton.setObjectName("okButton")
+        self.chosenSubInventory = QtWidgets.QComboBox(inventoryManager)
+        self.chosenSubInventory.setGeometry(QtCore.QRect(170, 80, 111, 22))
+        self.chosenSubInventory.setStyleSheet("background-color: rgb(245, 245, 245);")
+        self.chosenSubInventory.setObjectName("chosenSubInventory")
+        self.chosenSubInventory.addItem("")
+        self.chosenSubInventory.addItem("")
+        self.chosenSubInventory.addItem("")
 
-        self.updateInventoryRadioButton = QtWidgets.QRadioButton(inventoryManager)
-        self.updateInventoryRadioButton.setGeometry(QtCore.QRect(80, 30, 61, 17))
-        self.updateInventoryRadioButton.setObjectName("updateInventoryRadioButton")
+        self.inventoryForeignID = QtWidgets.QLineEdit(inventoryManager)
+        self.inventoryForeignID.setGeometry(QtCore.QRect(170, 120, 113, 20))
+        self.inventoryForeignID.setText("")
+        self.inventoryForeignID.setObjectName("inventoryForeignID")
+
+        self.subinventoryID = QtWidgets.QLineEdit(inventoryManager)
+        self.subinventoryID.setGeometry(QtCore.QRect(170, 160, 113, 20))
+        self.subinventoryID.setText("")
+        self.subinventoryID.setObjectName("subinventoryID")
 
         self.itemID = QtWidgets.QLineEdit(inventoryManager)
-        self.itemID.setGeometry(QtCore.QRect(170, 160, 113, 20))
+        self.itemID.setGeometry(QtCore.QRect(170, 200, 113, 20))
         self.itemID.setText("")
         self.itemID.setObjectName("itemID")
 
-        self.deleteInventoryRadioButton = QtWidgets.QRadioButton(inventoryManager)
-        self.deleteInventoryRadioButton.setGeometry(QtCore.QRect(80, 50, 51, 17))
-        self.deleteInventoryRadioButton.setObjectName("deleteInventoryRadioButton")
+        self.quantity = QtWidgets.QLineEdit(inventoryManager)
+        self.quantity.setGeometry(QtCore.QRect(170, 240, 113, 20))
+        self.quantity.setObjectName("quantity")
+
+        self.rarity = QtWidgets.QLineEdit(inventoryManager)
+        self.rarity.setGeometry(QtCore.QRect(170, 280, 113, 20))
+        self.rarity.setObjectName("rarity")
+
+        self.okButton = QtWidgets.QPushButton(inventoryManager)
+        self.okButton.setGeometry(QtCore.QRect(20, 320, 261, 31))
+        self.okButton.setStyleSheet(grey_background)
+        self.okButton.setObjectName("okButton")
+        self.okButton.clicked.connect(lambda: self.parseInformation())
 
         self.inventoryLabel = QtWidgets.QLabel(inventoryManager)
         self.inventoryLabel.setGeometry(QtCore.QRect(20, 10, 111, 16))
         self.inventoryLabel.setObjectName("inventoryLabel")
 
+        self.createInventoryRadioButton = QtWidgets.QRadioButton(inventoryManager)
+        self.createInventoryRadioButton.setGeometry(QtCore.QRect(20, 30, 41, 17))
+        self.createInventoryRadioButton.setObjectName("createInventoryRadioButton")
+
+        self.readInventoryRadioButton = QtWidgets.QRadioButton(inventoryManager)
+        self.readInventoryRadioButton.setGeometry(QtCore.QRect(20, 50, 41, 17))
+        self.readInventoryRadioButton.setObjectName("readInventoryRadioButton")
+
+        self.updateInventoryRadioButton = QtWidgets.QRadioButton(inventoryManager)
+        self.updateInventoryRadioButton.setGeometry(QtCore.QRect(80, 30, 61, 17))
+        self.updateInventoryRadioButton.setObjectName("updateInventoryRadioButton")
+
+        self.deleteInventoryRadioButton = QtWidgets.QRadioButton(inventoryManager)
+        self.deleteInventoryRadioButton.setGeometry(QtCore.QRect(80, 50, 51, 17))
+        self.deleteInventoryRadioButton.setObjectName("deleteInventoryRadioButton")
+
         self.subinventoryLabel = QtWidgets.QLabel(inventoryManager)
         self.subinventoryLabel.setGeometry(QtCore.QRect(170, 10, 111, 16))
         self.subinventoryLabel.setObjectName("subinventoryLabel")
 
-        self.deleteSubinventoryRadioButton = QtWidgets.QRadioButton(inventoryManager)
-        self.deleteSubinventoryRadioButton.setGeometry(QtCore.QRect(230, 50, 51, 17))
-        self.deleteSubinventoryRadioButton.setObjectName("deleteSubinventoryRadioButton")
+        self.createSubinventoryRadioButton = QtWidgets.QRadioButton(inventoryManager)
+        self.createSubinventoryRadioButton.setGeometry(QtCore.QRect(170, 30, 41, 17))
+        self.createSubinventoryRadioButton.setObjectName("createSubinventoryRadioButton")
 
         self.readSubinventoryRadioButton = QtWidgets.QRadioButton(inventoryManager)
         self.readSubinventoryRadioButton.setGeometry(QtCore.QRect(170, 50, 41, 17))
@@ -101,22 +130,23 @@ class Ui_inventoryManager(object):
         self.updateSubinventoryRadioButton.setGeometry(QtCore.QRect(230, 30, 61, 17))
         self.updateSubinventoryRadioButton.setObjectName("updateSubinventoryRadioButton")
 
-        self.createSubinventoryRadioButton = QtWidgets.QRadioButton(inventoryManager)
-        self.createSubinventoryRadioButton.setGeometry(QtCore.QRect(170, 30, 41, 17))
-        self.createSubinventoryRadioButton.setObjectName("createSubinventoryRadioButton")
+        self.deleteSubinventoryRadioButton = QtWidgets.QRadioButton(inventoryManager)
+        self.deleteSubinventoryRadioButton.setGeometry(QtCore.QRect(230, 50, 51, 17))
+        self.deleteSubinventoryRadioButton.setObjectName("deleteSubinventoryRadioButton")
 
-        self.mesos = QtWidgets.QLineEdit(inventoryManager)
-        self.mesos.setGeometry(QtCore.QRect(20, 160, 113, 20))
-        self.mesos.setText("")
-        self.mesos.setObjectName("mesos")
+        self.buttonGroup = QtWidgets.QButtonGroup()
+        self.buttonGroup.addButton(self.createInventoryRadioButton)
+        self.buttonGroup.addButton(self.readInventoryRadioButton)
+        self.buttonGroup.addButton(self.updateInventoryRadioButton)
+        self.buttonGroup.addButton(self.deleteInventoryRadioButton)
+        self.buttonGroup.addButton(self.createSubinventoryRadioButton)
+        self.buttonGroup.addButton(self.readSubinventoryRadioButton)
+        self.buttonGroup.addButton(self.updateSubinventoryRadioButton)
+        self.buttonGroup.addButton(self.deleteSubinventoryRadioButton)
 
-        self.quantity = QtWidgets.QLineEdit(inventoryManager)
-        self.quantity.setGeometry(QtCore.QRect(170, 200, 113, 20))
-        self.quantity.setObjectName("quantity")
-
-        self.rarity = QtWidgets.QLineEdit(inventoryManager)
-        self.rarity.setGeometry(QtCore.QRect(170, 240, 113, 20))
-        self.rarity.setObjectName("rarity")
+        self.output = QtWidgets.QTableWidget(inventoryManager)
+        self.output.setGeometry(QtCore.QRect(320, 10, 301, 341))
+        self.output.setObjectName("output")
 
         self.retranslateUi(inventoryManager)
         QtCore.QMetaObject.connectSlotsByName(inventoryManager)
@@ -124,6 +154,9 @@ class Ui_inventoryManager(object):
     def retranslateUi(self, inventoryManager):
         _translate = QtCore.QCoreApplication.translate
         inventoryManager.setWindowTitle(_translate("inventoryManager", "Maplestory Manager - Inventory"))
+        self.chosenSubInventory.setItemText(0, _translate("inventoryManager", "Equip"))
+        self.chosenSubInventory.setItemText(1, _translate("inventoryManager", "Use"))
+        self.chosenSubInventory.setItemText(2, _translate("inventoryManager", "Etc"))
         self.inventoryId.setPlaceholderText(_translate("inventoryManager", "Inventory ID"))
         self.readInventoryRadioButton.setText(_translate("inventoryManager", "View"))
         self.characterID.setPlaceholderText(_translate("inventoryManager", "Character (ID)"))
@@ -145,6 +178,149 @@ class Ui_inventoryManager(object):
         self.quantity.setPlaceholderText(_translate("inventoryManager", "Quantity"))
         self.rarity.setPlaceholderText(_translate("inventoryManager", "Rarity (EQUIP ONLY)"))
 
+    def parseInformation(self):
+        action = self.buttonGroup.checkedId()
+
+        if (action <= ADD_SUBINVENTORY_BUTTON): #Subinventory
+            print("subinventory")
+
+            choiceDict = {
+                "Equip": 0,
+                "Use": 1,
+                "Etc": 2
+            }
+
+            tempChosenSubInventory = choiceDict[self.chosenSubInventory.currentText()]
+            referenceList = [EquipSubInventory, UseSubInventory, EtcSubInventory]
+            subInventory = referenceList[tempChosenSubInventory]
+
+            if (tempChosenSubInventory == 0):
+                self.output.setColumnCount(5)
+                column1 = QtWidgets.QTableWidgetItem()
+                self.output.setHorizontalHeaderItem(0, column1)
+                column2 = QtWidgets.QTableWidgetItem()
+                self.output.setHorizontalHeaderItem(1, column2)
+                column3 = QtWidgets.QTableWidgetItem()
+                self.output.setHorizontalHeaderItem(2, column3)
+                column4 = QtWidgets.QTableWidgetItem()
+                self.output.setHorizontalHeaderItem(3, column4)
+                column5 = QtWidgets.QTableWidgetItem()
+                self.output.setHorizontalHeaderItem(4, column5)
+                column1 = self.output.horizontalHeaderItem(0)
+                column1.setText(QtCore.QCoreApplication.translate("inventoryManager", "idEquipSubInventory"))
+                column2 = self.output.horizontalHeaderItem(1)
+                column2.setText(QtCore.QCoreApplication.translate("inventoryManager", "idParentInventory"))
+                column3 = self.output.horizontalHeaderItem(2)
+                column3.setText(QtCore.QCoreApplication.translate("inventoryManager", "idEquip"))
+                column4 = self.output.horizontalHeaderItem(3)
+                column4.setText(QtCore.QCoreApplication.translate("inventoryManager", "equipQuantity"))
+                column5 = self.output.horizontalHeaderItem(4)
+                column5.setText(QtCore.QCoreApplication.translate("inventoryManager", "equipRarity"))
+
+            else:
+                self.output.setColumnCount(4)
+                column1 = QtWidgets.QTableWidgetItem()
+                self.output.setHorizontalHeaderItem(0, column1)
+                column2 = QtWidgets.QTableWidgetItem()
+                self.output.setHorizontalHeaderItem(1, column2)
+                column3 = QtWidgets.QTableWidgetItem()
+                self.output.setHorizontalHeaderItem(2, column3)
+                column4 = QtWidgets.QTableWidgetItem()
+                self.output.setHorizontalHeaderItem(3, column4)
+                column1 = self.output.horizontalHeaderItem(0)
+                column1.setText(QtCore.QCoreApplication.translate("inventoryManager", "id" + self.chosenSubInventory.currentText() +"SubInventory"))
+                column2 = self.output.horizontalHeaderItem(1)
+                column2.setText(QtCore.QCoreApplication.translate("inventoryManager", "idParentInventory"))
+                column3 = self.output.horizontalHeaderItem(2)
+                column3.setText(QtCore.QCoreApplication.translate("inventoryManager", "id" + self.chosenSubInventory.currentText()))
+                column4 = self.output.horizontalHeaderItem(3)
+                column4.setText(QtCore.QCoreApplication.translate("inventoryManager", self.chosenSubInventory.currentText() + "Quantity"))
+
+            tempParentInventoryID = self.inventoryForeignID.text()
+            tempSubInventoryID = self.subinventoryID.text()
+            tempItemID = self.itemID.text()
+            tempQuantity = self.quantity.text()
+            tempRarity = self.rarity.text()
+            
+            if (action == ADD_SUBINVENTORY_BUTTON):
+                if (tempChosenSubInventory == 0):
+                    subInventory.insert(tempParentInventoryID, tempItemID, tempQuantity, tempRarity)
+                else:
+                    subInventory.insert(tempParentInventoryID, tempItemID, tempQuantity)
+
+            elif (action == VIEW_SUBINVENTORY_BUTTON):
+                if (not tempParentInventoryID and not tempSubInventoryID and not tempItemID and not tempQuantity):
+                    result = subInventory.selectAll()
+                else:
+                    result = subInventory.select(tempSubInventoryID)
+                    result = [result]
+                self.output.setRowCount(len(result))
+                if (tempChosenSubInventory == 0):
+                    for i in range(len(result)):
+                        self.output.setItem(i, 0, QtWidgets.QTableWidgetItem(str(result[i][0])))
+                        self.output.setItem(i, 1, QtWidgets.QTableWidgetItem(str(result[i][1])))
+                        self.output.setItem(i, 2, QtWidgets.QTableWidgetItem(str(result[i][2])))
+                        self.output.setItem(i, 3, QtWidgets.QTableWidgetItem(str(result[i][3])))
+                        self.output.setItem(i, 4, QtWidgets.QTableWidgetItem(str(result[i][4])))
+                else:
+                    for i in range(len(result)):
+                        self.output.setItem(i, 0, QtWidgets.QTableWidgetItem(str(result[i][0])))
+                        self.output.setItem(i, 1, QtWidgets.QTableWidgetItem(str(result[i][1])))
+                        self.output.setItem(i, 2, QtWidgets.QTableWidgetItem(str(result[i][2])))
+                        self.output.setItem(i, 3, QtWidgets.QTableWidgetItem(str(result[i][3])))
+
+            #elif (action == UPDATE_SUBINVENTORY_BUTTON):
+            #    if (tempChosenSubInventory == 0):
+            #        subInventory.update(tempSubInventoryID, tempQuantity, tempRarity)
+            #    else:
+            #        subInventory.update(tempItemID, tempQuantity)
+
+            elif (action == DELETE_SUBINVENTORY_BUTTON):
+                subInventory.delete(tempSubInventoryID)
+
+        elif (action >= DELETE_INVENTORY_BUTTON): #Inventory
+            print("inventory")
+
+            self.output.setColumnCount(3)
+            column1 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(0, column1)
+            column2 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(1, column2)
+            column3 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(2, column3)
+            column1 = self.output.horizontalHeaderItem(0)
+            column1.setText(QtCore.QCoreApplication.translate("inventoryManager", "idInventory"))
+            column2 = self.output.horizontalHeaderItem(1)
+            column2.setText(QtCore.QCoreApplication.translate("inventoryManager", "Mesos"))
+            column3 = self.output.horizontalHeaderItem(2)
+            column3.setText(QtCore.QCoreApplication.translate("inventoryManager", "NX"))
+
+
+            tempCharacterID = self.characterID.text()
+            tempInventoryID = self.inventoryId.text()
+            tempMesos = self.mesos.text()
+            tempNX = self.nx.text()
+
+            if (action == ADD_INVENTORY_BUTTON):
+                Inventory.insert(tempInventoryID, tempMesos, tempNX)
+
+            elif (action == VIEW_INVENTORY_BUTTON):
+                if (not tempCharacterID and not tempInventoryID and not tempMesos and not tempNX):
+                    result = Inventory.selectAll()
+                else:
+                    result = Inventory.select(tempInventoryID)
+                    result = [result]
+                self.output.setRowCount(len(result))
+                for i in range(len(result)):
+                    self.output.setItem(i, 0, QtWidgets.QTableWidgetItem(str(result[i][0])))
+                    self.output.setItem(i, 1, QtWidgets.QTableWidgetItem(str(result[i][1])))
+                    self.output.setItem(i, 2, QtWidgets.QTableWidgetItem(str(result[i][2])))
+            
+            elif (action == UPDATE_INVENTORY_BUTTON):
+                Inventory.update(tempInventoryID, tempMesos, tempNX)
+
+            else:
+                Inventory.delete(tempInventoryID)
 
 if __name__ == "__main__":
     import sys

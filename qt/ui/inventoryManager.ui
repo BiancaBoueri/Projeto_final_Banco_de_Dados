@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>592</width>
-    <height>324</height>
+    <width>630</width>
+    <height>358</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>630</width>
+    <height>358</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>630</width>
+    <height>358</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Maplestory Manager - Inventory</string>
@@ -37,8 +49,8 @@
     <rect>
      <x>320</x>
      <y>10</y>
-     <width>256</width>
-     <height>301</height>
+     <width>301</width>
+     <height>341</height>
     </rect>
    </property>
   </widget>
@@ -75,7 +87,7 @@
    <property name="geometry">
     <rect>
      <x>170</x>
-     <y>120</y>
+     <y>160</y>
      <width>113</width>
      <height>20</height>
     </rect>
@@ -104,7 +116,7 @@
    <property name="geometry">
     <rect>
      <x>170</x>
-     <y>80</y>
+     <y>120</y>
      <width>113</width>
      <height>20</height>
     </rect>
@@ -136,7 +148,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>280</y>
+     <y>310</y>
      <width>261</width>
      <height>31</height>
     </rect>
@@ -165,7 +177,7 @@
    <property name="geometry">
     <rect>
      <x>170</x>
-     <y>160</y>
+     <y>200</y>
      <width>113</width>
      <height>20</height>
     </rect>
@@ -288,7 +300,7 @@
    <property name="geometry">
     <rect>
      <x>170</x>
-     <y>200</y>
+     <y>240</y>
      <width>113</width>
      <height>20</height>
     </rect>
@@ -301,7 +313,7 @@
    <property name="geometry">
     <rect>
      <x>170</x>
-     <y>240</y>
+     <y>280</y>
      <width>113</width>
      <height>20</height>
     </rect>
@@ -309,6 +321,34 @@
    <property name="placeholderText">
     <string>Rarity (EQUIP ONLY)</string>
    </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>170</x>
+     <y>80</y>
+     <width>111</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(245, 245, 245);</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>Equip</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Use</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Etc</string>
+    </property>
+   </item>
   </widget>
  </widget>
  <resources/>
