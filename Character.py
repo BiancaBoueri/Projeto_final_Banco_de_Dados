@@ -14,7 +14,7 @@ def insert(Account_username, name, Class, mainAttribute, level, HP, MP, EXP, ser
   mycursor.execute(sql,vals)
   mydb.commit()
 
-def update(name, Class, mainAttribute, level, HP, MP, EXP, server):
+def update(name, Class, mainAttribute, level, HP, MP, EXP, server, Map_idMap):
   if(Class):
     sql = "UPDATE maplestory.Character SET class = %s WHERE name = %s"
     vals = (Class,name)
@@ -54,6 +54,12 @@ def update(name, Class, mainAttribute, level, HP, MP, EXP, server):
   if(server):
     sql = "UPDATE maplestory.Character SET server = %s WHERE name = %s"
     vals = (server,name)
+    mycursor.execute(sql,vals)
+    mydb.commit()
+
+  if(Map_idMap):
+    sql = "UPDATE maplestory.Character SET Map_idMap = %s WHERE name = %s"
+    vals = (Map_idMap,name)
     mycursor.execute(sql,vals)
     mydb.commit()
 

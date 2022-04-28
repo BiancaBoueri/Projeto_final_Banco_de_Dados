@@ -61,6 +61,12 @@ def select(username):
   for i in mycursor:
     return i
 
+def selectImage(username):
+  sql = "SELECT profilePicture FROM Account WHERE username = '%s'" %(username)
+  mycursor.execute(sql)
+  for i in mycursor:
+    return i
+
 def delete(username):
   sql = "DELETE FROM Account WHERE username = '%s'" %(username)
   mycursor.execute(sql)

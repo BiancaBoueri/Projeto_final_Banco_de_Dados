@@ -17,7 +17,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize
 
-
 app = QtWidgets.QApplication(sys.argv)
 appWindow = QtWidgets.QMainWindow()
 ui = mainWindow.Ui_mainWindow()
