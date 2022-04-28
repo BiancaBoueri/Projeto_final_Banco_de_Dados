@@ -12,9 +12,15 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from accountManagerAdvancedView import Ui_accountManagerAdvancedView
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize
+import Account
 
 grey_background = "background-color: rgb(245, 245, 245);"
 white_background = "background-color: rgb(255, 255, 255);"
+
+ADD_BUTTON = -2
+VIEW_BUTTON = -3
+UPDATE_BUTTON = -4
+DELETE_BUTTON = -5
 
 class Ui_accountManager(object):
     def setupUi(self, accountManager):
@@ -73,9 +79,36 @@ class Ui_accountManager(object):
         self.pin.setText("")
         self.pin.setObjectName("pin")
 
-        self.output = QtWidgets.QListView(accountManager)
+        self.output = QtWidgets.QTableWidget(accountManager)
         self.output.setGeometry(QtCore.QRect(160, 60, 256, 221))
         self.output.setObjectName("output")
+        self.output.setColumnCount(6)
+
+        column1 = QtWidgets.QTableWidgetItem()
+        self.output.setHorizontalHeaderItem(0, column1)
+        column2 = QtWidgets.QTableWidgetItem()
+        self.output.setHorizontalHeaderItem(1, column2)
+        column3 = QtWidgets.QTableWidgetItem()
+        self.output.setHorizontalHeaderItem(2, column3)
+        column4 = QtWidgets.QTableWidgetItem()
+        self.output.setHorizontalHeaderItem(3, column4)
+        column5 = QtWidgets.QTableWidgetItem()
+        self.output.setHorizontalHeaderItem(4, column5)
+        column6 = QtWidgets.QTableWidgetItem()
+        self.output.setHorizontalHeaderItem(5, column6)
+
+        column1 = self.output.horizontalHeaderItem(0)
+        column1.setText(QtCore.QCoreApplication.translate("accountManager", "Username"))
+        column2 = self.output.horizontalHeaderItem(1)
+        column2.setText(QtCore.QCoreApplication.translate("accountManager", "Password"))
+        column3 = self.output.horizontalHeaderItem(2)
+        column3.setText(QtCore.QCoreApplication.translate("accountManager", "Creation Date"))
+        column4 = self.output.horizontalHeaderItem(3)
+        column4.setText(QtCore.QCoreApplication.translate("accountManager", "Localization"))
+        column5 = self.output.horizontalHeaderItem(4)
+        column5.setText(QtCore.QCoreApplication.translate("accountManager", "Language"))
+        column6 = self.output.horizontalHeaderItem(5)
+        column6.setText(QtCore.QCoreApplication.translate("accountManager", "PIN"))
 
         self.advancedViewButton = QtWidgets.QPushButton(accountManager)
         self.advancedViewButton.setGeometry(QtCore.QRect(304, 300, 111, 31))
@@ -83,10 +116,17 @@ class Ui_accountManager(object):
         self.advancedViewButton.setObjectName("advancedViewButton")
         self.advancedViewButton.clicked.connect(self.callAdvancedView)
 
+        self.buttonGroup = QtWidgets.QButtonGroup()
+        self.buttonGroup.addButton(self.createRadioButton)
+        self.buttonGroup.addButton(self.readRadioButton)
+        self.buttonGroup.addButton(self.updateRadioButton)
+        self.buttonGroup.addButton(self.deleteRadioButton)
+
         self.okButton = QtWidgets.QPushButton(accountManager)
         self.okButton.setObjectName("okButton")
         self.okButton.setGeometry(QtCore.QRect(20, 300, 111, 31))
         self.okButton.setStyleSheet(grey_background)
+        self.okButton.clicked.connect(lambda: self.parseInformation())
 
         self.retranslateUi(accountManager)
         QtCore.QMetaObject.connectSlotsByName(accountManager)
@@ -112,6 +152,39 @@ class Ui_accountManager(object):
         self.ui = Ui_accountManagerAdvancedView()
         self.ui.setupUi(self.accountManagerAdvancedViewWindow)
         self.accountManagerAdvancedViewWindow.show()
+
+    def parseInformation(self):
+        tempUsername = self.username.text()
+        tempPassword = self.password.text()
+        tempProfilePicturePath = self.profilePicture.text()
+        tempLocalization = self.localization.text()
+        tempLanguage = self.preferredLanguage.text()
+        tempPIN = self.pin.text()
+        action = self.buttonGroup.checkedId()
+
+        if (action == ADD_BUTTON):
+            Account.insert(tempUsername, tempPassword, tempProfilePicturePath, tempLocalization, tempLanguage, tempPIN)
+        
+        elif (action == VIEW_BUTTON):
+            if (not tempUsername and not tempPassword and not tempProfilePicturePath and not tempLocalization and not tempLanguage and not tempPIN):
+                result = Account.selectAll()
+            else:
+                result = Account.select(tempUsername)
+                result = [result]
+            self.output.setRowCount(len(result))
+            for i in range(len(result)):
+                self.output.setItem(i, 0, QtWidgets.QTableWidgetItem(str(result[i][0])))
+                self.output.setItem(i, 1, QtWidgets.QTableWidgetItem(str(result[i][1])))
+                self.output.setItem(i, 2, QtWidgets.QTableWidgetItem(str(result[i][3])))
+                self.output.setItem(i, 3, QtWidgets.QTableWidgetItem(str(result[i][4])))
+                self.output.setItem(i, 4, QtWidgets.QTableWidgetItem(str(result[i][5])))
+                self.output.setItem(i, 5, QtWidgets.QTableWidgetItem(str(result[i][6])))
+
+        elif (action == UPDATE_BUTTON):
+            Account.update(tempUsername, tempPassword, tempProfilePicturePath, tempLocalization, tempLanguage, tempPIN)
+
+        elif (action == DELETE_BUTTON):
+            Account.delete(tempUsername)
 
 
 if __name__ == "__main__":

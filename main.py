@@ -17,13 +17,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize
 
-
-# app = QtWidgets.QApplication(sys.argv)
-# appWindow = QtWidgets.QMainWindow()
-# ui = mainWindow.Ui_mainWindow()
-# ui.setupUi(appWindow)
-# appWindow.show()
  
+app = QtWidgets.QApplication(sys.argv)
+appWindow = QtWidgets.QMainWindow()
+ui = mainWindow.Ui_mainWindow()
+ui.setupUi(appWindow)
+appWindow.show()
+
 
 #Map.insert("101325","Mirror Touched Sea 5","3")
 #Map.insert("145","Ruined Past 5","4")
@@ -115,4 +115,4 @@ from PyQt5.QtCore import QSize
 #print(Character.selectAll())
 
 
-#sys.exit(app.exec_())
+sys.exit(app.exec_())

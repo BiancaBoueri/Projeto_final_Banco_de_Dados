@@ -48,11 +48,11 @@ class Ui_characterManagerAdvancedView(object):
         self.output.setObjectName("output")
 
         self.andFirst = QtWidgets.QCheckBox(characterManagerAdvancedView)
-        self.andFirst.setGeometry(QtCore.QRect(10, 280, 41, 17))
+        self.andFirst.setGeometry(QtCore.QRect(10, 270, 41, 17))
         self.andFirst.setObjectName("andFirst")
 
         self.orFirst = QtWidgets.QCheckBox(characterManagerAdvancedView)
-        self.orFirst.setGeometry(QtCore.QRect(60, 280, 41, 17))
+        self.orFirst.setGeometry(QtCore.QRect(60, 270, 41, 17))
         self.orFirst.setObjectName("orFirst")
 
         self.firstButtonGroup = QtWidgets.QButtonGroup()

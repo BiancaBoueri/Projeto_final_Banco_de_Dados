@@ -322,7 +322,7 @@
     <string>Rarity (EQUIP ONLY)</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QComboBox" name="chosenSubInventory">
    <property name="geometry">
     <rect>
      <x>170</x>
