@@ -1,8 +1,8 @@
 from dbConnection import mydb, mycursor 
 
-def insert(Inventory_idInventory, UseBase_idUse, useQuantity):
-  sql = "INSERT INTO UseSubInventory (Inventory_idInventory, UseBase_idUse, useQuantity) VALUES (%s,%s,%s)"
-  vals = (Inventory_idInventory, UseBase_idUse, useQuantity)
+def insert(idUseSubInventory, Inventory_idInventory, UseBase_idUse, useQuantity):
+  sql = "INSERT INTO UseSubInventory VALUES (%s,%s,%s,%s)"
+  vals = (idUseSubInventory, Inventory_idInventory, UseBase_idUse, useQuantity)
   mycursor.execute(sql,vals)
   mydb.commit()
 
