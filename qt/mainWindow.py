@@ -30,7 +30,7 @@ class Ui_mainWindow(object):
         mainWindow.setMinimumSize(QtCore.QSize(531, 484))
         mainWindow.setMaximumSize(QtCore.QSize(531, 484))
         icon = QIcon()
-        icon.addFile(u"images\maplestoryIcon.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile("/home/bianca/Documents/1.matérias/9º_Semestre_EAD/BD/Projeto_final_Banco_de_Dados/images/maplestoryIcon.ico", QSize(), QIcon.Normal, QIcon.Off)
         mainWindow.setWindowIcon(icon)
         mainWindow.setStyleSheet("")
 
@@ -78,7 +78,7 @@ class Ui_mainWindow(object):
         self.maplestoryLogo = QtWidgets.QLabel(self.centralwidget)
         self.maplestoryLogo.setGeometry(QtCore.QRect(-30, 10, 541, 181))
         self.maplestoryLogo.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.maplestoryLogo.setPixmap(QtGui.QPixmap("images\maplestoryLogo.png"))
+        self.maplestoryLogo.setPixmap(QtGui.QPixmap("./images/maplestoryLogo.png"))
         self.maplestoryLogo.setObjectName("maplestoryLogo")
 
         self.selectFunctionLabel = QtWidgets.QLabel(self.centralwidget)

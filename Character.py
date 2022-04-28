@@ -14,6 +14,12 @@ def insert(Account_username, name, Class, mainAttribute, level, HP, MP, EXP, ser
   mycursor.execute(sql,vals)
   mydb.commit()
 
+def updateInventoryFK(name,Inventory_idInventory):
+  sql = "UPDATE maplestory.Character SET Inventory_idInventory = %s WHERE name = %s"
+  vals = (Inventory_idInventory,name)
+  mycursor.execute(sql,vals)
+  mydb.commit()
+
 def update(name, Class, mainAttribute, level, HP, MP, EXP, server):
   if(Class):
     sql = "UPDATE maplestory.Character SET class = %s WHERE name = %s"
@@ -85,7 +91,14 @@ def deleteAll():
   mycursor.execute("DELETE FROM maplestory.Character")
   mydb.commit()
 
+def setAllInventoryFKNull():
+  sql = "UPDATE maplestory.Character SET Inventory_idInventory = NULL"
+  mycursor.execute(sql)
+  mydb.commit()
 
-
+def setInventoryFKNull(idInventory):
+  sql = "UPDATE maplestory.Character SET Inventory_idInventory = NULL WHERE Inventory_idInventory = '%s'" %(idInventory)
+  mycursor.execute(sql)
+  mydb.commit()
 
 
