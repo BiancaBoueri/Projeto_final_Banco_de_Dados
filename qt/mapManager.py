@@ -127,9 +127,8 @@ class Ui_mapManager(object):
                 result = [result]
             self.output.setRowCount(len(result))
             for i in range(len(result)):
-                self.output.setItem(i, 0, QtWidgets.QTableWidgetItem(str(result[i][0])))
-                self.output.setItem(i, 1, QtWidgets.QTableWidgetItem(str(result[i][1])))
-                self.output.setItem(i, 2, QtWidgets.QTableWidgetItem(str(result[i][2])))
+                for j in range(0,3):
+                    self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
 
         elif (action == UPDATE_BUTTON):
             Map.update(tempMapID, tempMapName, tempSpawn)

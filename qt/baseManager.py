@@ -13,11 +13,17 @@ import time
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize
+import EquipBase, UseBase, EtcBase
 
 grey_background = "background-color: rgb(245, 245, 245);"
 white_background = "background-color: rgb(255, 255, 255);"
 transparent = "background-color: rgba(255, 255, 255, 0);"
 _translate = QtCore.QCoreApplication.translate
+
+ADD_BUTTON = -2
+VIEW_BUTTON = -3
+UPDATE_BUTTON = -4
+DELETE_BUTTON = -5
 
 class Ui_baseManager(object):
 
@@ -62,15 +68,11 @@ class Ui_baseManager(object):
         self.baseSelector.setItemText(3, _translate("baseManager", "Etc Base"))
         self.baseSelector.currentTextChanged.connect(lambda: self.changeScreen(self.baseSelector.currentText()))
 
-        self.deleteRadioButton = QtWidgets.QRadioButton(baseManager)
-        self.deleteRadioButton.setGeometry(QtCore.QRect(350, 10, 81, 17))
-        self.deleteRadioButton.setObjectName("deleteRadioButton")
-        self.deleteRadioButton.setText(_translate("baseManager", "Delete Item"))
-
-        self.updateRadioButton = QtWidgets.QRadioButton(baseManager)
-        self.updateRadioButton.setGeometry(QtCore.QRect(260, 10, 81, 17))
-        self.updateRadioButton.setObjectName("updateRadioButton")
-        self.updateRadioButton.setText(_translate("baseManager", "Update Item"))
+        self.createRadioButton = QtWidgets.QRadioButton(baseManager)
+        self.createRadioButton.setGeometry(QtCore.QRect(100, 10, 71, 17))
+        self.createRadioButton.setStyleSheet(transparent)
+        self.createRadioButton.setObjectName("createRadioButton")
+        self.createRadioButton.setText(_translate("baseManager", "Add Item"))
 
         self.readRadioButton = QtWidgets.QRadioButton(baseManager)
         self.readRadioButton.setGeometry(QtCore.QRect(180, 10, 71, 17))
@@ -78,15 +80,24 @@ class Ui_baseManager(object):
         self.readRadioButton.setStyleSheet(transparent)
         self.readRadioButton.setText(_translate("baseManager", "View Item"))
 
-        self.createRadioButton = QtWidgets.QRadioButton(baseManager)
-        self.createRadioButton.setGeometry(QtCore.QRect(100, 10, 71, 17))
-        self.createRadioButton.setStyleSheet(transparent)
-        self.createRadioButton.setObjectName("createRadioButton")
-        self.createRadioButton.setText(_translate("baseManager", "Add Item"))
+        self.updateRadioButton = QtWidgets.QRadioButton(baseManager)
+        self.updateRadioButton.setGeometry(QtCore.QRect(260, 10, 81, 17))
+        self.updateRadioButton.setObjectName("updateRadioButton")
+        self.updateRadioButton.setText(_translate("baseManager", "Update Item"))
 
-        self.output = QtWidgets.QListView(baseManager)
-        self.output.setGeometry(QtCore.QRect(180, 40, 241, 201))
-        self.output.setMinimumSize(QtCore.QSize(241, 151))
+        self.deleteRadioButton = QtWidgets.QRadioButton(baseManager)
+        self.deleteRadioButton.setGeometry(QtCore.QRect(350, 10, 81, 17))
+        self.deleteRadioButton.setObjectName("deleteRadioButton")
+        self.deleteRadioButton.setText(_translate("baseManager", "Delete Item"))
+
+        self.buttonGroup = QtWidgets.QButtonGroup()
+        self.buttonGroup.addButton(self.createRadioButton)
+        self.buttonGroup.addButton(self.readRadioButton)
+        self.buttonGroup.addButton(self.updateRadioButton)
+        self.buttonGroup.addButton(self.deleteRadioButton)
+
+        self.output = QtWidgets.QTableWidget(baseManager)
+        self.output.setGeometry(QtCore.QRect(180, 40, 241, 301))
         self.output.setObjectName("output")
 
         self.equipBaseManager(baseManager)
@@ -100,18 +111,102 @@ class Ui_baseManager(object):
             self.gridEquipLayoutWidget.show()
             self.gridUseLayoutWidget.hide()
             self.gridEtcLayoutWidget.hide()
+            self.updateTable("Equip")
         elif text == "Use Base":
             self.gridEquipLayoutWidget.hide()
             self.gridUseLayoutWidget.show()
             self.gridEtcLayoutWidget.hide()
+            self.updateTable("Use")
         elif text == "Etc Base":
             self.gridEquipLayoutWidget.hide()
             self.gridUseLayoutWidget.hide()
             self.gridEtcLayoutWidget.show()
+            self.updateTable("Etc")
         else:
             self.gridEquipLayoutWidget.hide()
             self.gridUseLayoutWidget.hide()
             self.gridEtcLayoutWidget.hide()
+
+    def updateTable(self, typeOfView): #Para a versao final, colocar os outputs dentro dos Widgets pra não trocar toda hora
+        if (typeOfView == "Equip"):
+            self.output.setColumnCount(8)
+            column1 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(0, column1)
+            column2 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(1, column2)
+            column3 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(2, column3)
+            column4 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(3, column4)
+            column5 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(4, column5)
+            column6 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(5, column6)
+            column7 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(6, column7)
+            column8 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(7, column8)
+
+            column1 = self.output.horizontalHeaderItem(0)
+            column1.setText(QtCore.QCoreApplication.translate("baseManager", "Equip ID"))
+            column2 = self.output.horizontalHeaderItem(1)
+            column2.setText(QtCore.QCoreApplication.translate("baseManager", "Equip Name"))
+            column3 = self.output.horizontalHeaderItem(2)
+            column3.setText(QtCore.QCoreApplication.translate("baseManager", "Class"))
+            column4 = self.output.horizontalHeaderItem(3)
+            column4.setText(QtCore.QCoreApplication.translate("baseManager", "ATT"))
+            column5 = self.output.horizontalHeaderItem(4)
+            column5.setText(QtCore.QCoreApplication.translate("baseManager", "MATT"))
+            column6 = self.output.horizontalHeaderItem(5)
+            column6.setText(QtCore.QCoreApplication.translate("baseManager", "Attribute"))
+            column7 = self.output.horizontalHeaderItem(6)
+            column7.setText(QtCore.QCoreApplication.translate("baseManager", "Attribute Bonus"))
+            column8 = self.output.horizontalHeaderItem(7)
+            column8.setText(QtCore.QCoreApplication.translate("baseManager", "Value"))
+
+        elif (typeOfView == "Use"):
+            self.output.setColumnCount(6)
+            column1 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(0, column1)
+            column2 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(1, column2)
+            column3 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(2, column3)
+            column4 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(3, column4)
+            column5 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(4, column5)
+            column6 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(5, column6)
+
+            column1 = self.output.horizontalHeaderItem(0)
+            column1.setText(QtCore.QCoreApplication.translate("baseManager", "Use ID"))
+            column2 = self.output.horizontalHeaderItem(1)
+            column2.setText(QtCore.QCoreApplication.translate("baseManager", "Use Name"))
+            column3 = self.output.horizontalHeaderItem(2)
+            column3.setText(QtCore.QCoreApplication.translate("baseManager", "+HP"))
+            column4 = self.output.horizontalHeaderItem(3)
+            column4.setText(QtCore.QCoreApplication.translate("baseManager", "+MP"))
+            column5 = self.output.horizontalHeaderItem(4)
+            column5.setText(QtCore.QCoreApplication.translate("baseManager", "Attribute Bonus"))
+            column6 = self.output.horizontalHeaderItem(5)
+            column6.setText(QtCore.QCoreApplication.translate("baseManager", "Value"))
+
+        elif (typeOfView == "Etc"):
+            self.output.setColumnCount(3)
+            column1 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(0, column1)
+            column2 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(1, column2)
+            column3 = QtWidgets.QTableWidgetItem()
+            self.output.setHorizontalHeaderItem(2, column3)
+
+            column1 = self.output.horizontalHeaderItem(0)
+            column1.setText(QtCore.QCoreApplication.translate("baseManager", "Etc ID"))
+            column2 = self.output.horizontalHeaderItem(1)
+            column2.setText(QtCore.QCoreApplication.translate("baseManager", "Etc Name"))
+            column3 = self.output.horizontalHeaderItem(2)
+            column3.setText(QtCore.QCoreApplication.translate("baseManager", "Value"))
 
 
     def equipBaseManager(self, baseManager):
@@ -167,6 +262,7 @@ class Ui_baseManager(object):
         self.okEquipButton.setStyleSheet(grey_background)
         self.okEquipButton.setObjectName("okEquipButton")
         self.gridLayoutEquip.addWidget(self.okEquipButton, 8, 0, 1, 2)
+        self.okEquipButton.clicked.connect(lambda: self.parseInformation("Equip"))
 
         self.equipValue = QtWidgets.QLineEdit(self.gridEquipLayoutWidget)
         self.equipValue.setObjectName("equipValue")
@@ -213,12 +309,13 @@ class Ui_baseManager(object):
         self.okUseButton.setStyleSheet(grey_background)
         self.okUseButton.setObjectName("okUseButton")
         self.gridLayoutUse.addWidget(self.okUseButton, 7, 0, 1, 2)
+        self.okUseButton.clicked.connect(lambda: self.parseInformation("Use"))
 
-        self.attributeBonus = QtWidgets.QSpinBox(self.gridUseLayoutWidget)
-        self.attributeBonus.setMinimum(-128)
-        self.attributeBonus.setMaximum(127)
-        self.attributeBonus.setObjectName("attributeBonus")
-        self.gridLayoutUse.addWidget(self.attributeBonus, 4, 1, 1, 1)
+        self.attributeBonusUse = QtWidgets.QSpinBox(self.gridUseLayoutWidget)
+        self.attributeBonusUse.setMinimum(-128)
+        self.attributeBonusUse.setMaximum(127)
+        self.attributeBonusUse.setObjectName("attributeBonus")
+        self.gridLayoutUse.addWidget(self.attributeBonusUse, 4, 1, 1, 1)
 
         self.retranslateUiUse()
         QtCore.QMetaObject.connectSlotsByName(baseManager)
@@ -247,6 +344,7 @@ class Ui_baseManager(object):
         self.okEtcButton.setStyleSheet(grey_background)
         self.okEtcButton.setObjectName("okEtcButton")
         self.gridLayoutEtc.addWidget(self.okEtcButton, 3, 0, 1, 2)
+        self.okEtcButton.clicked.connect(lambda: self.parseInformation("Etc"))
 
         self.retranslateUiEtc()
         QtCore.QMetaObject.connectSlotsByName(baseManager)
@@ -278,6 +376,92 @@ class Ui_baseManager(object):
         self.etcName.setPlaceholderText(_translate("baseManager", "Etc Name"))
         self.etcValue.setPlaceholderText(_translate("baseManager", "Value"))
         self.okEtcButton.setText(_translate("baseManager", "OK"))
+
+    def parseInformation(self, base):
+        action = self.buttonGroup.checkedId()
+        if (base == "Equip"):
+            tempIDEquip = self.idUse.text()
+            tempEquipName = self.useName.text()
+            tempClass = self.classCanUse.text()
+            tempATT = self.attackPower.text()
+            tempMATT = self.magicPower.text()
+            tempAttribute = self.attribute.text()
+            tempBonus = self.attributeBonus.text()
+            tempEquipValue = self.useValue.text()
+
+            if (action == ADD_BUTTON):
+                EquipBase.insert(tempIDEquip, tempEquipName, tempClass, tempATT, tempMATT, tempAttribute, tempBonus, tempEquipValue)
+
+            elif (action == VIEW_BUTTON):
+                if (not tempIDEquip):
+                    result = EquipBase.selectAll()
+                else:
+                    result = EquipBase.select(tempIDEquip)
+                    result = [result]
+                self.output.setRowCount(len(result))
+                for i in range(len(result)):
+                    for j in range(0,8):
+                        self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
+
+            elif (action == UPDATE_BUTTON):
+                EquipBase.update(tempIDEquip, tempEquipName, tempClass, tempATT, tempMATT, tempAttribute, tempBonus, tempEquipValue)
+
+            elif (action == DELETE_BUTTON):
+                EquipBase.delete(tempIDEquip)
+
+        elif (base == "Use"):
+            tempIDUse = self.idUse.text()
+            tempUseName = self.useName.text()
+            tempRecHP = self.recoveredHP.text()
+            tempRecMP = self.recoveredMP.text()
+            tempBonus = self.attributeBonusUse.text()
+            tempUseValue = self.useValue.text()
+
+            if (action == ADD_BUTTON):
+                UseBase.insert(tempIDUse, tempUseName, tempRecHP, tempRecMP, tempBonus, tempUseValue)
+
+            elif (action == VIEW_BUTTON):
+                if (not tempIDUse):
+                    result = UseBase.selectAll()
+                else:
+                    result = UseBase.select(tempIDEtc)
+                    result = [result]
+                self.output.setRowCount(len(result))
+                for i in range(len(result)):
+                    for j in range(0,6):
+                        self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
+
+            elif (action == UPDATE_BUTTON):
+                UseBase.update(tempIDUse, tempUseName, tempRecHP, tempRecMP, tempBonus, tempUseValue)
+
+            elif (action == DELETE_BUTTON):
+                UseBase.delete(tempIDUse)
+
+        else:
+            tempIDEtc = self.idEtc.text()
+            tempEtcName = self.etcName.text()
+            tempEtcValue = self.etcValue.text()
+
+            if (action == ADD_BUTTON):
+                EtcBase.insert(tempIDEtc, tempEtcName, tempEtcValue)
+
+            elif (action == VIEW_BUTTON):
+                if (not tempIDEtc):
+                    result = EtcBase.selectAll()
+                else:
+                    result = EtcBase.select(tempIDEtc)
+                    result = [result]
+                self.output.setRowCount(len(result))
+                for i in range(len(result)):
+                    for j in range(0,3):
+                        self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
+
+            elif (action == UPDATE_BUTTON):
+                EtcBase.update(tempIDEtc, tempEtcName, tempEtcValue)
+
+            elif (action == DELETE_BUTTON):
+                EtcBase.delete(tempIDEtc)
+
 
 if __name__ == "__main__":
     import sys

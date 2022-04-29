@@ -159,7 +159,7 @@ class Ui_inventoryManager(object):
         self.chosenSubInventory.setItemText(2, _translate("inventoryManager", "Etc"))
         self.inventoryId.setPlaceholderText(_translate("inventoryManager", "Inventory ID"))
         self.readInventoryRadioButton.setText(_translate("inventoryManager", "View"))
-        self.characterID.setPlaceholderText(_translate("inventoryManager", "Character (ID)"))
+        self.characterID.setPlaceholderText(_translate("inventoryManager", "Character Name"))
         self.subinventoryID.setPlaceholderText(_translate("inventoryManager", "SubInventory ID"))
         self.createInventoryRadioButton.setText(_translate("inventoryManager", "Add"))
         self.inventoryForeignID.setPlaceholderText(_translate("inventoryManager", "Parent Inventory (ID)"))
@@ -182,8 +182,6 @@ class Ui_inventoryManager(object):
         action = self.buttonGroup.checkedId()
 
         if (action <= ADD_SUBINVENTORY_BUTTON): #Subinventory
-            print("subinventory")
-
             choiceDict = {
                 "Equip": 0,
                 "Use": 1,
@@ -244,9 +242,9 @@ class Ui_inventoryManager(object):
             
             if (action == ADD_SUBINVENTORY_BUTTON):
                 if (tempChosenSubInventory == 0):
-                    subInventory.insert(tempParentInventoryID, tempItemID, tempQuantity, tempRarity)
+                    subInventory.insert(tempSubInventoryID, tempParentInventoryID, tempItemID, tempQuantity, tempRarity)
                 else:
-                    subInventory.insert(tempParentInventoryID, tempItemID, tempQuantity)
+                    subInventory.insert(tempSubInventoryID, tempParentInventoryID, tempItemID, tempQuantity)
 
             elif (action == VIEW_SUBINVENTORY_BUTTON):
                 if (not tempParentInventoryID and not tempSubInventoryID and not tempItemID and not tempQuantity):
@@ -257,29 +255,23 @@ class Ui_inventoryManager(object):
                 self.output.setRowCount(len(result))
                 if (tempChosenSubInventory == 0):
                     for i in range(len(result)):
-                        self.output.setItem(i, 0, QtWidgets.QTableWidgetItem(str(result[i][0])))
-                        self.output.setItem(i, 1, QtWidgets.QTableWidgetItem(str(result[i][1])))
-                        self.output.setItem(i, 2, QtWidgets.QTableWidgetItem(str(result[i][2])))
-                        self.output.setItem(i, 3, QtWidgets.QTableWidgetItem(str(result[i][3])))
-                        self.output.setItem(i, 4, QtWidgets.QTableWidgetItem(str(result[i][4])))
+                        for j in range(0,5):
+                            self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
                 else:
                     for i in range(len(result)):
-                        self.output.setItem(i, 0, QtWidgets.QTableWidgetItem(str(result[i][0])))
-                        self.output.setItem(i, 1, QtWidgets.QTableWidgetItem(str(result[i][1])))
-                        self.output.setItem(i, 2, QtWidgets.QTableWidgetItem(str(result[i][2])))
-                        self.output.setItem(i, 3, QtWidgets.QTableWidgetItem(str(result[i][3])))
+                        for j in range(0,4):
+                            self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
 
-            #elif (action == UPDATE_SUBINVENTORY_BUTTON):
-            #    if (tempChosenSubInventory == 0):
-            #        subInventory.update(tempSubInventoryID, tempQuantity, tempRarity)
-            #    else:
-            #        subInventory.update(tempItemID, tempQuantity)
+            elif (action == UPDATE_SUBINVENTORY_BUTTON):
+                if (tempChosenSubInventory == 0):
+                    subInventory.update(tempSubInventoryID, tempQuantity, tempRarity)
+                else:
+                    subInventory.update(tempItemID, tempQuantity)
 
             elif (action == DELETE_SUBINVENTORY_BUTTON):
                 subInventory.delete(tempSubInventoryID)
 
         elif (action >= DELETE_INVENTORY_BUTTON): #Inventory
-            print("inventory")
 
             self.output.setColumnCount(3)
             column1 = QtWidgets.QTableWidgetItem()
@@ -289,7 +281,7 @@ class Ui_inventoryManager(object):
             column3 = QtWidgets.QTableWidgetItem()
             self.output.setHorizontalHeaderItem(2, column3)
             column1 = self.output.horizontalHeaderItem(0)
-            column1.setText(QtCore.QCoreApplication.translate("inventoryManager", "idInventory"))
+            column1.setText(QtCore.QCoreApplication.translate("inventoryManager", "Inventory ID"))
             column2 = self.output.horizontalHeaderItem(1)
             column2.setText(QtCore.QCoreApplication.translate("inventoryManager", "Mesos"))
             column3 = self.output.horizontalHeaderItem(2)
@@ -302,7 +294,7 @@ class Ui_inventoryManager(object):
             tempNX = self.nx.text()
 
             if (action == ADD_INVENTORY_BUTTON):
-                Inventory.insert(tempInventoryID, tempMesos, tempNX)
+                Inventory.insert(tempCharacterID, tempInventoryID, tempMesos, tempNX)
 
             elif (action == VIEW_INVENTORY_BUTTON):
                 if (not tempCharacterID and not tempInventoryID and not tempMesos and not tempNX):
@@ -312,9 +304,8 @@ class Ui_inventoryManager(object):
                     result = [result]
                 self.output.setRowCount(len(result))
                 for i in range(len(result)):
-                    self.output.setItem(i, 0, QtWidgets.QTableWidgetItem(str(result[i][0])))
-                    self.output.setItem(i, 1, QtWidgets.QTableWidgetItem(str(result[i][1])))
-                    self.output.setItem(i, 2, QtWidgets.QTableWidgetItem(str(result[i][2])))
+                        for j in range(0,3):
+                            self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
             
             elif (action == UPDATE_INVENTORY_BUTTON):
                 Inventory.update(tempInventoryID, tempMesos, tempNX)

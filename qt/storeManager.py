@@ -92,11 +92,11 @@ class Ui_storeManager(object):
         self.output.setHorizontalHeaderItem(2, column3)
 
         column1 = self.output.horizontalHeaderItem(0)
-        column1.setText(QtCore.QCoreApplication.translate("storeManager", "idItem"))
+        column1.setText(QtCore.QCoreApplication.translate("storeManager", "Item ID"))
         column2 = self.output.horizontalHeaderItem(1)
-        column2.setText(QtCore.QCoreApplication.translate("storeManager", "value"))
+        column2.setText(QtCore.QCoreApplication.translate("storeManager", "Value"))
         column3 = self.output.horizontalHeaderItem(2)
-        column3.setText(QtCore.QCoreApplication.translate("storeManager", "stock"))
+        column3.setText(QtCore.QCoreApplication.translate("storeManager", "Stock"))
 
         self.simulateButton = QtWidgets.QPushButton(storeManager)
         self.simulateButton.setGeometry(QtCore.QRect(10, 210, 121, 31))
@@ -143,9 +143,8 @@ class Ui_storeManager(object):
                 result = [result]
             self.output.setRowCount(len(result))
             for i in range(len(result)):
-                self.output.setItem(i, 0, QtWidgets.QTableWidgetItem(str(result[i][0])))
-                self.output.setItem(i, 1, QtWidgets.QTableWidgetItem(str(result[i][1])))
-                self.output.setItem(i, 2, QtWidgets.QTableWidgetItem(str(result[i][2])))
+                for j in range(0,3):
+                    self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
 
         elif (action == UPDATE_BUTTON):
             Store.update(tempItemID, tempValue, tempStock)
