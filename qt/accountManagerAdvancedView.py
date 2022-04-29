@@ -32,10 +32,6 @@ class Ui_accountManagerAdvancedView(object):
         accountManagerAdvancedView.setWindowIcon(icon)
         accountManagerAdvancedView.setStyleSheet(white_background)
 
-        self.output = QtWidgets.QListWidget(accountManagerAdvancedView)
-        self.output.setGeometry(QtCore.QRect(320, 20, 551, 391))
-        self.output.setObjectName("output")
-
         self.usernameCheckbox = QtWidgets.QCheckBox(accountManagerAdvancedView)
         self.usernameCheckbox.setGeometry(QtCore.QRect(20, 20, 70, 17))
         self.usernameCheckbox.setObjectName("usernameCheckbox")
@@ -178,18 +174,38 @@ class Ui_accountManagerAdvancedView(object):
         self.searchButton.setGeometry(QtCore.QRect(160, 180, 131, 41))
         self.searchButton.setStyleSheet(grey_background)
         self.searchButton.setObjectName("searchButton")
-        self.searchButton.clicked.connect(lambda: self.teste())
+        self.searchButton.clicked.connect(lambda: self.parseInformation())
+
+        self.output = QtWidgets.QTableWidget(accountManagerAdvancedView)
+        self.output.setGeometry(QtCore.QRect(320, 20, 551, 391))
+        self.output.setObjectName("output")
 
         self.retranslateUi(accountManagerAdvancedView)
         QtCore.QMetaObject.connectSlotsByName(accountManagerAdvancedView)
 
-    def teste(self):
-        #Account.update("leevanf",NULL,"./images/avatar2.png",NULL,NULL,NULL)
-        image = Account.select(self.outputFirstConditional.text())[2]
-        pixmap = QtGui.QPixmap()
-        pixmap.loadFromData(image)
-        pixmap =  pixmap.scaled(128, 128, QtCore.Qt.KeepAspectRatio)
-        self.profilePictureView.setPixmap(pixmap)
+    def parseInformation(self):
+        choicesList = [self.usernameCheckbox.isChecked(), self.passwordCheckbox.isChecked(), self.creationDateCheckbox.isChecked(), self.localizationCheckbox.isChecked(), self.preferredLanguageCheckbox.isChecked(), self.pinCheckbox.isChecked(), self.profilePictureCheckbox.isChecked()]
+        namesList = ["Username", "Password", "Creation Date", "Localization", "Language", "PIN", "Profile Picture"]
+        SQLnamesList = ["username", "password", "creationDate", "localization", "preferredLanguage", "PIN", "profilePicture"]
+        self.output.setColumnCount(choicesList.count(True))
+        counter = 0
+
+        for i in range(len(choicesList)-1):
+            if (choicesList[i]):
+                newColumn = QtWidgets.QTableWidgetItem()
+                self.output.setHorizontalHeaderItem(counter, newColumn)
+                newColumn = self.output.horizontalHeaderItem(counter)
+                newColumn.setText(QtCore.QCoreApplication.translate("accountManagerAdvancedView", namesList[i]))
+                counter += 1
+
+        if (self.profilePictureCheckbox.isChecked()):
+            image = Account.select(self.outputFirstConditional.text())[2]
+            pixmap = QtGui.QPixmap()
+            pixmap.loadFromData(image)
+            pixmap = pixmap.scaled(128, 128, QtCore.Qt.KeepAspectRatio)
+            self.profilePictureView.setPixmap(pixmap)
+        
+
 
     def retranslateUi(self, accountManagerAdvancedView):
         _translate = QtCore.QCoreApplication.translate

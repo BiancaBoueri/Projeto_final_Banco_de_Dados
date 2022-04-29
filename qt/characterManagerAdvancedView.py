@@ -30,11 +30,6 @@ class Ui_characterManagerAdvancedView(object):
         self.charLevelCheckbox.setGeometry(QtCore.QRect(20, 100, 70, 17))
         self.charLevelCheckbox.setObjectName("charLevelCheckbox")
 
-        self.outputFirstConditional = QtWidgets.QLineEdit(characterManagerAdvancedView)
-        self.outputFirstConditional.setGeometry(QtCore.QRect(180, 240, 113, 20))
-        self.outputFirstConditional.setStyleSheet("")
-        self.outputFirstConditional.setObjectName("outputFirstConditional")
-
         self.charHPCheckbox = QtWidgets.QCheckBox(characterManagerAdvancedView)
         self.charHPCheckbox.setGeometry(QtCore.QRect(200, 10, 70, 17))
         self.charHPCheckbox.setObjectName("charHPCheckbox")
@@ -42,10 +37,6 @@ class Ui_characterManagerAdvancedView(object):
         self.charClassCheckbox = QtWidgets.QCheckBox(characterManagerAdvancedView)
         self.charClassCheckbox.setGeometry(QtCore.QRect(20, 40, 101, 17))
         self.charClassCheckbox.setObjectName("charClassCheckbox")
-
-        self.output = QtWidgets.QListWidget(characterManagerAdvancedView)
-        self.output.setGeometry(QtCore.QRect(310, 10, 551, 391))
-        self.output.setObjectName("output")
 
         self.andFirst = QtWidgets.QCheckBox(characterManagerAdvancedView)
         self.andFirst.setGeometry(QtCore.QRect(10, 270, 41, 17))
@@ -71,65 +62,33 @@ class Ui_characterManagerAdvancedView(object):
         self.secondButtonGroup.addButton(self.andSecond)
         self.secondButtonGroup.addButton(self.orSecond)
 
-        self.outputSecondConditional = QtWidgets.QLineEdit(characterManagerAdvancedView)
-        self.outputSecondConditional.setGeometry(QtCore.QRect(180, 310, 113, 20))
-        self.outputSecondConditional.setStyleSheet("")
-        self.outputSecondConditional.setObjectName("outputSecondConditional")
-
         self.charNameCheckbox = QtWidgets.QCheckBox(characterManagerAdvancedView)
         self.charNameCheckbox.setGeometry(QtCore.QRect(20, 10, 101, 17))
         self.charNameCheckbox.setObjectName("charNameCheckbox")
-
-        self.conditionThirdConditional = QtWidgets.QComboBox(characterManagerAdvancedView)
-        self.conditionThirdConditional.setGeometry(QtCore.QRect(130, 380, 41, 22))
-        self.conditionThirdConditional.setStyleSheet(grey_background)
-        self.conditionThirdConditional.setObjectName("conditionThirdConditional")
-        self.conditionThirdConditional.addItem("")
-        self.conditionThirdConditional.addItem("")
-        self.conditionThirdConditional.addItem("")
-        self.conditionThirdConditional.addItem("")
-        self.conditionThirdConditional.addItem("")
-        self.conditionThirdConditional.addItem("")
-
-        self.conditionFirstConditional = QtWidgets.QComboBox(characterManagerAdvancedView)
-        self.conditionFirstConditional.setGeometry(QtCore.QRect(130, 240, 41, 22))
-        self.conditionFirstConditional.setStyleSheet(grey_background)
-        self.conditionFirstConditional.setObjectName("conditionFirstConditional")
-        self.conditionFirstConditional.addItem("")
-        self.conditionFirstConditional.addItem("")
-        self.conditionFirstConditional.addItem("")
-        self.conditionFirstConditional.addItem("")
-        self.conditionFirstConditional.addItem("")
-        self.conditionFirstConditional.addItem("")
-
-        self.outputThirdConditional = QtWidgets.QLineEdit(characterManagerAdvancedView)
-        self.outputThirdConditional.setGeometry(QtCore.QRect(180, 380, 113, 20))
-        self.outputThirdConditional.setStyleSheet("")
-        self.outputThirdConditional.setObjectName("outputThirdConditional")
 
         self.charAttributeCheckbox = QtWidgets.QCheckBox(characterManagerAdvancedView)
         self.charAttributeCheckbox.setGeometry(QtCore.QRect(20, 70, 91, 17))
         self.charAttributeCheckbox.setObjectName("charAttributeCheckbox")
 
-        self.searchButton = QtWidgets.QPushButton(characterManagerAdvancedView)
-        self.searchButton.setGeometry(QtCore.QRect(10, 160, 271, 51))
-        self.searchButton.setStyleSheet(grey_background)
-        self.searchButton.setObjectName("searchButton")
-
-        self.conditionSecondConditional = QtWidgets.QComboBox(characterManagerAdvancedView)
-        self.conditionSecondConditional.setGeometry(QtCore.QRect(130, 310, 41, 22))
-        self.conditionSecondConditional.setStyleSheet(grey_background)
-        self.conditionSecondConditional.setObjectName("conditionSecondConditional")
-        self.conditionSecondConditional.addItem("")
-        self.conditionSecondConditional.addItem("")
-        self.conditionSecondConditional.addItem("")
-        self.conditionSecondConditional.addItem("")
-        self.conditionSecondConditional.addItem("")
-        self.conditionSecondConditional.addItem("")
-
         self.charMPCheckbox = QtWidgets.QCheckBox(characterManagerAdvancedView)
         self.charMPCheckbox.setGeometry(QtCore.QRect(200, 40, 91, 17))
         self.charMPCheckbox.setObjectName("charMPCheckbox")
+
+        self.charEXPCheckbox = QtWidgets.QCheckBox(characterManagerAdvancedView)
+        self.charEXPCheckbox.setGeometry(QtCore.QRect(200, 70, 91, 17))
+        self.charEXPCheckbox.setObjectName("charEXPCheckbox")
+
+        self.charServerCheckbox = QtWidgets.QCheckBox(characterManagerAdvancedView)
+        self.charServerCheckbox.setGeometry(QtCore.QRect(20, 130, 91, 17))
+        self.charServerCheckbox.setObjectName("charServerCheckbox")
+
+        self.charMapCheckbox = QtWidgets.QCheckBox(characterManagerAdvancedView)
+        self.charMapCheckbox.setGeometry(QtCore.QRect(200, 100, 91, 17))
+        self.charMapCheckbox.setObjectName("charMapCheckbox")
+
+        self.charInventoryCheckbox = QtWidgets.QCheckBox(characterManagerAdvancedView)
+        self.charInventoryCheckbox.setGeometry(QtCore.QRect(200, 130, 91, 17))
+        self.charInventoryCheckbox.setObjectName("charInventoryCheckbox")
 
         self.inputFirstConditional = QtWidgets.QComboBox(characterManagerAdvancedView)
         self.inputFirstConditional.setGeometry(QtCore.QRect(10, 240, 111, 22))
@@ -148,22 +107,6 @@ class Ui_characterManagerAdvancedView(object):
         self.inputFirstConditional.addItem("")
         self.inputFirstConditional.addItem("")
         self.inputFirstConditional.addItem("")
-
-        self.charEXPCheckbox = QtWidgets.QCheckBox(characterManagerAdvancedView)
-        self.charEXPCheckbox.setGeometry(QtCore.QRect(200, 70, 91, 17))
-        self.charEXPCheckbox.setObjectName("charEXPCheckbox")
-
-        self.charServerCheckbox = QtWidgets.QCheckBox(characterManagerAdvancedView)
-        self.charServerCheckbox.setGeometry(QtCore.QRect(20, 130, 91, 17))
-        self.charServerCheckbox.setObjectName("charServerCheckbox")
-
-        self.charMapCheckbox = QtWidgets.QCheckBox(characterManagerAdvancedView)
-        self.charMapCheckbox.setGeometry(QtCore.QRect(200, 100, 91, 17))
-        self.charMapCheckbox.setObjectName("charMapCheckbox")
-
-        self.charInventoryCheckbox = QtWidgets.QCheckBox(characterManagerAdvancedView)
-        self.charInventoryCheckbox.setGeometry(QtCore.QRect(200, 130, 91, 17))
-        self.charInventoryCheckbox.setObjectName("charInventoryCheckbox")
 
         self.inputSecondConditional = QtWidgets.QComboBox(characterManagerAdvancedView)
         self.inputSecondConditional.setGeometry(QtCore.QRect(10, 310, 111, 22))
@@ -201,8 +144,81 @@ class Ui_characterManagerAdvancedView(object):
         self.inputThirdConditional.addItem("")
         self.inputThirdConditional.addItem("")
 
+        self.conditionFirstConditional = QtWidgets.QComboBox(characterManagerAdvancedView)
+        self.conditionFirstConditional.setGeometry(QtCore.QRect(130, 240, 41, 22))
+        self.conditionFirstConditional.setStyleSheet(grey_background)
+        self.conditionFirstConditional.setObjectName("conditionFirstConditional")
+        self.conditionFirstConditional.addItem("")
+        self.conditionFirstConditional.addItem("")
+        self.conditionFirstConditional.addItem("")
+        self.conditionFirstConditional.addItem("")
+        self.conditionFirstConditional.addItem("")
+        self.conditionFirstConditional.addItem("")
+
+        self.conditionSecondConditional = QtWidgets.QComboBox(characterManagerAdvancedView)
+        self.conditionSecondConditional.setGeometry(QtCore.QRect(130, 310, 41, 22))
+        self.conditionSecondConditional.setStyleSheet(grey_background)
+        self.conditionSecondConditional.setObjectName("conditionSecondConditional")
+        self.conditionSecondConditional.addItem("")
+        self.conditionSecondConditional.addItem("")
+        self.conditionSecondConditional.addItem("")
+        self.conditionSecondConditional.addItem("")
+        self.conditionSecondConditional.addItem("")
+        self.conditionSecondConditional.addItem("")
+
+        self.conditionThirdConditional = QtWidgets.QComboBox(characterManagerAdvancedView)
+        self.conditionThirdConditional.setGeometry(QtCore.QRect(130, 380, 41, 22))
+        self.conditionThirdConditional.setStyleSheet(grey_background)
+        self.conditionThirdConditional.setObjectName("conditionThirdConditional")
+        self.conditionThirdConditional.addItem("")
+        self.conditionThirdConditional.addItem("")
+        self.conditionThirdConditional.addItem("")
+        self.conditionThirdConditional.addItem("")
+        self.conditionThirdConditional.addItem("")
+        self.conditionThirdConditional.addItem("")
+
+        self.outputFirstConditional = QtWidgets.QLineEdit(characterManagerAdvancedView)
+        self.outputFirstConditional.setGeometry(QtCore.QRect(180, 240, 103, 20))
+        self.outputFirstConditional.setStyleSheet("")
+        self.outputFirstConditional.setObjectName("outputFirstConditional")
+
+        self.outputSecondConditional = QtWidgets.QLineEdit(characterManagerAdvancedView)
+        self.outputSecondConditional.setGeometry(QtCore.QRect(180, 310, 103, 20))
+        self.outputSecondConditional.setStyleSheet("")
+        self.outputSecondConditional.setObjectName("outputSecondConditional")
+
+        self.outputThirdConditional = QtWidgets.QLineEdit(characterManagerAdvancedView)
+        self.outputThirdConditional.setGeometry(QtCore.QRect(180, 380, 103, 20))
+        self.outputThirdConditional.setStyleSheet("")
+        self.outputThirdConditional.setObjectName("outputThirdConditional")
+
+        self.searchButton = QtWidgets.QPushButton(characterManagerAdvancedView)
+        self.searchButton.setGeometry(QtCore.QRect(10, 160, 271, 51))
+        self.searchButton.setStyleSheet(grey_background)
+        self.searchButton.setObjectName("searchButton")
+        self.searchButton.clicked.connect(lambda: self.parseInformation())
+
+        self.output = QtWidgets.QTableWidget(characterManagerAdvancedView)
+        self.output.setGeometry(QtCore.QRect(310, 10, 551, 391))
+        self.output.setObjectName("output")
+
         self.retranslateUi(characterManagerAdvancedView)
         QtCore.QMetaObject.connectSlotsByName(characterManagerAdvancedView)
+        
+    def parseInformation(self):
+        choicesList = [self.charNameCheckbox.isChecked(), self.charClassCheckbox.isChecked(), self.charAttributeCheckbox.isChecked(), self.charLevelCheckbox.isChecked(), self.charServerCheckbox.isChecked(), self.charHPCheckbox.isChecked(), self.charMPCheckbox.isChecked(), self.charEXPCheckbox.isChecked(), self.charMapCheckbox.isChecked(), self.charInventoryCheckbox.isChecked()]
+        namesList = ["Char Name", "Char Class", "Main Attribute", "Level", "Server", "HP", "MP", "EXP", "Last Map", "Inventory"]
+        SQLnamesList = ["name", "class", "mainAttribute", "level", "server", "HP", "MP", "EXP", "Map_idMap", "Inventory_idInventory"]
+        self.output.setColumnCount(choicesList.count(True))
+        counter = 0
+
+        for i in range(len(choicesList)):
+            if (choicesList[i]):
+                newColumn = QtWidgets.QTableWidgetItem()
+                self.output.setHorizontalHeaderItem(counter, newColumn)
+                newColumn = self.output.horizontalHeaderItem(counter)
+                newColumn.setText(QtCore.QCoreApplication.translate("accountManagerAdvancedView", namesList[i]))
+                counter += 1
 
     def retranslateUi(self, characterManagerAdvancedView):
         _translate = QtCore.QCoreApplication.translate
