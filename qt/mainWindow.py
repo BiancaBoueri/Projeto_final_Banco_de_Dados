@@ -30,7 +30,7 @@ class Ui_mainWindow(object):
         mainWindow.setMinimumSize(QtCore.QSize(531, 484))
         mainWindow.setMaximumSize(QtCore.QSize(531, 484))
         icon = QIcon()
-        icon.addFile("/home/bianca/Documents/1.matérias/9º_Semestre_EAD/BD/Projeto_final_Banco_de_Dados/images/maplestoryIcon.ico", QSize(), QIcon.Normal, QIcon.Off)
+        icon.addFile("./images/maplestoryIcon.ico", QSize(), QIcon.Normal, QIcon.Off)
         mainWindow.setWindowIcon(icon)
         mainWindow.setStyleSheet("")
 

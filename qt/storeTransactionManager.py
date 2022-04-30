@@ -18,9 +18,9 @@ white_background = "background-color: rgb(255, 255, 255);"
 class Ui_transactionManager(object):
     def setupUi(self, transactionManager):
         transactionManager.setObjectName("transactionManager")
-        transactionManager.resize(422, 273)
-        transactionManager.setMinimumSize(QtCore.QSize(422, 273))
-        transactionManager.setMaximumSize(QtCore.QSize(422, 273))
+        transactionManager.resize(422, 279)
+        transactionManager.setMinimumSize(QtCore.QSize(422, 279))
+        transactionManager.setMaximumSize(QtCore.QSize(422, 279))
         icon = QIcon()
         icon.addFile(u"images\maplestoryIcon.ico", QSize(), QIcon.Normal, QIcon.Off)
         transactionManager.setWindowIcon(icon)
@@ -40,10 +40,48 @@ class Ui_transactionManager(object):
         self.buyProduct.setGeometry(QtCore.QRect(10, 10, 41, 17))
         self.buyProduct.setObjectName("buyProduct")
 
-        self.output = QtWidgets.QListView(transactionManager)
-        self.output.setGeometry(QtCore.QRect(150, 10, 261, 251))
-        self.output.setMinimumSize(QtCore.QSize(241, 151))
+        self.output = QtWidgets.QTableWidget(transactionManager)
+        self.output.setGeometry(QtCore.QRect(150, 10, 261, 261))
         self.output.setObjectName("output")
+        self.output.setColumnCount(9)
+
+        column1 = QtWidgets.QTableWidgetItem()
+        self.output.setHorizontalHeaderItem(0, column1)
+        column2 = QtWidgets.QTableWidgetItem()
+        self.output.setHorizontalHeaderItem(1, column2)
+        column3 = QtWidgets.QTableWidgetItem()
+        self.output.setHorizontalHeaderItem(2, column3)
+        column4 = QtWidgets.QTableWidgetItem()
+        self.output.setHorizontalHeaderItem(3, column4)
+        column5 = QtWidgets.QTableWidgetItem()
+        self.output.setHorizontalHeaderItem(4, column5)
+        column6 = QtWidgets.QTableWidgetItem()
+        self.output.setHorizontalHeaderItem(5, column6)
+        column7 = QtWidgets.QTableWidgetItem()
+        self.output.setHorizontalHeaderItem(6, column7)
+        column8 = QtWidgets.QTableWidgetItem()
+        self.output.setHorizontalHeaderItem(7, column8)
+        column9 = QtWidgets.QTableWidgetItem()
+        self.output.setHorizontalHeaderItem(8, column9)
+
+        column1 = self.output.horizontalHeaderItem(0)
+        column1.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Char Name"))
+        column2 = self.output.horizontalHeaderItem(1)
+        column2.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Inventory ID"))
+        column3 = self.output.horizontalHeaderItem(2)
+        column3.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Subinventory ID"))
+        column4 = self.output.horizontalHeaderItem(3)
+        column4.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Mesos"))
+        column5 = self.output.horizontalHeaderItem(4)
+        column5.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "In Stock"))
+        column6 = self.output.horizontalHeaderItem(5)
+        column6.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Value"))
+        column7 = self.output.horizontalHeaderItem(6)
+        column7.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Item ID"))
+        column8 = self.output.horizontalHeaderItem(7)
+        column8.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Quantity"))
+        column9 = self.output.horizontalHeaderItem(8)
+        column9.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Rarity (Equip)"))
 
         self.sellProduct = QtWidgets.QRadioButton(transactionManager)
         self.sellProduct.setGeometry(QtCore.QRect(90, 10, 41, 17))
@@ -54,10 +92,16 @@ class Ui_transactionManager(object):
         self.quantity.setText("")
         self.quantity.setObjectName("quantity")
 
+        self.rarity = QtWidgets.QLineEdit(transactionManager)
+        self.rarity.setGeometry(QtCore.QRect(10, 200, 121, 20))
+        self.rarity.setText("")
+        self.rarity.setObjectName("rarity")
+
         self.okButton = QtWidgets.QPushButton(transactionManager)
-        self.okButton.setGeometry(QtCore.QRect(10, 200, 121, 31))
+        self.okButton.setGeometry(QtCore.QRect(10, 240, 121, 31))
         self.okButton.setStyleSheet(grey_background)
         self.okButton.setObjectName("okButton")
+        self.okButton.clicked.connect(lambda: self.parseInformation())
 
         self.itemType = QtWidgets.QComboBox(transactionManager)
         self.itemType.setGeometry(QtCore.QRect(10, 80, 121, 22))
@@ -70,6 +114,10 @@ class Ui_transactionManager(object):
         self.retranslateUi(transactionManager)
         QtCore.QMetaObject.connectSlotsByName(transactionManager)
 
+    def parseInformation(self):
+        #Call procedure
+        pass
+
     def retranslateUi(self, transactionManager):
         _translate = QtCore.QCoreApplication.translate
         transactionManager.setWindowTitle(_translate("transactionManager", "Maplestory Manager - Store (Transaction)"))
@@ -77,6 +125,7 @@ class Ui_transactionManager(object):
         self.buyProduct.setText(_translate("transactionManager", "Buy"))
         self.sellProduct.setText(_translate("transactionManager", "Sell"))
         self.quantity.setPlaceholderText(_translate("transactionManager", "Quantity"))
+        self.rarity.setPlaceholderText(_translate("transactionManager", "Rarity"))
         self.okButton.setText(_translate("transactionManager", "OK"))
         self.character.setPlaceholderText(_translate("transactionManager", "Character (ID or Name)"))
         self.itemType.setItemText(0, _translate("transactionManager", "Equip"))

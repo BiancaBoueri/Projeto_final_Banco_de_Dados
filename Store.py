@@ -1,3 +1,4 @@
+from logging.config import valid_ident
 from dbConnection import mydb, mycursor 
 
 def insert(idItem, value, stock):
@@ -41,7 +42,12 @@ def deleteAll():
   mycursor.execute("DELETE FROM Store")
   mydb.commit()
 
-
-
-
-
+#def createView(base, charName, itemID):
+#  sql = """CREATE VIEW viewStoreTransactions AS 
+#  SELECT name,idInventory,mesos,idUse,useQuantity,stock,base.value
+#  FROM maplestory.Character AS ch JOIN Inventory AS i JOIN UseSubInventory AS u JOIN Store JOIN %s AS base
+#  ON i.idInventory=ch.Inventory_idInventory AND i.idInventory=u.Inventory_idInventory AND ub.idUse = u.UseBase_idUse
+#  WHERE name= "%s" AND idItem="%s" AND idUse = "%s";"""
+#  vals = (base, charName, itemID)
+#
+#SELECT * FROM viewStoreTransactions;

@@ -11,6 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QMessageBox, QErrorMessage
 import Map
 
 grey_background = "background-color: rgb(245, 245, 245);"
@@ -52,6 +53,7 @@ class Ui_mapManager(object):
         self.okButton.setStyleSheet(grey_background)
         self.okButton.setObjectName("okButton")
         self.okButton.clicked.connect(lambda: self.parseInformation())
+        #self.okButton.clicked.connect(lambda: self.alertBox())
 
         self.createRadioButton = QtWidgets.QRadioButton(mapManager)
         self.createRadioButton.setGeometry(QtCore.QRect(10, 10, 61, 17))
@@ -136,6 +138,15 @@ class Ui_mapManager(object):
         elif (action == DELETE_BUTTON):
             Map.delete(tempMapID)
 
+    def alertBox(self):
+        msg = QMessageBox()
+        msg.setWindowTitle("Bad Request")
+        msg.setText("Your request could not be finished.                         ")
+        msg.setInformativeText("Error 101: Given type for mapId isn't compatible.\n\nCheck the details section for the complete error message.")
+        msg.setDetailedText("Error sql here")
+        msg.setIcon(QMessageBox.Critical)
+
+        x = msg.exec_()
 
 if __name__ == "__main__":
     import sys
