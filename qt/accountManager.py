@@ -166,7 +166,7 @@ class Ui_accountManager(object):
             Account.insert(tempUsername, tempPassword, tempProfilePicturePath, tempLocalization, tempLanguage, tempPIN)
         
         elif (action == VIEW_BUTTON):
-            if (not tempUsername and not tempPassword and not tempProfilePicturePath and not tempLocalization and not tempLanguage and not tempPIN):
+            if (not tempUsername):
                 result = Account.selectAll()
             else:
                 result = Account.select(tempUsername)

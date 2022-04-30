@@ -135,7 +135,7 @@ class Ui_characterManager(object):
         self.output = QtWidgets.QTableWidget(characterManager)
         self.output.setGeometry(QtCore.QRect(280, 60, 291, 271))
         self.output.setObjectName("output")
-        self.output.setColumnCount(11)
+        self.output.setColumnCount(12)
 
         column1 = QtWidgets.QTableWidgetItem()
         self.output.setHorizontalHeaderItem(0, column1)
@@ -159,15 +159,17 @@ class Ui_characterManager(object):
         self.output.setHorizontalHeaderItem(9, column10)
         column11 = QtWidgets.QTableWidgetItem()
         self.output.setHorizontalHeaderItem(10, column11)
+        column12 = QtWidgets.QTableWidgetItem()
+        self.output.setHorizontalHeaderItem(11, column12)
 
         column1 = self.output.horizontalHeaderItem(0)
         column1.setText(QtCore.QCoreApplication.translate("characterManager", "Username"))
         column2 = self.output.horizontalHeaderItem(1)
-        column2.setText(QtCore.QCoreApplication.translate("characterManager", "Character Name"))
+        column2.setText(QtCore.QCoreApplication.translate("characterManager", "Char. Name"))
         column3 = self.output.horizontalHeaderItem(2)
-        column3.setText(QtCore.QCoreApplication.translate("characterManager", "Character Class"))
+        column3.setText(QtCore.QCoreApplication.translate("characterManager", "Char. Creation Date"))
         column4 = self.output.horizontalHeaderItem(3)
-        column4.setText(QtCore.QCoreApplication.translate("characterManager", "Server"))
+        column4.setText(QtCore.QCoreApplication.translate("characterManager", "Char. Class"))
         column5 = self.output.horizontalHeaderItem(4)
         column5.setText(QtCore.QCoreApplication.translate("characterManager", "Attribute"))
         column6 = self.output.horizontalHeaderItem(5)
@@ -179,9 +181,11 @@ class Ui_characterManager(object):
         column9 = self.output.horizontalHeaderItem(8)
         column9.setText(QtCore.QCoreApplication.translate("characterManager", "EXP"))
         column10 = self.output.horizontalHeaderItem(9)
-        column10.setText(QtCore.QCoreApplication.translate("characterManager", "Last Map"))
+        column10.setText(QtCore.QCoreApplication.translate("characterManager", "Server"))
         column11 = self.output.horizontalHeaderItem(10)
-        column11.setText(QtCore.QCoreApplication.translate("characterManager", "Inventory ID"))
+        column11.setText(QtCore.QCoreApplication.translate("characterManager", "Last Map"))
+        column12 = self.output.horizontalHeaderItem(11)
+        column12.setText(QtCore.QCoreApplication.translate("characterManager", "Inventory ID"))
 
         self.retranslateUi(characterManager)
         QtCore.QMetaObject.connectSlotsByName(characterManager)
@@ -234,24 +238,15 @@ class Ui_characterManager(object):
             Character.insert(tempUsername, tempCharacterName, tempCharacterClass, tempAttribute, tempLevel, tempHP, tempMP, tempEXP, tempServer, tempLastMap, tempInventoryID)
         
         elif (action == VIEW_BUTTON):
-            if (not tempUsername and not tempCharacterName and not tempCharacterClass and not tempServer and not tempAttribute and not tempLevel and not tempHP and not tempMP and not tempEXP and not tempServer and not tempLastMap and not tempInventoryID):
+            if (not tempUsername and not tempCharacterName and not tempCharacterClass and not tempServer and not tempHP and not tempMP and not tempEXP and not tempServer and not tempLastMap and not tempInventoryID):
                 result = Character.selectAll()
             else:
                 result = Character.select(tempCharacterName)
                 result = [result]
             self.output.setRowCount(len(result))
             for i in range(len(result)):
-                self.output.setItem(i, 0, QtWidgets.QTableWidgetItem(str(result[i][0])))
-                self.output.setItem(i, 1, QtWidgets.QTableWidgetItem(str(result[i][1])))
-                self.output.setItem(i, 2, QtWidgets.QTableWidgetItem(str(result[i][2])))
-                self.output.setItem(i, 3, QtWidgets.QTableWidgetItem(str(result[i][3])))
-                self.output.setItem(i, 4, QtWidgets.QTableWidgetItem(str(result[i][4])))
-                self.output.setItem(i, 5, QtWidgets.QTableWidgetItem(str(result[i][5])))
-                self.output.setItem(i, 6, QtWidgets.QTableWidgetItem(str(result[i][6])))
-                self.output.setItem(i, 7, QtWidgets.QTableWidgetItem(str(result[i][7])))
-                self.output.setItem(i, 8, QtWidgets.QTableWidgetItem(str(result[i][8])))
-                self.output.setItem(i, 9, QtWidgets.QTableWidgetItem(str(result[i][9])))
-                self.output.setItem(i, 10, QtWidgets.QTableWidgetItem(str(result[i][10])))
+                for j in range(0,12):
+                    self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
 
         elif (action == UPDATE_BUTTON):
             Character.update(tempCharacterName, tempCharacterClass, tempAttribute, tempLevel, tempHP, tempMP, tempEXP, tempServer, tempLastMap)
