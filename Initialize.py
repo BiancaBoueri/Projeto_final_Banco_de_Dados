@@ -151,7 +151,193 @@ def storeInitializer():
     mycursor.execute(sql)
     mydb.commit()
 
-def initializeAll():
+def createSellProcedure(): 
+
+    sql = """DELIMITER $$
+    CREATE PROCEDURE sellUseItem(
+    IN characterName VARCHAR(20),
+    IN itemID CHAR(8),
+    IN quantity TINYINT,
+    OUT sellReturn VARCHAR(50)
+    )
+    BEGIN
+      SET @useSubInventoryID = (SELECT idUseSubInventory FROM maplestory.Character AS ch JOIN UseSubInventory AS u ON ch.Inventory_idInventory=u.Inventory_idInventory WHERE name = characterName);
+      SET @itemQuantity = (SELECT useQuantity FROM UseSubInventory WHERE UseBase_idUse = itemID AND idUseSubInventory = @useSubInventoryID); 
+        IF @itemQuantity < quantity THEN
+        SET sellreturn = "Character doesn't have enough itens";
+      ELSE 
+            SET @inventory = (SELECT Inventory_idInventory FROM maplestory.Character WHERE name = characterName);
+            SET @value = (SELECT value FROM UseBase WHERE idUse = itemID);
+            UPDATE Inventory SET mesos = mesos + (@value * quantity) WHERE idInventory = @inventory;
+        UPDATE UseSubInventory SET useQuantity = useQuantity - quantity WHERE UseBase_idUse = itemID AND idUseSubInventory = @useSubInventoryID;
+        INSERT INTO Store VALUES (itemID,@value,quantity) ON DUPLICATE KEY UPDATE stock=stock + quantity;        
+        SET sellReturn = "Success";
+      END IF;
+    END $$ 
+    DELIMITER ;"""
+
+    mycursor.execute(sql)
+    mydb.commit()
+
+    sql = """DELIMITER $$
+    CREATE PROCEDURE sellEtcItem(
+    IN characterName VARCHAR(20),
+    IN itemID CHAR(8),
+    IN quantity TINYINT,
+    OUT sellReturn VARCHAR(50)
+    )
+    BEGIN
+      SET @etcSubInventoryID = (SELECT idEtcSubInventory FROM maplestory.Character AS ch JOIN EtcSubInventory AS u ON ch.Inventory_idInventory=u.Inventory_idInventory WHERE name = characterName);
+      SET @itemQuantity = (SELECT etcQuantity FROM EtcSubInventory WHERE EtcBase_idEtc = itemID AND idEtcSubInventory = @etcSubInventoryID); 
+        IF @itemQuantity < quantity THEN
+        SET sellreturn = "Character doesn't have enough itens";
+      ELSE 
+            SET @inventory = (SELECT Inventory_idInventory FROM maplestory.Character WHERE name = characterName);
+            SET @value = (SELECT value FROM EtcBase WHERE idEtc = itemID);
+            UPDATE Inventory SET mesos = mesos + (@value * quantity) WHERE idInventory = @inventory;
+        UPDATE EtcSubInventory SET etcQuantity = etcQuantity - quantity WHERE EtcBase_idEtc = itemID AND idEtcSubInventory = @etcSubInventoryID;
+        INSERT INTO Store VALUES (itemID,@value,quantity) ON DUPLICATE KEY UPDATE stock=stock + quantity;        
+        SET sellReturn = "Success";
+      END IF;
+    END $$ 
+    DELIMITER ;"""
+  
+    mycursor.execute(sql)
+    mydb.commit()
+
+    sql = """DELIMITER $$
+    CREATE PROCEDURE sellEquipItem(
+    IN characterName VARCHAR(20),
+    IN itemID CHAR(8),
+    IN quantity TINYINT,
+    IN rarity VARCHAR(9),
+    OUT sellReturn VARCHAR(50)
+    )
+    BEGIN 
+      SET @equipSubInventoryID = (SELECT idEquipSubInventory FROM maplestory.Character AS ch JOIN EquipSubInventory AS u ON ch.Inventory_idInventory=u.Inventory_idInventory WHERE name = characterName);
+        SET @itemQuantity = (SELECT equipQuantity FROM EquipSubInventory WHERE EquipBase_idEquip = itemID AND idEquipSubInventory = @equipSubInventoryID AND equipRarity = rarity);
+        IF @itemQuantity < quantity THEN
+        SET sellreturn = "Character doesn't have enough itens";
+      ELSE 
+            SET @inventory = (SELECT Inventory_idInventory FROM maplestory.Character WHERE name = characterName);
+            SET @value = (SELECT value FROM EquipBase WHERE idEquip = itemID);
+            UPDATE Inventory SET mesos = mesos + (@value * quantity) WHERE idInventory = @inventory;
+        UPDATE EquipSubInventory SET equipQuantity = equipQuantity - quantity WHERE EquipBase_idEquip = itemID AND idEquipSubInventory = @equipSubInventoryID AND equipRarity = rarity;
+        INSERT INTO Store VALUES (itemID,@value,quantity) ON DUPLICATE KEY UPDATE stock=stock + quantity;        
+        SET sellReturn = "Success";
+      END IF;
+    END $$ 
+    DELIMITER ;"""
+
+    mycursor.execute(sql)
+    mydb.commit()
+
+def createBuyProcedure():
+
+    sql = """DELIMITER $$
+    CREATE PROCEDURE buyUseItem( 
+    IN characterName VARCHAR(20),
+    IN itemID CHAR(8),
+    IN quantity TINYINT,
+    OUT buyReturn VARCHAR(50)
+    )
+    BEGIN
+      SET @useSubInventoryID = (SELECT idUseSubInventory FROM maplestory.Character AS ch JOIN UseSubInventory AS u ON ch.Inventory_idInventory=u.Inventory_idInventory WHERE name = characterName);
+        SET @inventory = (SELECT Inventory_idInventory FROM maplestory.Character WHERE name = characterName);
+        SET @characterMesos = (SELECT mesos from Inventory where idInventory = @inventory);    
+        SET @storeStock = (SELECT stock FROM Store WHERE idItem = itemID);
+        SET @itemExists = (SELECT EXISTS(SELECT idItem FROM Store WHERE idItem = itemID));
+        IF @itemExists = 0 THEN
+        SET buyReturn = "Store doesn't have this item in stock";
+        ELSEIF quantity > @storeStock THEN
+        SET buyReturn = "Store doesn't have enough items in stock";
+        ELSE 
+        SET @value = (SELECT value FROM Store WHERE idItem = itemID);        
+        IF @value > @characterMesos THEN
+          SET buyReturn = "Character doesn't have enough money";
+        ELSE 
+          UPDATE Inventory SET mesos = mesos - (@value * quantity) WHERE idInventory = @inventory;
+          INSERT INTO UseSubInventory VALUES (@useSubInventoryID,@inventory,itemID,quantity) ON DUPLICATE KEY UPDATE useQuantity=useQuantity + quantity;
+          INSERT INTO Store VALUES (itemID,@value,"1") ON DUPLICATE KEY UPDATE stock=stock - quantity;
+          SET buyReturn = "Success";
+        END IF;
+      END IF;
+    END $$ 
+    DELIMITER ;"""
+
+    mycursor.execute(sql)
+    mydb.commit()
+
+    sql = """DELIMITER $$
+    CREATE PROCEDURE buyEtcItem( 
+    IN characterName VARCHAR(20),
+    IN itemID CHAR(8),
+    IN quantity TINYINT,
+    OUT buyReturn VARCHAR(50)
+    )
+    BEGIN
+      SET @etcSubInventoryID = (SELECT idEtcSubInventory FROM maplestory.Character AS ch JOIN EtcSubInventory AS u ON ch.Inventory_idInventory=u.Inventory_idInventory WHERE name = characterName);
+        SET @inventory = (SELECT Inventory_idInventory FROM maplestory.Character WHERE name = characterName);
+        SET @characterMesos = (SELECT mesos from Inventory where idInventory = @inventory);    
+        SET @storeStock = (SELECT stock FROM Store WHERE idItem = itemID);
+        SET @itemExists = (SELECT EXISTS(SELECT idItem FROM Store WHERE idItem = itemID));
+        IF @itemExists = 0 THEN
+        SET buyReturn = "Store doesn't have this item in stock";
+        ELSEIF quantity > @storeStock THEN
+        SET buyReturn = "Store doesn't have enough items in stock";
+        ELSE 
+        SET @value = (SELECT value FROM Store WHERE idItem = itemID);        
+        IF @value > @characterMesos THEN
+          SET buyReturn = "Character doesn't have enough money";
+        ELSE 
+          UPDATE Inventory SET mesos = mesos - (@value * quantity) WHERE idInventory = @inventory;
+          INSERT INTO EtcSubInventory VALUES (@etcSubInventoryID,@inventory,itemID,quantity) ON DUPLICATE KEY UPDATE etcQuantity=etcQuantity + quantity;
+          INSERT INTO Store VALUES (itemID,@value,"1") ON DUPLICATE KEY UPDATE stock=stock - quantity;
+          SET buyReturn = "Success";
+        END IF;
+      END IF;
+    END $$ 
+    DELIMITER ;"""
+
+    mycursor.execute(sql)
+    mydb.commit()
+
+    sql = """
+    DELIMITER $$
+    CREATE PROCEDURE buyEquipItem( 
+    IN characterName VARCHAR(20),
+    IN itemID CHAR(8),
+    IN quantity TINYINT,
+    OUT buyReturn VARCHAR(50)
+    )
+    BEGIN
+      SET @equipSubInventoryID = (SELECT idEquipSubInventory FROM maplestory.Character AS ch JOIN EquipSubInventory AS u ON ch.Inventory_idInventory=u.Inventory_idInventory WHERE name = characterName);
+        SET @inventory = (SELECT Inventory_idInventory FROM maplestory.Character WHERE name = characterName);
+        SET @characterMesos = (SELECT mesos from Inventory where idInventory = @inventory);    
+        SET @storeStock = (SELECT stock FROM Store WHERE idItem = itemID);
+        SET @itemExists = (SELECT EXISTS(SELECT idItem FROM Store WHERE idItem = itemID));
+        IF @itemExists = 0 THEN
+        SET buyReturn = "Store doesn't have this item in stock";
+        ELSEIF quantity > @storeStock THEN
+        SET buyReturn = "Store doesn't have enough items in stock";
+        ELSE 
+        SET @value = (SELECT value FROM Store WHERE idItem = itemID);        
+        IF @value > @characterMesos THEN
+          SET buyReturn = "Character doesn't have enough money";
+        ELSE 
+          UPDATE Inventory SET mesos = mesos - (@value * quantity) WHERE idInventory = @inventory;
+                INSERT INTO EquipSubInventory VALUES (@equipSubInventoryID,@inventory,itemID,quantity,"Rare") ON DUPLICATE KEY UPDATE equipQuantity=equipQuantity + quantity;
+          INSERT INTO Store VALUES (itemID,@value,"1") ON DUPLICATE KEY UPDATE stock=stock - quantity;
+          SET buyReturn = "Success";
+        END IF;
+      END IF;
+    END $$ 
+    DELIMITER ;"""
+
+    mycursor.execute(sql)
+    mydb.commit()
+
+def initializeTables():
     accountInitializer()
     mapInitializer()
     inventoryInitializer()
@@ -164,3 +350,9 @@ def initializeAll():
     useSubInventoryInitializer()
     etcSubInventoryInitializer()
     storeInitializer()
+
+def initializeProcedure():
+    createSellProcedure()
+    createBuyProcedure()
+
+initializeProcedure()

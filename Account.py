@@ -7,8 +7,10 @@ def convertData(fileName):
     return binaryData
 
 def insert(username, password, profilePicture, localization, preferredLanguage, PIN):
-  if(profilePicture != None):
+  if(profilePicture != ''):
     profilePicture = convertData(profilePicture)
+  else:
+    profilePicture = convertData("./images/avatarDefault.png")
   creationDate = date.today()
   sql = "INSERT INTO Account VALUES (%s,%s,%s,%s,%s,%s,%s)"
   vals = (username, password, profilePicture, creationDate, localization, preferredLanguage, PIN)

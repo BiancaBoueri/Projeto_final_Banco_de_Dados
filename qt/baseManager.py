@@ -14,6 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize
 import EquipBase, UseBase, EtcBase
+import alertBox
 
 grey_background = "background-color: rgb(245, 245, 245);"
 white_background = "background-color: rgb(255, 255, 255);"
@@ -380,7 +381,7 @@ class Ui_baseManager(object):
     def parseInformation(self, base):
         action = self.buttonGroup.checkedId()
         if (base == "Equip"):
-            tempIDEquip = self.idUse.text()
+            tempIDEquip = self.idEquip.text()
             tempEquipName = self.useName.text()
             tempClass = self.classCanUse.text()
             tempATT = self.attackPower.text()
@@ -389,25 +390,32 @@ class Ui_baseManager(object):
             tempBonus = self.attributeBonus.text()
             tempEquipValue = self.useValue.text()
 
-            if (action == ADD_BUTTON):
-                EquipBase.insert(tempIDEquip, tempEquipName, tempClass, tempATT, tempMATT, tempAttribute, tempBonus, tempEquipValue)
+            try:
+                if (action == ADD_BUTTON):
+                    EquipBase.insert(tempIDEquip, tempEquipName, tempClass, tempATT, tempMATT, tempAttribute, tempBonus, tempEquipValue)
 
-            elif (action == VIEW_BUTTON):
-                if (not tempIDEquip):
-                    result = EquipBase.selectAll()
-                else:
-                    result = EquipBase.select(tempIDEquip)
-                    result = [result]
-                self.output.setRowCount(len(result))
-                for i in range(len(result)):
-                    for j in range(0,8):
-                        self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
+                elif (action == VIEW_BUTTON):
+                    if (tempIDEquip == ''):
+                        result = EquipBase.selectAll()
+                    else:
+                        result = EquipBase.select(tempIDEquip)
+                        result = [result]
+                    self.output.setRowCount(len(result))
+                    print(len(result))
+                    for i in range(len(result)):
+                        for j in range(0,8):
+                            self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
 
-            elif (action == UPDATE_BUTTON):
-                EquipBase.update(tempIDEquip, tempEquipName, tempClass, tempATT, tempMATT, tempAttribute, tempBonus, tempEquipValue)
 
-            elif (action == DELETE_BUTTON):
-                EquipBase.delete(tempIDEquip)
+                elif (action == UPDATE_BUTTON):
+                    EquipBase.update(tempIDEquip, tempEquipName, tempClass, tempATT, tempMATT, tempAttribute, tempBonus, tempEquipValue)
+
+                elif (action == DELETE_BUTTON):
+                    EquipBase.delete(tempIDEquip)
+
+            except Exception as e:
+                if (type(e) != TypeError):
+                    alertBox.AlertBox(e)
 
         elif (base == "Use"):
             tempIDUse = self.idUse.text()
@@ -417,51 +425,60 @@ class Ui_baseManager(object):
             tempBonus = self.attributeBonusUse.text()
             tempUseValue = self.useValue.text()
 
-            if (action == ADD_BUTTON):
-                UseBase.insert(tempIDUse, tempUseName, tempRecHP, tempRecMP, tempBonus, tempUseValue)
+            try:
+                if (action == ADD_BUTTON):
+                    UseBase.insert(tempIDUse, tempUseName, tempRecHP, tempRecMP, tempBonus, tempUseValue)
+            
+                elif (action == VIEW_BUTTON):
+                    if (not tempIDUse):
+                        result = UseBase.selectAll()
+                    else:
+                        result = UseBase.select(tempIDUse)
+                        result = [result]
+                    self.output.setRowCount(len(result))
+                    for i in range(len(result)):
+                        for j in range(0,6):
+                            self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
 
-            elif (action == VIEW_BUTTON):
-                if (not tempIDUse):
-                    result = UseBase.selectAll()
-                else:
-                    result = UseBase.select(tempIDEtc)
-                    result = [result]
-                self.output.setRowCount(len(result))
-                for i in range(len(result)):
-                    for j in range(0,6):
-                        self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
+                elif (action == UPDATE_BUTTON):
+                    UseBase.update(tempIDUse, tempUseName, tempRecHP, tempRecMP, tempBonus, tempUseValue)
 
-            elif (action == UPDATE_BUTTON):
-                UseBase.update(tempIDUse, tempUseName, tempRecHP, tempRecMP, tempBonus, tempUseValue)
+                elif (action == DELETE_BUTTON):
+                    UseBase.delete(tempIDUse)
 
-            elif (action == DELETE_BUTTON):
-                UseBase.delete(tempIDUse)
+            except Exception as e:
+                if (type(e) != TypeError):
+                    alertBox.AlertBox(e)
 
         else:
             tempIDEtc = self.idEtc.text()
             tempEtcName = self.etcName.text()
             tempEtcValue = self.etcValue.text()
+            
+            try:
+                if (action == ADD_BUTTON):
+                    EtcBase.insert(tempIDEtc, tempEtcName, tempEtcValue)
 
-            if (action == ADD_BUTTON):
-                EtcBase.insert(tempIDEtc, tempEtcName, tempEtcValue)
+                elif (action == VIEW_BUTTON):
+                    if (not tempIDEtc):
+                        result = EtcBase.selectAll()
+                    else:
+                        result = EtcBase.select(tempIDEtc)
+                        result = [result]
+                    self.output.setRowCount(len(result))
+                    for i in range(len(result)):
+                        for j in range(0,3):
+                            self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
 
-            elif (action == VIEW_BUTTON):
-                if (not tempIDEtc):
-                    result = EtcBase.selectAll()
-                else:
-                    result = EtcBase.select(tempIDEtc)
-                    result = [result]
-                self.output.setRowCount(len(result))
-                for i in range(len(result)):
-                    for j in range(0,3):
-                        self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
+                elif (action == UPDATE_BUTTON):
+                    EtcBase.update(tempIDEtc, tempEtcName, tempEtcValue)
 
-            elif (action == UPDATE_BUTTON):
-                EtcBase.update(tempIDEtc, tempEtcName, tempEtcValue)
+                elif (action == DELETE_BUTTON):
+                    EtcBase.delete(tempIDEtc)
 
-            elif (action == DELETE_BUTTON):
-                EtcBase.delete(tempIDEtc)
-
+            except Exception as e:
+                if (type(e) != TypeError):
+                    alertBox.AlertBox(e)
 
 if __name__ == "__main__":
     import sys

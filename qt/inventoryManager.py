@@ -12,6 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize
 import Inventory, EquipSubInventory, UseSubInventory, EtcSubInventory
+import alertBox
 
 
 grey_background = "background-color: rgb(245, 245, 245);"
@@ -240,36 +241,41 @@ class Ui_inventoryManager(object):
             tempQuantity = self.quantity.text()
             tempRarity = self.rarity.text()
             
-            if (action == ADD_SUBINVENTORY_BUTTON):
-                if (tempChosenSubInventory == 0):
-                    subInventory.insert(tempSubInventoryID, tempParentInventoryID, tempItemID, tempQuantity, tempRarity)
-                else:
-                    subInventory.insert(tempSubInventoryID, tempParentInventoryID, tempItemID, tempQuantity)
+            try:
+                if (action == ADD_SUBINVENTORY_BUTTON):
+                    if (tempChosenSubInventory == 0):
+                        subInventory.insert(tempSubInventoryID, tempParentInventoryID, tempItemID, tempQuantity, tempRarity)
+                    else:
+                        subInventory.insert(tempSubInventoryID, tempParentInventoryID, tempItemID, tempQuantity)
 
-            elif (action == VIEW_SUBINVENTORY_BUTTON):
-                if (not tempParentInventoryID and not tempSubInventoryID and not tempItemID and not tempQuantity):
-                    result = subInventory.selectAll()
-                else:
-                    result = subInventory.select(tempSubInventoryID)
-                    result = [result]
-                self.output.setRowCount(len(result))
-                if (tempChosenSubInventory == 0):
-                    for i in range(len(result)):
-                        for j in range(0,5):
-                            self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
-                else:
-                    for i in range(len(result)):
-                        for j in range(0,4):
-                            self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
+                elif (action == VIEW_SUBINVENTORY_BUTTON):
+                    if (not tempParentInventoryID and not tempSubInventoryID and not tempItemID and not tempQuantity):
+                        result = subInventory.selectAll()
+                    else:
+                        result = subInventory.select(tempSubInventoryID)
+                        result = [result]
+                    self.output.setRowCount(len(result))
+                    if (tempChosenSubInventory == 0):
+                        for i in range(len(result)):
+                            for j in range(0,5):
+                                self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
+                    else:
+                        for i in range(len(result)):
+                            for j in range(0,4):
+                                self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
 
-            elif (action == UPDATE_SUBINVENTORY_BUTTON):
-                if (tempChosenSubInventory == 0):
-                    subInventory.update(tempSubInventoryID, tempQuantity, tempRarity)
-                else:
-                    subInventory.update(tempItemID, tempQuantity)
+                elif (action == UPDATE_SUBINVENTORY_BUTTON):
+                    if (tempChosenSubInventory == 0):
+                        subInventory.update(tempSubInventoryID, tempItemID ,tempQuantity, tempRarity)
+                    else:
+                        subInventory.update(tempSubInventoryID, tempItemID, tempQuantity)
 
-            elif (action == DELETE_SUBINVENTORY_BUTTON):
-                subInventory.delete(tempSubInventoryID)
+                elif (action == DELETE_SUBINVENTORY_BUTTON):
+                    subInventory.delete(tempSubInventoryID)
+
+            except Exception as e:
+                if (type(e) != TypeError):
+                    alertBox.AlertBox(e)
 
         elif (action >= DELETE_INVENTORY_BUTTON): #Inventory
 
@@ -293,25 +299,31 @@ class Ui_inventoryManager(object):
             tempMesos = self.mesos.text()
             tempNX = self.nx.text()
 
-            if (action == ADD_INVENTORY_BUTTON):
-                Inventory.insert(tempCharacterID, tempInventoryID, tempMesos, tempNX)
+            try:
+                if (action == ADD_INVENTORY_BUTTON):
+                    Inventory.insert(tempCharacterID, tempInventoryID, tempMesos, tempNX)
 
-            elif (action == VIEW_INVENTORY_BUTTON):
-                if (not tempCharacterID and not tempInventoryID and not tempMesos and not tempNX):
-                    result = Inventory.selectAll()
-                else:
-                    result = Inventory.select(tempInventoryID)
-                    result = [result]
-                self.output.setRowCount(len(result))
-                for i in range(len(result)):
-                        for j in range(0,3):
-                            self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
+                elif (action == VIEW_INVENTORY_BUTTON):
+                    if (not tempCharacterID and not tempInventoryID and not tempMesos and not tempNX):
+                        result = Inventory.selectAll()
+                    else:
+                        result = Inventory.select(tempInventoryID)
+                        result = [result]
+                    self.output.setRowCount(len(result))
+                    for i in range(len(result)):
+                            for j in range(0,3):
+                                self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
+
             
-            elif (action == UPDATE_INVENTORY_BUTTON):
-                Inventory.update(tempInventoryID, tempMesos, tempNX)
+                elif (action == UPDATE_INVENTORY_BUTTON):
+                    Inventory.update(tempInventoryID, tempMesos, tempNX)
 
-            else:
-                Inventory.delete(tempInventoryID)
+                else:
+                    Inventory.delete(tempInventoryID)
+
+            except Exception as e:
+                if (type(e) != TypeError):
+                    alertBox.AlertBox(e)
 
 if __name__ == "__main__":
     import sys

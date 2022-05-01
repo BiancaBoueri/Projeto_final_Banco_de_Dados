@@ -1,3 +1,4 @@
+import mysql.connector
 from dbConnection import mydb, mycursor 
 
 def insert(idMap,mapName,spawnPosition):
@@ -41,7 +42,25 @@ def deleteAll():
   mycursor.execute("DELETE FROM Map")
   mydb.commit()
 
+def callProcedure(username, mapsOnly):
 
+  procedureConnection = mysql.connector.connect(host="localhost", user="root",password="password",database="maplestory")
+  myProcedureCursor = procedureConnection.cursor(buffered=True)
+  
+  if (mapsOnly):
+    sql = "CALL findMapWhereCharactersAre ('%s', 0, 1);" %(username)
+  else:
+    sql = "CALL findMapWhereCharactersAre ('%s', 1, 0);" %(username)
+  
+  resultList = []
+  myProcedureCursor.execute(sql)
+
+  for i in myProcedureCursor:
+    resultList.append(i)
+
+  myProcedureCursor.close()
+
+  return resultList
 
 
 

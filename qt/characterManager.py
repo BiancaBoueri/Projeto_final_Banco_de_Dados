@@ -9,10 +9,10 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from characterManagerAdvancedView import Ui_characterManagerAdvancedView
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize
 import Character
+import alertBox
 
 grey_background = "background-color: rgb(245, 245, 245);"
 white_background = "background-color: rgb(255, 255, 255);"
@@ -120,12 +120,6 @@ class Ui_characterManager(object):
         self.charInventory.setText("")
         self.charInventory.setObjectName("charInventory")
 
-        self.advancedViewButton = QtWidgets.QPushButton(characterManager)
-        self.advancedViewButton.setGeometry(QtCore.QRect(150, 300, 111, 31))
-        self.advancedViewButton.setStyleSheet(grey_background)
-        self.advancedViewButton.setObjectName("advancedViewButton")
-        self.advancedViewButton.clicked.connect(self.callAdvancedView)
-
         self.okButton = QtWidgets.QPushButton(characterManager)
         self.okButton.setGeometry(QtCore.QRect(20, 300, 111, 31))
         self.okButton.setStyleSheet(grey_background)
@@ -195,7 +189,6 @@ class Ui_characterManager(object):
         characterManager.setWindowTitle(_translate("characterManager", "Maplestory Manager - Character"))
         self.charMP.setPlaceholderText(_translate("characterManager", "MP"))
         self.createRadioButton.setText(_translate("characterManager", "Add Character"))
-        self.advancedViewButton.setText(_translate("characterManager", "Advanced View..."))
         self.charClass.setPlaceholderText(_translate("characterManager", "Character Class"))
         self.charName.setPlaceholderText(_translate("characterManager", "Character Name"))
         self.charHP.setPlaceholderText(_translate("characterManager", "HP"))
@@ -214,12 +207,6 @@ class Ui_characterManager(object):
         self.okButton.setText(_translate("characterManager", "OK"))
         self.username.setPlaceholderText(_translate("characterManager", "Username"))
 
-    def callAdvancedView(self):
-        self.characterManagerAdvancedViewWindow = QtWidgets.QWidget()
-        self.ui = Ui_characterManagerAdvancedView()
-        self.ui.setupUi(self.characterManagerAdvancedViewWindow)
-        self.characterManagerAdvancedViewWindow.show()
-
     def parseInformation(self):
         tempUsername = self.username.text()
         tempCharacterName = self.charName.text()
@@ -234,25 +221,30 @@ class Ui_characterManager(object):
         tempInventoryID = self.charInventory.text()
         action = self.buttonGroup.checkedId()
 
-        if (action == ADD_BUTTON):
-            Character.insert(tempUsername, tempCharacterName, tempCharacterClass, tempAttribute, tempLevel, tempHP, tempMP, tempEXP, tempServer, tempLastMap, tempInventoryID)
-        
-        elif (action == VIEW_BUTTON):
-            if (not tempUsername and not tempCharacterName and not tempCharacterClass and not tempServer and not tempHP and not tempMP and not tempEXP and not tempServer and not tempLastMap and not tempInventoryID):
-                result = Character.selectAll()
-            else:
-                result = Character.select(tempCharacterName)
-                result = [result]
-            self.output.setRowCount(len(result))
-            for i in range(len(result)):
-                for j in range(0,12):
-                    self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
+        try:
+            if (action == ADD_BUTTON):
+                Character.insert(tempUsername, tempCharacterName, tempCharacterClass, tempAttribute, tempLevel, tempHP, tempMP, tempEXP, tempServer, tempLastMap, tempInventoryID)
 
-        elif (action == UPDATE_BUTTON):
-            Character.update(tempCharacterName, tempCharacterClass, tempAttribute, tempLevel, tempHP, tempMP, tempEXP, tempServer, tempLastMap)
+            elif (action == VIEW_BUTTON):
+                if (not tempCharacterName):
+                    result = Character.selectAll()
+                else:
+                    result = Character.select(tempCharacterName)
+                    result = [result]
+                self.output.setRowCount(len(result))
+                for i in range(len(result)):
+                    for j in range(0,12):
+                        self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
 
-        elif (action == DELETE_BUTTON):
-            Character.delete(tempCharacterName)
+            elif (action == UPDATE_BUTTON):
+                Character.update(tempCharacterName, tempCharacterClass, tempAttribute, tempLevel, tempHP, tempMP, tempEXP, tempServer, tempLastMap)
+
+            elif (action == DELETE_BUTTON):
+                Character.delete(tempCharacterName)
+
+        except Exception as e:
+            if (type(e) != TypeError):
+                alertBox.AlertBox(e)
 
 if __name__ == "__main__":
     import sys

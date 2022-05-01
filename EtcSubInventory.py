@@ -6,10 +6,10 @@ def insert(idEtcSubInventory, Inventory_idInventory, EtcBase_idEtc, etcQuantity)
   mycursor.execute(sql,vals)
   mydb.commit()
 
-def update(idEtcSubInventory, etcQuantity):
+def update(idEtcSubInventory, etcID, etcQuantity):
   if(etcQuantity):
-    sql = "UPDATE EtcSubInventory SET etcQuantity = %s WHERE idEtcSubInventory = %s"
-    vals = (etcQuantity,idEtcSubInventory)
+    sql = "UPDATE EtcSubInventory SET etcQuantity = %s WHERE idEtcSubInventory = %s AND EtcBase_idEtc = %s"
+    vals = (etcQuantity,idEtcSubInventory,etcID)
     mycursor.execute(sql,vals)
     mydb.commit()
     

@@ -11,10 +11,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize
-import Account
 import AccountAdvanced
-import io
-from PIL import Image, ImageFile
+import alertBox
+from PIL import ImageFile
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
@@ -185,10 +184,12 @@ class Ui_accountManagerAdvancedView(object):
 
     def parseInformation(self):
         choicesList = [self.usernameCheckbox.isChecked(), self.passwordCheckbox.isChecked(), self.creationDateCheckbox.isChecked(), self.localizationCheckbox.isChecked(), self.preferredLanguageCheckbox.isChecked(), self.pinCheckbox.isChecked(), self.profilePictureCheckbox.isChecked()]
-        namesList = ["Username", "Password", "Creation Date", "Localization", "Language", "PIN", "Profile Picture"]
-        SQLnamesList = ["username", "password", "creationDate", "localization", "preferredLanguage", "PIN", "profilePicture"]
+        namesList = ["Username", "Password", "Creation Date", "Localization", "Language", "PIN", "Profile Picture", '']
+        SQLnamesList = ["username", "password", "creationDate", "localization", "preferredLanguage", "PIN", "profilePicture", None]
         
-        conditionalVar1 = (self.inputFirstConditional.currentText(), self.conditionFirstConditional.currentText() , self.outputFirstConditional.text())
+        conditionalVar1 = (SQLnamesList[namesList.index(self.inputFirstConditional.currentText())], 
+                            self.conditionFirstConditional.currentText(), 
+                            self.outputFirstConditional.text())
         if (self.orFirst.isChecked()):
             conditional1 = "OR"
         elif (self.andFirst.isChecked()):
@@ -196,7 +197,9 @@ class Ui_accountManagerAdvancedView(object):
         else:
             conditional1 = None
 
-        conditionalVar2 = (self.inputSecondConditional.currentText(), self.conditionSecondConditional.currentText() , self.outputSecondConditional.text())
+        conditionalVar2 = (SQLnamesList[namesList.index(self.inputSecondConditional.currentText())], 
+                            self.conditionSecondConditional.currentText(), 
+                            self.outputSecondConditional.text())
         if (self.orSecond.isChecked()):
             conditional2 = "OR"
         elif (self.andSecond.isChecked()):
@@ -204,7 +207,9 @@ class Ui_accountManagerAdvancedView(object):
         else:
             conditional2 = None
 
-        conditionalVar3 = (self.inputThirdConditional.currentText(), self.conditionThirdConditional.currentText() , self.outputThirdConditional.text())
+        conditionalVar3 = (SQLnamesList[namesList.index(self.inputThirdConditional.currentText())], 
+                            self.conditionThirdConditional.currentText(), 
+                            self.outputThirdConditional.text())
 
         if (choicesList.count(0) == len(choicesList)):
             choicesList = [1] * len(choicesList)
@@ -220,19 +225,23 @@ class Ui_accountManagerAdvancedView(object):
                 newColumn.setText(QtCore.QCoreApplication.translate("accountManagerAdvancedView", namesList[i]))
                 counter += 1
 
-        result = AccountAdvanced.advancedSelect(choicesList, SQLnamesList, conditionalVar1, conditional1, conditionalVar2, conditional2, conditionalVar3)
-        self.output.setRowCount(len(result))
-        for i in range(len(result)):
-            for j in range(0,choicesList.count(True)):
-                self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
+        try:
+            result = AccountAdvanced.advancedSelect(choicesList, SQLnamesList, conditionalVar1, conditional1, conditionalVar2, conditional2, conditionalVar3)
+            self.output.setRowCount(len(result))
+            for i in range(len(result)):
+                for j in range(0,choicesList.count(True)):
+                    self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
 
 
-        if (choicesList[-1]):
-            image = result[-1][-1]
-            pixmap = QtGui.QPixmap()
-            pixmap.loadFromData(image)
-            pixmap = pixmap.scaled(128, 128, QtCore.Qt.KeepAspectRatio)
-            self.profilePictureView.setPixmap(pixmap)
+            if (choicesList[-1]):
+                image = result[-1][-1]
+                pixmap = QtGui.QPixmap()
+                pixmap.loadFromData(image)
+                pixmap = pixmap.scaled(128, 128, QtCore.Qt.KeepAspectRatio)
+                self.profilePictureView.setPixmap(pixmap)
+        
+        except Exception as e:
+            alertBox.AlertBox(e)
         
 
 

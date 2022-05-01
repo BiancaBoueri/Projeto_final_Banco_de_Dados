@@ -13,6 +13,7 @@ from accountManagerAdvancedView import Ui_accountManagerAdvancedView
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize
 import Account
+import alertBox
 
 grey_background = "background-color: rgb(245, 245, 245);"
 white_background = "background-color: rgb(255, 255, 255);"
@@ -162,29 +163,35 @@ class Ui_accountManager(object):
         tempPIN = self.pin.text()
         action = self.buttonGroup.checkedId()
 
-        if (action == ADD_BUTTON):
-            Account.insert(tempUsername, tempPassword, tempProfilePicturePath, tempLocalization, tempLanguage, tempPIN)
+        try:
+            if (action == ADD_BUTTON):
+                Account.insert(tempUsername, tempPassword, tempProfilePicturePath, tempLocalization, tempLanguage, tempPIN)
+
         
-        elif (action == VIEW_BUTTON):
-            if (not tempUsername):
-                result = Account.selectAll()
-            else:
-                result = Account.select(tempUsername)
-                result = [result]
-            self.output.setRowCount(len(result))
-            for i in range(len(result)):
-                self.output.setItem(i, 0, QtWidgets.QTableWidgetItem(str(result[i][0])))
-                self.output.setItem(i, 1, QtWidgets.QTableWidgetItem(str(result[i][1])))
-                self.output.setItem(i, 2, QtWidgets.QTableWidgetItem(str(result[i][3])))
-                self.output.setItem(i, 3, QtWidgets.QTableWidgetItem(str(result[i][4])))
-                self.output.setItem(i, 4, QtWidgets.QTableWidgetItem(str(result[i][5])))
-                self.output.setItem(i, 5, QtWidgets.QTableWidgetItem(str(result[i][6])))
+            elif (action == VIEW_BUTTON):
+                if (tempUsername == ''):
+                    result = Account.selectAll()
+                else:
+                    result = Account.select(tempUsername)
+                    result = [result]
+                self.output.setRowCount(len(result))
+                for i in range(len(result)):
+                    self.output.setItem(i, 0, QtWidgets.QTableWidgetItem(str(result[i][0])))
+                    self.output.setItem(i, 1, QtWidgets.QTableWidgetItem(str(result[i][1])))
+                    self.output.setItem(i, 2, QtWidgets.QTableWidgetItem(str(result[i][3])))
+                    self.output.setItem(i, 3, QtWidgets.QTableWidgetItem(str(result[i][4])))
+                    self.output.setItem(i, 4, QtWidgets.QTableWidgetItem(str(result[i][5])))
+                    self.output.setItem(i, 5, QtWidgets.QTableWidgetItem(str(result[i][6])))
 
-        elif (action == UPDATE_BUTTON):
-            Account.update(tempUsername, tempPassword, tempProfilePicturePath, tempLocalization, tempLanguage, tempPIN)
+            elif (action == UPDATE_BUTTON):
+                Account.update(tempUsername, tempPassword, tempProfilePicturePath, tempLocalization, tempLanguage, tempPIN)
 
-        elif (action == DELETE_BUTTON):
-            Account.delete(tempUsername)
+            elif (action == DELETE_BUTTON):
+                Account.delete(tempUsername)
+
+        except Exception as e:
+            if (type(e) != TypeError):
+                alertBox.AlertBox(e)
 
 
 if __name__ == "__main__":

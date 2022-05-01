@@ -29,9 +29,9 @@ def advancedSelect(choicesList, SQLnamesList, conditionalVar1, conditional1, con
 
     if (conditional1 is not None and not parseNullInTuple(conditionalVar2)):
         if (conditional2 is not None):
-            sql.append(" {} ({} {} {}".format(conditional1, conditionalVar2[0], conditionalVar2[1], conditionalVar2[2]))
+            sql.append(" {} ({} {} '{}'".format(conditional1, conditionalVar2[0], conditionalVar2[1], conditionalVar2[2]))
         else:
-            sql.append(" {} {} {} {}".format(conditional1, conditionalVar2[0], conditionalVar2[1], conditionalVar2[2]))
+            sql.append(" {} {} {} '{}'".format(conditional1, conditionalVar2[0], conditionalVar2[1], conditionalVar2[2]))
 
     if (conditional2 is not None and not parseNullInTuple(conditionalVar3)):
         if (conditional1 is not None):

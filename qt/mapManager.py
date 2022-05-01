@@ -12,7 +12,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QMessageBox, QErrorMessage
+from mapAdvancedFind import Ui_mapAdvancedFind
 import Map
+import alertBox
 
 grey_background = "background-color: rgb(245, 245, 245);"
 white_background = "background-color: rgb(255, 255, 255);"
@@ -25,9 +27,9 @@ DELETE_BUTTON = -5
 class Ui_mapManager(object):
     def setupUi(self, mapManager):
         mapManager.setObjectName("mapManager")
-        mapManager.resize(400, 215)
-        mapManager.setMinimumSize(QtCore.QSize(400, 215))
-        mapManager.setMaximumSize(QtCore.QSize(400, 215))
+        mapManager.resize(400, 255)
+        mapManager.setMinimumSize(QtCore.QSize(400, 255))
+        mapManager.setMaximumSize(QtCore.QSize(400, 255))
         icon = QIcon()
         icon.addFile(u"images\maplestoryIcon.ico", QSize(), QIcon.Normal, QIcon.Off)
         mapManager.setWindowIcon(icon)
@@ -53,7 +55,12 @@ class Ui_mapManager(object):
         self.okButton.setStyleSheet(grey_background)
         self.okButton.setObjectName("okButton")
         self.okButton.clicked.connect(lambda: self.parseInformation())
-        #self.okButton.clicked.connect(lambda: self.alertBox())
+
+        self.advancedFind = QtWidgets.QPushButton(mapManager)
+        self.advancedFind.setGeometry(QtCore.QRect(10, 210, 111, 31))
+        self.advancedFind.setStyleSheet(grey_background)
+        self.advancedFind.setObjectName("advancedFind")
+        self.advancedFind.clicked.connect(lambda: self.callAdvancedView())
 
         self.createRadioButton = QtWidgets.QRadioButton(mapManager)
         self.createRadioButton.setGeometry(QtCore.QRect(10, 10, 61, 17))
@@ -78,7 +85,7 @@ class Ui_mapManager(object):
         self.buttonGroup.addButton(self.deleteRadioButton)
         
         self.output = QtWidgets.QTableWidget(mapManager)
-        self.output.setGeometry(QtCore.QRect(145, 50, 241, 151))
+        self.output.setGeometry(QtCore.QRect(145, 50, 241, 191))
         self.output.setMinimumSize(QtCore.QSize(241, 151))
         self.output.setObjectName("output")
         self.output.setColumnCount(3)
@@ -109,8 +116,15 @@ class Ui_mapManager(object):
         self.createRadioButton.setText(_translate("mapManager", "Add Map"))
         self.spawnPosition.setPlaceholderText(_translate("mapManager", "Spawn Position"))
         self.okButton.setText(_translate("mapManager", "OK"))
+        self.advancedFind.setText(_translate("mapManager", "Advanced Find"))
         self.updateRadioButton.setText(_translate("mapManager", "Update Map"))
         self.deleteRadioButton.setText(_translate("mapManager", "Delete Map"))
+
+    def callAdvancedView(self):
+        self.mapAdvancedFind = QtWidgets.QWidget()
+        self.ui = Ui_mapAdvancedFind()
+        self.ui.setupUi(self.mapAdvancedFind)
+        self.mapAdvancedFind.show()
 
     def parseInformation(self):
         tempMapID = self.idMap.text()
@@ -118,35 +132,39 @@ class Ui_mapManager(object):
         tempSpawn = self.spawnPosition.text()
         action = self.buttonGroup.checkedId()
 
-        if (action == ADD_BUTTON):
-            Map.insert(tempMapID, tempMapName, tempSpawn)
-        
-        elif (action == VIEW_BUTTON):
-            if (not tempMapID and not tempMapName and not tempSpawn):
-                result = Map.selectAll()
-            else:
-                result = Map.select(tempMapID)
-                result = [result]
-            self.output.setRowCount(len(result))
-            for i in range(len(result)):
-                for j in range(0,3):
-                    self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
+        try:
+            if (action == ADD_BUTTON):
+                Map.insert(tempMapID, tempMapName, tempSpawn)
 
-        elif (action == UPDATE_BUTTON):
-            Map.update(tempMapID, tempMapName, tempSpawn)
+            elif (action == VIEW_BUTTON):
+                if (not tempMapID):
+                    result = Map.selectAll()
+                else:
+                    result = Map.select(tempMapID)
+                    result = [result]
+                self.output.setRowCount(len(result))
+                for i in range(len(result)):
+                    for j in range(0,3):
+                        self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
 
-        elif (action == DELETE_BUTTON):
-            Map.delete(tempMapID)
+            elif (action == UPDATE_BUTTON):
+                Map.update(tempMapID, tempMapName, tempSpawn)
 
-    def alertBox(self):
+            elif (action == DELETE_BUTTON):
+                Map.delete(tempMapID)
+
+        except Exception as e:
+            if (type(e) != TypeError):
+                alertBox.AlertBox(e)
+
+    def alertBox(self, errorMessage):
         msg = QMessageBox()
         msg.setWindowTitle("Bad Request")
         msg.setText("Your request could not be finished.                         ")
-        msg.setInformativeText("Error 101: Given type for mapId isn't compatible.\n\nCheck the details section for the complete error message.")
-        msg.setDetailedText("Error sql here")
+        msg.setInformativeText("Check the details section for the complete error message.")
+        msg.setDetailedText(str(errorMessage))
         msg.setIcon(QMessageBox.Critical)
-
-        x = msg.exec_()
+        exit = msg.exec_()
 
 if __name__ == "__main__":
     import sys
