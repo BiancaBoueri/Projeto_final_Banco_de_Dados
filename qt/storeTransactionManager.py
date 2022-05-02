@@ -123,7 +123,6 @@ class Ui_transactionManager(object):
         tempQuantity = self.quantity.text()
         tempRarity = self.rarity.text()
         rarityList = ["Rare","Epic","Unique","Legendary"]
-        paramList = [tempCharName, tempItemType, tempItemID, tempQuantity, tempRarity]
 
         if (tempItemType == "Equip" and self.buyProduct.isChecked()):
             tempRarity = "Rare"
