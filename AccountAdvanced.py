@@ -41,7 +41,6 @@ def advancedSelect(choicesList, SQLnamesList, conditionalVar1, conditional1, con
     sql.append(";")
 
     sql = ''.join(sql)
-    print(sql)
     mycursor.execute(sql)
     resultList = []
     for i in mycursor:

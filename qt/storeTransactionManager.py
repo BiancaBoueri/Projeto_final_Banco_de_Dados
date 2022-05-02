@@ -71,17 +71,17 @@ class Ui_transactionManager(object):
         column2 = self.output.horizontalHeaderItem(1)
         column2.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Inventory ID"))
         column3 = self.output.horizontalHeaderItem(2)
-        column3.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Subinventory ID"))
+        column3.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Mesos"))
         column4 = self.output.horizontalHeaderItem(3)
-        column4.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Mesos"))
+        column4.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Subinventory ID"))
         column5 = self.output.horizontalHeaderItem(4)
-        column5.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "In Stock"))
+        column5.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Item ID"))
         column6 = self.output.horizontalHeaderItem(5)
-        column6.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Value"))
+        column6.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Item Name"))
         column7 = self.output.horizontalHeaderItem(6)
-        column7.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Item ID"))
+        column7.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Item Quantity"))
         column8 = self.output.horizontalHeaderItem(7)
-        column8.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Quantity"))
+        column8.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Store Stock"))
         column9 = self.output.horizontalHeaderItem(8)
         column9.setText(QtCore.QCoreApplication.translate("storeTransactionManager", "Rarity (Equip)"))
 
@@ -122,33 +122,33 @@ class Ui_transactionManager(object):
         tempItemID = self.idItem.text()
         tempQuantity = self.quantity.text()
         tempRarity = self.rarity.text()
-        paramList = [tempCharName, tempItemType, tempItemID, tempQuantity]
+        rarityList = ["Rare","Epic","Unique","Legendary"]
+        paramList = [tempCharName, tempItemType, tempItemID, tempQuantity, tempRarity]
+
+        if (tempItemType == "Equip" and self.buyProduct.isChecked()):
+            tempRarity = "Rare"
+        if (tempItemType == "Equip" and self.sellProduct.isChecked() and tempRarity not in rarityList):
+            alertBox.AlertBox("Rarity must be correctly specified for selling Equips")
+            return
 
         try:
-            if (tempItemType == "Equip"):
-                if (self.buyProduct.isChecked()):
-                    paramList.append(tempRarity)
-                    result = [StoreTransaction.callBuyEquipItemProcedure(paramList)]
-                else:
-                    result = [StoreTransaction.callSellEquipItemProcedure(paramList)]
-            elif (tempItemType == "Use"):
-                if (self.buyProduct.isChecked()):
-                    result = [StoreTransaction.callBuyUseItemProcedure(paramList)]
-                else:
-                    result = [StoreTransaction.callSellUseItemProcedure(paramList)]
-            else:
-                if (self.buyProduct.isChecked()):
-                    result = [StoreTransaction.callBuyEtcItemProcedure(paramList)]
-                else:
-                    result = [StoreTransaction.callSellEtcItemProcedure(paramList)]
-
-            self.output.setRowCount(len(result))
-            for i in range(len(result)):
-                for j in range(0,len(result)):
-                    self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
+            if (self.buyProduct.isChecked()):
+                result = StoreTransaction.callBuyProcedure(tempCharName,tempItemType,tempItemID,tempQuantity,tempRarity)
+            elif (self.sellProduct.isChecked()):
+                result = StoreTransaction.callSellProcedure(tempCharName,tempItemType,tempItemID,tempQuantity,tempRarity)
+            
+            if (type(result) == str):
+                alertBox.AlertBox(result)
+                return
+            elif (len(result) == 8):
+                result = result + (None,)
+            self.output.setRowCount(1)
+            for j in range(0,len(result)):
+                self.output.setItem(0, j, QtWidgets.QTableWidgetItem(str(result[j])))
 
         except Exception as e:
-            alertBox.AlertBox(e)
+            if (type(e) != TypeError):
+                alertBox.AlertBox(e)
 
 
 

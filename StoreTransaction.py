@@ -1,110 +1,106 @@
-from dbConnection import mydb, mycursor 
+import mysql.connector
+from dbConnection import mydb, mycursor
 
-def callUseStoreSituationView():
-  mycursor.execute("SELECT * FROM useStoreSituation")
-  resultList = []
-  for i in mycursor:
-    resultList.append(i)
-  return resultList
-
-def callEtcStoreSituationView():
-  mycursor.execute("SELECT * FROM etcStoreSituation")
-  resultList = []
-  for i in mycursor:
-    resultList.append(i)
-  return resultList
-
-def callEquipStoreSituationView():
-  mycursor.execute("SELECT * FROM equipStoreSituation")
-  resultList = []
-  for i in mycursor:
-    resultList.append(i)
-  return resultList
-
-def callBuyUseItemProcedure(list):
-
-  characterName = list[0]
-  itemType = list[1] 
-  itemID = list[2]
-  quantity = list[3]
-
-  vals = (characterName, itemID, quantity)
-  sql = """CALL buyUseItem(%s,%s,%s,@buyReturn);
-  SELECT @buyReturn;"""
-  mycursor.execute(sql,vals)
+def callLastTransactionEquipView(charName,idItem,itemRarity):
+  mycursor.execute("SELECT * FROM lasttransactionresultequip WHERE name = '%s' AND idItem = '%s' AND equipRarity = '%s'" %(charName,idItem,itemRarity))
   for i in mycursor:
     return i
 
-def callBuyEtcItemProcedure(list):
-  characterName = list[0]
-  itemType = list[1] 
-  itemID = list[2]
-  quantity = list[3]
-
-  vals = (characterName, itemID, quantity)
-  sql = """CALL buyEtcItem(%s,%s,%s,@buyReturn);
-  SELECT @buyReturn;"""
-  mycursor.execute(sql,vals)
-  print(mycursor)
-  for i in mycursor:
-    print(i)
-    return i
-
-def callBuyEquipItemProcedure(list):
-  characterName = list[0]
-  itemType = list[1] 
-  itemID = list[2]
-  quantity = list[3]
-
-  vals = (characterName, itemID, quantity)
-  sql = """CALL buyEquipItem(%s,%s,%s,@buyReturn);
-  SELECT @buyReturn;"""
-  mycursor.execute(sql,vals)
+def callLastTransactionUseView(charName,idItem):
+  mycursor.execute("SELECT * FROM lasttransactionresultuse WHERE name = '%s' AND idItem = '%s'" %(charName,idItem))
   for i in mycursor:
     return i
 
-def callSellUseItemProcedure(list):
-  characterName = list[0]
-  itemType = list[1] 
-  itemID = list[2]
-  quantity = list[3]
-
-  vals = (characterName, itemID, quantity)
-  sql = """CALL sellUseItem(%s,%s,%s,@sellReturn);
-  SELECT @sellReturn;"""
-  mycursor.execute(sql,vals)
-  mydb.commit()
+def callLastTransactionEtcView(charName,idItem):
+  mycursor.execute("SELECT * FROM lasttransactionresultetc WHERE name = '%s' AND idItem = '%s'" %(charName,idItem))
   for i in mycursor:
     return i
 
-def callSellEtcItemProcedure(list):
-  characterName = list[0]
-  itemType = list[1] 
-  itemID = list[2]
-  quantity = list[3]
+def callBuyProcedure(charName,typeOfItem,idItem,itemQuantity,itemRarity):
+  if (typeOfItem == "Equip"):
+    mycursor.execute("CALL buyFromStore('%s','Equip','%s',%s,@output);" %(charName,idItem,itemQuantity))
+    mycursor.execute("SELECT @output")
+    mydb.commit()
 
-  vals = (characterName, itemID, quantity)
-  sql = """CALL sellEtcItem(%s,%s,%s,@sellReturn);
-  SELECT @sellReturn;"""
-  mycursor.execute(sql,vals)
-  mydb.commit()
-  for i in mycursor:
-    return i
+    tempList = []
+    for i in mycursor:
+      tempList.append(i[0])
 
-def callSellEquipItemProcedure(list):
-  characterName = list[0]
-  itemType = list[1] 
-  itemID = list[2]
-  quantity = list[3]
-  rarity = list[4]
+    if (tempList[0] is not None):
+      return tempList[0]
 
-  vals = (characterName, itemID, quantity, rarity)
-  sql = """CALL sellEquipItem(%s,%s,%s,%s,@sellReturn);
-  SELECT @sellReturn;"""
-  mycursor.execute(sql,vals)
-  mydb.commit()
-  for i in mycursor:
-    return i
+    return callLastTransactionEquipView(charName,idItem,itemRarity)
+
+  elif (typeOfItem == "Use"):
+    mycursor.execute("CALL buyFromStore('%s','Use','%s',%s,@output);" %(charName,idItem,itemQuantity))
+    mycursor.execute("SELECT @output")
+    mydb.commit()
+
+    tempList = []
+    for i in mycursor:
+      tempList.append(i[0])
+
+    if (tempList[0] is not None):
+      return tempList[0]
+
+    return callLastTransactionUseView(charName,idItem)
+
+  elif (typeOfItem == "Etc"):
+    mycursor.execute("CALL buyFromStore('%s','Etc','%s',%s,@output);" %(charName,idItem,itemQuantity))
+    mycursor.execute("SELECT @output")
+    mydb.commit()
+
+    tempList = []
+    for i in mycursor:
+      tempList.append(i[0])
+
+    if (tempList[0] is not None):
+      return tempList[0]
+
+    return callLastTransactionEtcView(charName,idItem)
+
+def callSellProcedure(charName,typeOfItem,idItem,itemQuantity,itemRarity):
+  if (typeOfItem == "Equip"):
+    mycursor.execute("CALL sellOnStore('%s','Equip','%s',%s,'Rare',@output);" %(charName,idItem,itemQuantity))
+    mycursor.execute("SELECT @output")
+    mydb.commit()
+
+    tempList = []
+    for i in mycursor:
+      tempList.append(i[0])
+
+    if (tempList[0] is not None):
+      return tempList[0]
+
+    return callLastTransactionEquipView(charName,idItem,itemRarity)
+
+  elif (typeOfItem == "Use"):
+    mycursor.execute("CALL sellOnStore('%s','Use','%s',%s,'Rare',@output);" %(charName,idItem,itemQuantity))
+    mycursor.execute("SELECT @output")
+    mydb.commit()
+
+    tempList = []
+    for i in mycursor:
+      tempList.append(i[0])
+
+    if (tempList[0] is not None):
+      return tempList[0]
+
+    return callLastTransactionUseView(charName,idItem)
+
+  elif (typeOfItem == "Etc"):
+    mycursor.execute("CALL sellOnStore('%s','Etc','%s',%s,'Rare',@output);" %(charName,idItem,itemQuantity))
+    mycursor.execute("SELECT @output")
+    mydb.commit()
+
+    tempList = []
+    for i in mycursor:
+      tempList.append(i[0])
+
+    if (tempList[0] is not None):
+      return tempList[0]
+
+    return callLastTransactionEtcView(charName,idItem)
 
 
     

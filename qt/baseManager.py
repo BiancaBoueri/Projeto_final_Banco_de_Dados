@@ -401,7 +401,6 @@ class Ui_baseManager(object):
                         result = EquipBase.select(tempIDEquip)
                         result = [result]
                     self.output.setRowCount(len(result))
-                    print(len(result))
                     for i in range(len(result)):
                         for j in range(0,8):
                             self.output.setItem(i, j, QtWidgets.QTableWidgetItem(str(result[i][j])))
